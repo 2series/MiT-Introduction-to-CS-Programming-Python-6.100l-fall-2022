@@ -16,8 +16,16 @@
 # range(-4,6,2)
 # range(5,6)
 
-#for i in range(5):
-    # your code here
+# def count_evens(range_obj):
+#     count = sum(1 for num in range_obj if num % 2 == 0)
+#     print(f"Number of even numbers in {range_obj}: {count}")
+
+# count_evens(range(5))
+# count_evens(range(10))
+# count_evens(range(2,9,3))
+# count_evens(range(-4,6,2))
+# count_evens(range(5,6))
+
 
 
 #############################################
@@ -73,7 +81,13 @@
 # s = "abca" Then your code prints 3. 
 
 # your code here
-s = 'abca'
+# s = 'abca'
+
+# def count_unique_letters(s):
+#     unique_letters = set(s)
+#     return len(unique_letters)
+
+# print(count_unique_letters(s))
 
 
 ##############################################
@@ -121,8 +135,11 @@ s = 'abca'
 # secret value. If it's not found, it doesn't print anything. 
 
 # your code here
-secret = 4
+# secret = 4
 
+# for i in range(1, 11):
+#     if i == secret:
+#         print("found")
 
 ################################################
 
@@ -133,8 +150,14 @@ secret = 4
 # secret value. If it's not found, prints that it didn't find it. 
 
 # your code here   
-secret = 4
-
+# secret = 4
+# found_flag = False
+# for i in range(1, 11):
+#     if i == secret:
+#         found_flag = True
+#         print("found")
+# if found_flag == False:
+#     print("not found")
     
 ####################################################
 
@@ -301,7 +324,18 @@ secret = 4
 
 # text1 = "abc"
 # text2 = "cde"
-# your code here
+
+# def count_common_chars(str1, str2):
+#     return len(set(str1) & set(str2))
+
+# print(count_common_chars(text1, text2))
+
+# # Test with larger example
+# text1 = "may the fourth be with you"
+# text2 = "revenge of the sixth"
+# print(count_common_chars(text1, text2))
+
+
 
 ####################################################
 ##################### END AT HOME ######################
