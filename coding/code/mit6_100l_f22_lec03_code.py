@@ -92,12 +92,17 @@
 
 
 ################ YOU TRY IT ################
-# for i in range(1,4,1):
-#     print(i)
-# for j in range(1,4,2):
-#     print(j*2)
-# for me in range(4,0,-1):
-#     print("$"*me)
+# Print numbers 1 to 3
+for i in range(1, 4, 1):
+    print(i)
+
+# Print even numbers 2 and 6
+for j in range(1, 4, 2):
+    print(j * 2)
+
+# Print decreasing dollar signs pattern
+for me in range(4, 0, -1):
+    print("$" * me)
 
 
 ###########################################
@@ -139,6 +144,7 @@
 #     mysum += i
 # print(mysum)
 
+
 ###########################################
 
 
@@ -153,6 +159,11 @@
 # For ex. if x = 15, it prints 5, 10, and 15. 
 # For ex. if x = 14, it prints 5 and 10.
 
+x = 15
+for i in range(1, x+1):
+    if i % 5 == 0:
+        print(i)
+
 
 # Practice 2:
 # Declare a variable n that stores an int. Print the sum of all digits 
@@ -160,46 +171,18 @@
 # when you divide n by 10.
 # For ex. If x = 1234, print 10
  
+n = 1234
+total = 0
+while n > 0:
+    r = n % 10
+    total += r 
+    n = n // 10
+print(total)
 
 
 
 #########################################################
 ##################### END AT HOME ###########################
-#########################################################
-
-
-#########################################################
-##################### ANSWERS AT HOME ###########################
-#########################################################
-
-# Practice 1: 
-# Declare a variable x that stores an int > 0. Print all ints, one on each
-# line, between 1 (inclusive) and x (inclusive) that are divisible by 5.
-# For ex. if x = 15, it prints 5, 10, and 15. If x = 14, it prints 5 and 10.
-
-# x = 15
-# for i in range(1,x+1):
-#     if i%5 == 0:
-#         print(i)
-
-
-# Practice 2:
-# Declare a variable n that stores an int. Print the sum of all digits 
-# in n. Hint: you can get a digit at a time looking at the remainder 
-# when you divide n by 10.
-# For ex. If x = 1234, print 10
-# n = 1234
-# total = 0
-# while True:
-#     r = n%10
-#     total += r 
-#     n = n//10
-#     if n == 0:
-#         break
-# print(total)
-
-#########################################################
-##################### END ANSWERS AT HOME ###########################
 #########################################################
 
 
