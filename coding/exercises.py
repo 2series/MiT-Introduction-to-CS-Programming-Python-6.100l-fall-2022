@@ -15,11 +15,11 @@
 # * negative if the variable number is negative
 # * zero if the variable number is equal to zero
 
-number = 1
+# number = 1
 
-if number > 0:
-    print("positive")
-elif number < 0:
-    print("negative")
-else:
-    print("zero")
+# if number > 0:
+#     print("positive")
+# elif number < 0:
+#     print("negative")
+# else:
+#     print("zero")
