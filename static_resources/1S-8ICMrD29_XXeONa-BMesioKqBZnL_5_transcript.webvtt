@@ -1,0 +1,995 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.470 align:middle line:90%
+[SQUEAKING]
+
+00:00:02.470 --> 00:00:03.952 align:middle line:90%
+[RUSTLING]
+
+00:00:03.952 --> 00:00:06.422 align:middle line:90%
+[CLICKING]
+
+00:00:06.422 --> 00:00:17.450 align:middle line:90%
+
+
+00:00:17.450 --> 00:00:21.690 align:middle line:84%
+ANA BELL: OK, let's get
+started with today's lecture.
+
+00:00:21.690 --> 00:00:24.680 align:middle line:84%
+It's going to be more
+of a chill lecture
+
+00:00:24.680 --> 00:00:26.460 align:middle line:84%
+than what we've
+done in the past,
+
+00:00:26.460 --> 00:00:28.910 align:middle line:84%
+even though we've got quite
+a few things to cover,
+
+00:00:28.910 --> 00:00:31.370 align:middle line:84%
+as you can see from
+this title slide.
+
+00:00:31.370 --> 00:00:33.440 align:middle line:84%
+I'm not going to go
+super duper fast,
+
+00:00:33.440 --> 00:00:35.610 align:middle line:84%
+so please feel free to
+ask lots of questions.
+
+00:00:35.610 --> 00:00:37.382 align:middle line:84%
+And then the second
+half of the lecture
+
+00:00:37.382 --> 00:00:38.840 align:middle line:84%
+will be really
+chill, because we're
+
+00:00:38.840 --> 00:00:41.420 align:middle line:84%
+going to be talking about
+testing and debugging
+
+00:00:41.420 --> 00:00:45.180 align:middle line:84%
+strategies, SO super
+high level topic.
+
+00:00:45.180 --> 00:00:50.030 align:middle line:84%
+But first we're going to tie up
+some loose ends related to lists
+
+00:00:50.030 --> 00:00:52.050 align:middle line:90%
+and relating to functions.
+
+00:00:52.050 --> 00:00:55.160 align:middle line:84%
+So we're not going to
+introduce a lot of new syntax.
+
+00:00:55.160 --> 00:00:59.210 align:middle line:84%
+These ideas are more optional
+in your day to day coding.
+
+00:00:59.210 --> 00:01:01.950 align:middle line:84%
+But they're just really,
+really nice to know.
+
+00:01:01.950 --> 00:01:05.480 align:middle line:84%
+So let's first start talking
+about this idea of a list
+
+00:01:05.480 --> 00:01:08.310 align:middle line:90%
+comprehension.
+
+00:01:08.310 --> 00:01:12.620 align:middle line:84%
+So you've been writing
+functions that deal with lists.
+
+00:01:12.620 --> 00:01:17.210 align:middle line:84%
+And one really common pattern
+that I hope you've seen so far
+
+00:01:17.210 --> 00:01:18.660 align:middle line:90%
+is the following.
+
+00:01:18.660 --> 00:01:20.930 align:middle line:84%
+So this code right
+here shows something
+
+00:01:20.930 --> 00:01:22.910 align:middle line:84%
+that we've definitely
+coded together
+
+00:01:22.910 --> 00:01:24.950 align:middle line:84%
+and you've definitely
+coded in the finger
+
+00:01:24.950 --> 00:01:27.080 align:middle line:90%
+exercises and the quizzes.
+
+00:01:27.080 --> 00:01:29.130 align:middle line:84%
+And so it is a really
+common pattern.
+
+00:01:29.130 --> 00:01:33.830 align:middle line:84%
+So the idea here is you have a
+function that creates a new list
+
+00:01:33.830 --> 00:01:35.480 align:middle line:84%
+where the elements
+of this new list
+
+00:01:35.480 --> 00:01:38.090 align:middle line:84%
+are a function of
+the input list.
+
+00:01:38.090 --> 00:01:41.750 align:middle line:84%
+So the pattern here is we
+create a new empty list
+
+00:01:41.750 --> 00:01:43.370 align:middle line:90%
+inside the function.
+
+00:01:43.370 --> 00:01:46.730 align:middle line:84%
+We have a loop over every
+element in the input.
+
+00:01:46.730 --> 00:01:49.040 align:middle line:84%
+And to each one of these
+elements in the input,
+
+00:01:49.040 --> 00:01:50.700 align:middle line:90%
+we apply the same function.
+
+00:01:50.700 --> 00:01:53.270 align:middle line:84%
+So in this particular case,
+we're taking that element
+
+00:01:53.270 --> 00:01:54.680 align:middle line:90%
+and squaring it.
+
+00:01:54.680 --> 00:01:56.480 align:middle line:84%
+And each one of
+these elements we're
+
+00:01:56.480 --> 00:01:59.840 align:middle line:84%
+appending to this new
+list, originally empty,
+
+00:01:59.840 --> 00:02:03.680 align:middle line:84%
+until we've done this function
+to every element in L.
+
+00:02:03.680 --> 00:02:07.580 align:middle line:84%
+And then we return this
+newly created list.
+
+00:02:07.580 --> 00:02:11.310 align:middle line:84%
+So now since this is a really
+common thing that programmers
+
+00:02:11.310 --> 00:02:16.320 align:middle line:84%
+do, Python allows you to
+do this exact functionality
+
+00:02:16.320 --> 00:02:18.330 align:middle line:90%
+with one line of code.
+
+00:02:18.330 --> 00:02:21.150 align:middle line:84%
+And the way we do this
+is using something
+
+00:02:21.150 --> 00:02:23.020 align:middle line:90%
+called a list comprehension.
+
+00:02:23.020 --> 00:02:26.250 align:middle line:84%
+So the way that we do a list
+comprehension, essentially
+
+00:02:26.250 --> 00:02:29.190 align:middle line:84%
+taking these four lines of
+code from this function,
+
+00:02:29.190 --> 00:02:33.870 align:middle line:84%
+we are going to write them
+in this one line of code that
+
+00:02:33.870 --> 00:02:35.700 align:middle line:90%
+looks something like this.
+
+00:02:35.700 --> 00:02:38.350 align:middle line:84%
+So the idea here is with
+this one line of code,
+
+00:02:38.350 --> 00:02:41.280 align:middle line:84%
+we're going to
+create a new list.
+
+00:02:41.280 --> 00:02:43.790 align:middle line:84%
+We're going to have
+an iterator that
+
+00:02:43.790 --> 00:02:46.410 align:middle line:84%
+goes through some sort
+of sequence of values.
+
+00:02:46.410 --> 00:02:48.920 align:middle line:84%
+And we're going to
+apply the same function
+
+00:02:48.920 --> 00:02:50.630 align:middle line:90%
+to every one of those elements.
+
+00:02:50.630 --> 00:02:54.140 align:middle line:84%
+And the other optional piece
+that we can add inside this list
+
+00:02:54.140 --> 00:02:56.990 align:middle line:84%
+comprehension is to
+only apply that function
+
+00:02:56.990 --> 00:02:59.270 align:middle line:90%
+if some condition holds.
+
+00:02:59.270 --> 00:03:04.190 align:middle line:84%
+So let's look at
+this example and see
+
+00:03:04.190 --> 00:03:07.430 align:middle line:84%
+how we can convert
+these four lines of code
+
+00:03:07.430 --> 00:03:11.480 align:middle line:84%
+to one line of list
+comprehension code.
+
+00:03:11.480 --> 00:03:16.170 align:middle line:84%
+So we've got creating
+a new empty list.
+
+00:03:16.170 --> 00:03:23.200 align:middle line:84%
+This is going to tell Python to
+create a new empty list for us,
+
+00:03:23.200 --> 00:03:25.500 align:middle line:84%
+so just open and
+closed square brackets.
+
+00:03:25.500 --> 00:03:28.020 align:middle line:84%
+And within these open and
+closed square brackets,
+
+00:03:28.020 --> 00:03:31.440 align:middle line:84%
+we're going to write a
+one liner expression.
+
+00:03:31.440 --> 00:03:34.320 align:middle line:84%
+And this one liner is
+going to encapsulate
+
+00:03:34.320 --> 00:03:37.900 align:middle line:90%
+these two lines of code here.
+
+00:03:37.900 --> 00:03:41.250 align:middle line:84%
+So the expression--
+sorry, the function
+
+00:03:41.250 --> 00:03:43.680 align:middle line:84%
+we're going to apply
+to every element in L
+
+00:03:43.680 --> 00:03:46.435 align:middle line:84%
+is going to be taking that
+element and squaring it.
+
+00:03:46.435 --> 00:03:48.810 align:middle line:84%
+So on the right-hand side here
+in the list comprehension,
+
+00:03:48.810 --> 00:03:51.560 align:middle line:90%
+we've got some e squared.
+
+00:03:51.560 --> 00:03:52.970 align:middle line:90%
+Well, what is e?
+
+00:03:52.970 --> 00:03:57.530 align:middle line:84%
+Well, it's going to be
+every element e in L.
+
+00:03:57.530 --> 00:03:59.660 align:middle line:84%
+So if we read this in
+English, we basically
+
+00:03:59.660 --> 00:04:04.520 align:middle line:84%
+say L is going to contain
+elements e squared for e in L.
+
+00:04:04.520 --> 00:04:07.280 align:middle line:84%
+So it sounds weird, but
+it kind of makes sense
+
+00:04:07.280 --> 00:04:09.540 align:middle line:90%
+even if we read it in English.
+
+00:04:09.540 --> 00:04:13.620 align:middle line:84%
+And behind the scenes,
+Python will take one by one
+
+00:04:13.620 --> 00:04:16.079 align:middle line:90%
+each element in L, square it.
+
+00:04:16.079 --> 00:04:17.970 align:middle line:84%
+And that's the
+sequence of elements it
+
+00:04:17.970 --> 00:04:20.744 align:middle line:90%
+will populate this Lnew with.
+
+00:04:20.744 --> 00:04:23.560 align:middle line:90%
+
+
+00:04:23.560 --> 00:04:25.880 align:middle line:84%
+Now, what if we add
+a condition to that?
+
+00:04:25.880 --> 00:04:29.380 align:middle line:84%
+So let's say we want to create
+this new list of elements
+
+00:04:29.380 --> 00:04:32.790 align:middle line:90%
+only for even elements.
+
+00:04:32.790 --> 00:04:35.120 align:middle line:84%
+So we only want to
+square the even elements
+
+00:04:35.120 --> 00:04:38.090 align:middle line:84%
+within my original
+list, L. Well,
+
+00:04:38.090 --> 00:04:41.570 align:middle line:84%
+if we were to write a function
+that does that, we have to add
+
+00:04:41.570 --> 00:04:43.200 align:middle line:90%
+this extra condition here.
+
+00:04:43.200 --> 00:04:46.700 align:middle line:84%
+So everything else is the same
+except for this if e percent 2
+
+00:04:46.700 --> 00:04:47.570 align:middle line:90%
+equals 0.
+
+00:04:47.570 --> 00:04:50.810 align:middle line:84%
+This tells Python to
+only grab elements
+
+00:04:50.810 --> 00:04:54.640 align:middle line:90%
+that are even, divisible by 2.
+
+00:04:54.640 --> 00:04:57.830 align:middle line:84%
+So how do we write this in
+list comprehension form?
+
+00:04:57.830 --> 00:04:59.290 align:middle line:90%
+So here's a new list.
+
+00:04:59.290 --> 00:05:02.650 align:middle line:84%
+And this is the function to
+apply only if the test is true.
+
+00:05:02.650 --> 00:05:06.440 align:middle line:84%
+In list comprehension,
+this is my new list.
+
+00:05:06.440 --> 00:05:09.860 align:middle line:84%
+I've got the for
+loop is over here.
+
+00:05:09.860 --> 00:05:16.925 align:middle line:84%
+And then the test to apply is at
+the end here, if e % 2 equal 0.
+
+00:05:16.925 --> 00:05:18.800 align:middle line:84%
+And then what is the
+function we're applying?
+
+00:05:18.800 --> 00:05:20.630 align:middle line:90%
+It's just e squared like before.
+
+00:05:20.630 --> 00:05:24.470 align:middle line:84%
+So the test just gets appended
+to the end of this list
+
+00:05:24.470 --> 00:05:28.520 align:middle line:90%
+comprehension expression here.
+
+00:05:28.520 --> 00:05:29.670 align:middle line:90%
+Yeah?
+
+00:05:29.670 --> 00:05:31.670 align:middle line:84%
+AUDIENCE: [INAUDIBLE]
+running faster,
+
+00:05:31.670 --> 00:05:33.560 align:middle line:90%
+is there a reason to do that?
+
+00:05:33.560 --> 00:05:35.160 align:middle line:90%
+PROFESSOR: Does it run faster?
+
+00:05:35.160 --> 00:05:36.500 align:middle line:90%
+I'm not sure, actually.
+
+00:05:36.500 --> 00:05:40.700 align:middle line:84%
+It might run marginally faster
+but probably not significantly.
+
+00:05:40.700 --> 00:05:44.570 align:middle line:84%
+The reason to do this
+is because as you
+
+00:05:44.570 --> 00:05:48.320 align:middle line:84%
+get more practice with it, this
+will be easier to read in code.
+
+00:05:48.320 --> 00:05:52.260 align:middle line:84%
+And often if you see a
+large chunk like this,
+
+00:05:52.260 --> 00:05:53.750 align:middle line:90%
+your eyes will glaze over.
+
+00:05:53.750 --> 00:05:55.890 align:middle line:84%
+You're not going to want
+to read a chunk like that.
+
+00:05:55.890 --> 00:05:58.100 align:middle line:84%
+But if you see it
+all in one line,
+
+00:05:58.100 --> 00:06:00.380 align:middle line:84%
+you're going to think,
+well, how bad can it be?
+
+00:06:00.380 --> 00:06:01.410 align:middle line:90%
+[LAUGHS]
+
+00:06:01.410 --> 00:06:04.610 align:middle line:84%
+And so you can come up with
+really complicated list
+
+00:06:04.610 --> 00:06:06.380 align:middle line:90%
+comprehension expressions.
+
+00:06:06.380 --> 00:06:11.630 align:middle line:84%
+But usually we reserve them for
+really simple, really quick ways
+
+00:06:11.630 --> 00:06:15.800 align:middle line:84%
+to create these lists that you
+just populate with some values
+
+00:06:15.800 --> 00:06:16.550 align:middle line:90%
+right off the bat.
+
+00:06:16.550 --> 00:06:18.620 align:middle line:84%
+So it just makes the code
+a lot easier to read.
+
+00:06:18.620 --> 00:06:21.690 align:middle line:90%
+
+
+00:06:21.690 --> 00:06:25.413 align:middle line:84%
+OK, so list comprehensions
+are pretty useful.
+
+00:06:25.413 --> 00:06:27.330 align:middle line:84%
+If you get a little bit
+of practice with them,
+
+00:06:27.330 --> 00:06:30.850 align:middle line:84%
+you'll find yourself kind of
+using them all over the place.
+
+00:06:30.850 --> 00:06:35.440 align:middle line:84%
+And they basically replace
+code that looks like this.
+
+00:06:35.440 --> 00:06:38.850 align:middle line:84%
+So these lines of code
+is a very generic way
+
+00:06:38.850 --> 00:06:43.380 align:middle line:84%
+of writing this one
+liner list comprehension.
+
+00:06:43.380 --> 00:06:47.210 align:middle line:84%
+So here I've got a function
+f that I would like to apply.
+
+00:06:47.210 --> 00:06:51.380 align:middle line:84%
+This expr expression
+is the function
+
+00:06:51.380 --> 00:06:53.430 align:middle line:84%
+I would like to apply
+to each element.
+
+00:06:53.430 --> 00:06:56.750 align:middle line:84%
+This is the list I would like
+to apply that function to.
+
+00:06:56.750 --> 00:07:00.260 align:middle line:84%
+And the test is going
+to be the conditional.
+
+00:07:00.260 --> 00:07:03.020 align:middle line:84%
+In this particular
+case, this test
+
+00:07:03.020 --> 00:07:05.360 align:middle line:84%
+means I apply it to
+every single element.
+
+00:07:05.360 --> 00:07:07.610 align:middle line:84%
+But you can imagine
+having a function,
+
+00:07:07.610 --> 00:07:10.500 align:middle line:84%
+which in the previous case,
+we would say lambda x,
+
+00:07:10.500 --> 00:07:13.850 align:middle line:90%
+x % 2 equals 0 as our condition.
+
+00:07:13.850 --> 00:07:16.820 align:middle line:84%
+And then the function that
+we're essentially replacing
+
+00:07:16.820 --> 00:07:19.820 align:middle line:84%
+is this with list
+comprehensions.
+
+00:07:19.820 --> 00:07:21.020 align:middle line:90%
+We create this new list.
+
+00:07:21.020 --> 00:07:24.230 align:middle line:84%
+Again, this is the pattern that
+we saw in the previous slide.
+
+00:07:24.230 --> 00:07:26.390 align:middle line:84%
+We loop through every
+element in the list.
+
+00:07:26.390 --> 00:07:30.020 align:middle line:84%
+If that condition holds,
+append that function
+
+00:07:30.020 --> 00:07:31.630 align:middle line:90%
+applied to each element.
+
+00:07:31.630 --> 00:07:34.330 align:middle line:84%
+And then at the end,
+return the list.
+
+00:07:34.330 --> 00:07:36.250 align:middle line:84%
+So this is just a
+very generic way
+
+00:07:36.250 --> 00:07:39.290 align:middle line:90%
+to write a list comprehension.
+
+00:07:39.290 --> 00:07:41.300 align:middle line:84%
+So let's look at some
+concrete examples.
+
+00:07:41.300 --> 00:07:45.700 align:middle line:84%
+So here I'm not
+applying the function
+
+00:07:45.700 --> 00:07:49.240 align:middle line:84%
+e squared to a particular
+set of elements from a list.
+
+00:07:49.240 --> 00:07:53.320 align:middle line:84%
+I'm applying it to the sequence
+of values given by range.
+
+00:07:53.320 --> 00:07:55.780 align:middle line:84%
+Remember when we were talking
+about for loops iterating
+
+00:07:55.780 --> 00:07:59.650 align:middle line:84%
+through things, they can iterate
+through integers following
+
+00:07:59.650 --> 00:08:04.000 align:middle line:84%
+some pattern, like
+range 6, range 1, 9, 2,
+
+00:08:04.000 --> 00:08:04.990 align:middle line:90%
+something like that.
+
+00:08:04.990 --> 00:08:08.050 align:middle line:84%
+As long as you have a sequence
+of values you can iterate over,
+
+00:08:08.050 --> 00:08:11.840 align:middle line:84%
+you can plop that into
+this list comprehension.
+
+00:08:11.840 --> 00:08:13.390 align:middle line:90%
+So you can iterate over lists.
+
+00:08:13.390 --> 00:08:14.980 align:middle line:90%
+You could iterate over tuples.
+
+00:08:14.980 --> 00:08:18.310 align:middle line:84%
+You could iterate over
+these direct ranges.
+
+00:08:18.310 --> 00:08:20.780 align:middle line:84%
+You could iterate over a
+range of the length of a list.
+
+00:08:20.780 --> 00:08:23.320 align:middle line:84%
+Whatever creates an
+iterable for you,
+
+00:08:23.320 --> 00:08:26.690 align:middle line:84%
+you can put that in
+the list comprehension.
+
+00:08:26.690 --> 00:08:29.980 align:middle line:84%
+So in this particular case,
+the way I read this is I've
+
+00:08:29.980 --> 00:08:31.510 align:middle line:90%
+got something that I'm squaring.
+
+00:08:31.510 --> 00:08:33.370 align:middle line:84%
+And what's the thing
+that I'm squaring?
+
+00:08:33.370 --> 00:08:36.490 align:middle line:84%
+It's going to be each
+value in range 6.
+
+00:08:36.490 --> 00:08:39.559 align:middle line:84%
+So I think about it like, what
+is this sequence of values
+
+00:08:39.559 --> 00:08:40.789 align:middle line:90%
+that I'm going to operate on?
+
+00:08:40.789 --> 00:08:44.020 align:middle line:84%
+Well, it's going to be the
+numbers 0, 1, 2, 3, 4, 5.
+
+00:08:44.020 --> 00:08:45.770 align:middle line:84%
+And the thing that I'm
+going to do to them
+
+00:08:45.770 --> 00:08:48.060 align:middle line:84%
+is square each one
+of those values.
+
+00:08:48.060 --> 00:08:51.680 align:middle line:84%
+So the end list that I get
+out of this one liner here
+
+00:08:51.680 --> 00:08:55.910 align:middle line:84%
+is a list containing 0 squared,
+1 squared, 2 squared, 3 squared,
+
+00:08:55.910 --> 00:08:59.180 align:middle line:90%
+4 squared, and 5 squared.
+
+00:08:59.180 --> 00:09:00.900 align:middle line:90%
+We can add a condition to that.
+
+00:09:00.900 --> 00:09:05.360 align:middle line:84%
+So here I've got each element
+squared for e in range 8,
+
+00:09:05.360 --> 00:09:09.170 align:middle line:90%
+only if e is even.
+
+00:09:09.170 --> 00:09:12.380 align:middle line:84%
+So then the way I think about
+it is let's start off with what
+
+00:09:12.380 --> 00:09:13.820 align:middle line:90%
+every element in the range is.
+
+00:09:13.820 --> 00:09:16.640 align:middle line:84%
+Well, it's 0, 1,
+2, 3, 4, 5, 6, 7.
+
+00:09:16.640 --> 00:09:19.490 align:middle line:84%
+The condition I'm applying
+to that is that it's even.
+
+00:09:19.490 --> 00:09:21.560 align:middle line:84%
+So the numbers I'm
+going to end up
+
+00:09:21.560 --> 00:09:25.160 align:middle line:84%
+with, I'm filtering all
+those to only contain
+
+00:09:25.160 --> 00:09:30.080 align:middle line:84%
+0, 2, 4, and 6, because we
+go up to but not including 8.
+
+00:09:30.080 --> 00:09:32.490 align:middle line:84%
+And then I'm going to
+square every one of those.
+
+00:09:32.490 --> 00:09:34.820 align:middle line:84%
+So the end result from
+this list comprehension
+
+00:09:34.820 --> 00:09:37.880 align:middle line:84%
+is a list containing the
+elements 0 squared, 2 squared,
+
+00:09:37.880 --> 00:09:39.890 align:middle line:90%
+4 squared, and 6 squared.
+
+00:09:39.890 --> 00:09:42.760 align:middle line:90%
+
+
+00:09:42.760 --> 00:09:47.490 align:middle line:84%
+And lastly, we've been
+doing just single integers
+
+00:09:47.490 --> 00:09:48.810 align:middle line:90%
+in the resulting list.
+
+00:09:48.810 --> 00:09:52.420 align:middle line:84%
+But as I mentioned, we can
+do more complicated things.
+
+00:09:52.420 --> 00:09:55.560 align:middle line:84%
+So as long as we can write
+a little expression here
+
+00:09:55.560 --> 00:09:59.070 align:middle line:84%
+for the thing that we'd like to
+calculate or add to the list,
+
+00:09:59.070 --> 00:10:01.780 align:middle line:84%
+we can put it in the
+list comprehension.
+
+00:10:01.780 --> 00:10:04.050 align:middle line:84%
+So in this particular
+case, the element
+
+00:10:04.050 --> 00:10:07.410 align:middle line:84%
+that I'm adding to my
+list comprehension,
+
+00:10:07.410 --> 00:10:11.530 align:middle line:84%
+my resulting list from the list
+comprehension is a list itself.
+
+00:10:11.530 --> 00:10:16.200 align:middle line:84%
+So each element in my
+resulting list is another list.
+
+00:10:16.200 --> 00:10:20.640 align:middle line:84%
+And that inner list is going to
+contain two elements every time,
+
+00:10:20.640 --> 00:10:24.450 align:middle line:84%
+the thing I'm actually
+iterating over and its square.
+
+00:10:24.450 --> 00:10:27.390 align:middle line:90%
+
+
+00:10:27.390 --> 00:10:29.560 align:middle line:90%
+And I've got a condition here.
+
+00:10:29.560 --> 00:10:32.730 align:middle line:84%
+So I've got the
+elements 0, 1, 2, and 3.
+
+00:10:32.730 --> 00:10:34.350 align:middle line:90%
+That's the range.
+
+00:10:34.350 --> 00:10:38.020 align:middle line:84%
+But I'm only grabbing the odd
+ones in this particular case.
+
+00:10:38.020 --> 00:10:43.225 align:middle line:84%
+So the resulting set of numbers
+that I'm going to apply this to
+
+00:10:43.225 --> 00:10:46.500 align:middle line:90%
+is going to be the number--
+
+00:10:46.500 --> 00:10:50.500 align:middle line:84%
+is the numbers 1 and
+3, because those are
+
+00:10:50.500 --> 00:10:53.410 align:middle line:90%
+the two odd numbers in range 4.
+
+00:10:53.410 --> 00:10:57.890 align:middle line:84%
+And so the resulting list is
+going to contain two elements.
+
+00:10:57.890 --> 00:11:01.420 align:middle line:84%
+So this outer square bracket
+is the list that I've created.
+
+00:11:01.420 --> 00:11:06.340 align:middle line:84%
+And its elements will be the
+element that I have actually
+
+00:11:06.340 --> 00:11:12.220 align:middle line:84%
+iterated over and its square
+as a list, so 1 and 1 squared
+
+00:11:12.220 --> 00:11:18.010 align:middle line:84%
+for e and e squared when e
+is 1, and then 3 and 9, 3
+
+00:11:18.010 --> 00:11:19.645 align:middle line:90%
+squared when e is 3.
+
+00:11:19.645 --> 00:11:22.880 align:middle line:90%
+
+
+00:11:22.880 --> 00:11:23.930 align:middle line:90%
+Questions about that?
+
+00:11:23.930 --> 00:11:26.500 align:middle line:90%
+
+
+00:11:26.500 --> 00:11:28.780 align:middle line:90%
+OK, so pretty cool.
+
+00:11:28.780 --> 00:11:31.240 align:middle line:84%
+It's a really nice way to
+create lists really quickly.
+
+00:11:31.240 --> 00:11:34.660 align:middle line:84%
+Like if you wanted to create
+a list full of 0's, full
+
+00:11:34.660 --> 00:11:37.450 align:middle line:84%
+of a hundred 0's, no
+need to do a loop.
+
+00:11:37.450 --> 00:11:39.220 align:middle line:84%
+You basically do a
+list comprehension
+
+00:11:39.220 --> 00:11:45.070 align:middle line:84%
+that says square brackets 0
+for e in range 101 or 100.
+
+00:11:45.070 --> 00:11:47.530 align:middle line:84%
+And then you've got yourself
+a nice little list full
+
+00:11:47.530 --> 00:11:48.445 align:middle line:90%
+of a hundred 0's.
+
+00:11:48.445 --> 00:11:50.980 align:middle line:90%
+
+
+00:11:50.980 --> 00:11:54.310 align:middle line:84%
+All right, so think about
+this and then tell me
+
+00:11:54.310 --> 00:11:55.670 align:middle line:90%
+what the answer is.
+
+00:11:55.670 --> 00:12:00.110 align:middle line:84%
+So the idea here is we have
+this list comprehension.
+
+00:12:00.110 --> 00:12:03.170 align:middle line:84%
+And just go through
+it step by step.
+
+00:12:03.170 --> 00:12:04.790 align:middle line:84%
+It looks a little
+bit intimidating.
+
+00:12:04.790 --> 00:12:07.430 align:middle line:84%
+But the first step is
+to look at for loop
+
+00:12:07.430 --> 00:12:10.880 align:middle line:84%
+and ask yourself, what are
+the values I'm iterating over?
+
+00:12:10.880 --> 00:12:13.850 align:middle line:84%
+Then look at the
+condition, if there is one.
+
+00:12:13.850 --> 00:12:14.780 align:middle line:90%
+There is one.
+
+00:12:14.780 --> 00:12:16.290 align:middle line:84%
+In this case, it's
+at the end here.
+
+00:12:16.290 --> 00:12:18.560 align:middle line:84%
+So now, what subsets of
+those original things
+
+00:12:18.560 --> 00:12:21.080 align:middle line:84%
+you're iterating over
+are you actually keeping?
+
+00:12:21.080 --> 00:12:23.510 align:middle line:84%
+And then from those things
+that you're keeping,
+
+00:12:23.510 --> 00:12:25.370 align:middle line:90%
+what function are you applying?
+
+00:12:25.370 --> 00:12:28.090 align:middle line:84%
+It's the one right
+at the beginning.
+
+00:12:28.090 --> 00:12:29.300 align:middle line:90%
+So think about it.
+
+00:12:29.300 --> 00:12:31.210 align:middle line:84%
+And then I'll ask
+you to tell me.
+
+00:12:31.210 --> 00:12:35.080 align:middle line:90%
+
+
+00:12:35.080 --> 00:12:38.350 align:middle line:84%
+So step one, what are the
+values I'm iterating over,
+
+00:12:38.350 --> 00:12:42.740 align:middle line:84%
+the full values, not
+including the condition?
+
+00:12:42.740 --> 00:12:43.790 align:middle line:90%
+Someone yell it out.
+
+00:12:43.790 --> 00:12:46.310 align:middle line:90%
+
+
+00:12:46.310 --> 00:12:47.760 align:middle line:90%
+Yeah, that list in the middle.
+
+00:12:47.760 --> 00:12:48.260 align:middle line:90%
+Awesome.
+
+00:12:48.260 --> 00:12:58.040 align:middle line:84%
+OK, so xy, abcd, and then 7,
+and then what's the last thing?
+
+00:12:58.040 --> 00:13:01.010 align:middle line:84%
+Is it the number
+4.0 or a string?
+
+00:13:01.010 --> 00:13:02.990 align:middle line:90%
+Yeah, exactly, 4.0.
+
+00:13:02.990 --> 00:13:05.240 align:middle line:90%
+OK, string, string.
+
+00:13:05.240 --> 00:13:06.710 align:middle line:90%
+Step 2, from this--
+
+00:13:06.710 --> 00:13:09.760 align:middle line:90%
+[NO AUDIO]
+
+00:13:09.760 --> 01:15:20.000 align:middle line:90%

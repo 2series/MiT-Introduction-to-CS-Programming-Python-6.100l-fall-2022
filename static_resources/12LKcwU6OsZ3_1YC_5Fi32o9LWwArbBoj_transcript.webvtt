@@ -1,0 +1,4642 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:11.270 align:middle line:84%
+[SQUEAKING]
+[RUSTLING] [CLICKING]
+
+00:00:11.270 --> 00:00:11.870 align:middle line:90%
+ANA BELL: OK.
+
+00:00:11.870 --> 00:00:16.610 align:middle line:84%
+So let's get started
+on today's lecture.
+
+00:00:16.610 --> 00:00:18.920 align:middle line:84%
+Last lecture, I left
+you off with the promise
+
+00:00:18.920 --> 00:00:20.972 align:middle line:84%
+of bigger and better
+algorithms to do
+
+00:00:20.972 --> 00:00:22.430 align:middle line:84%
+what we've been
+trying to do, which
+
+00:00:22.430 --> 00:00:25.320 align:middle line:84%
+is to approximate square
+roots and things like that.
+
+00:00:25.320 --> 00:00:27.560 align:middle line:84%
+So today will be
+the introduction
+
+00:00:27.560 --> 00:00:30.770 align:middle line:84%
+of our last algorithm
+for a bit before we'll
+
+00:00:30.770 --> 00:00:32.689 align:middle line:84%
+start talking about
+more Python syntax.
+
+00:00:32.689 --> 00:00:35.120 align:middle line:84%
+But today, we're going to
+introduce the bisection search
+
+00:00:35.120 --> 00:00:36.680 align:middle line:90%
+algorithm.
+
+00:00:36.680 --> 00:00:38.390 align:middle line:84%
+But before we get
+into that, let's
+
+00:00:38.390 --> 00:00:40.770 align:middle line:84%
+try to remember where
+we left off last time.
+
+00:00:40.770 --> 00:00:44.900 align:middle line:84%
+So last time, we talked
+about floating point numbers.
+
+00:00:44.900 --> 00:00:47.750 align:middle line:84%
+And then we talked about
+approximation algorithms,
+
+00:00:47.750 --> 00:00:48.710 align:middle line:90%
+right?
+
+00:00:48.710 --> 00:00:52.400 align:middle line:84%
+So the reason why we talked
+about floating point numbers
+
+00:00:52.400 --> 00:00:55.220 align:middle line:84%
+is because we wanted to come
+up with an algorithm that was
+
+00:00:55.220 --> 00:00:56.690 align:middle line:90%
+better than guess and check.
+
+00:00:56.690 --> 00:00:58.400 align:middle line:84%
+Guess and check was
+really limiting.
+
+00:00:58.400 --> 00:01:01.610 align:middle line:84%
+We were basically limited
+to some exhaustive number
+
+00:01:01.610 --> 00:01:04.230 align:middle line:90%
+of potential solutions.
+
+00:01:04.230 --> 00:01:07.850 align:middle line:84%
+But we didn't just want
+to have an exhaustive set
+
+00:01:07.850 --> 00:01:09.320 align:middle line:90%
+to look through for a solution.
+
+00:01:09.320 --> 00:01:12.660 align:middle line:84%
+We wanted to be able to actually
+come up with an approximation
+
+00:01:12.660 --> 00:01:14.580 align:middle line:90%
+to solve our problems.
+
+00:01:14.580 --> 00:01:18.010 align:middle line:84%
+And so we talked about floating
+point numbers because we said,
+
+00:01:18.010 --> 00:01:20.100 align:middle line:84%
+well, instead of having,
+for example, integer
+
+00:01:20.100 --> 00:01:24.850 align:middle line:84%
+increments when we searched
+for square roots of values,
+
+00:01:24.850 --> 00:01:27.780 align:middle line:84%
+let's try to have
+smaller increments.
+
+00:01:27.780 --> 00:01:30.550 align:middle line:84%
+And so if we have smaller
+increments than an integer,
+
+00:01:30.550 --> 00:01:33.950 align:middle line:84%
+well, we were starting to
+look at incrementing by 0.1,
+
+00:01:33.950 --> 00:01:38.820 align:middle line:84%
+or 0.25 , or 0.001
+, whatever we want.
+
+00:01:38.820 --> 00:01:41.540 align:middle line:84%
+And so then since we started
+talking about these floating
+
+00:01:41.540 --> 00:01:43.760 align:middle line:84%
+point numbers, it was
+important to understand
+
+00:01:43.760 --> 00:01:45.200 align:middle line:90%
+what happens behind the scenes.
+
+00:01:45.200 --> 00:01:48.080 align:middle line:84%
+And we saw that these floating
+point numbers can't actually
+
+00:01:48.080 --> 00:01:51.170 align:middle line:84%
+be represented in
+memory directly exactly.
+
+00:01:51.170 --> 00:01:53.930 align:middle line:84%
+There's always-- for the
+majority of the numbers,
+
+00:01:53.930 --> 00:01:56.450 align:middle line:84%
+there's going to be
+some sort of rounding
+
+00:01:56.450 --> 00:01:59.330 align:middle line:84%
+that happens when that
+number is stored in memory.
+
+00:01:59.330 --> 00:02:01.380 align:middle line:90%
+And the rounding is very small.
+
+00:02:01.380 --> 00:02:05.570 align:middle line:84%
+It's something like 10 to
+the negative 10-- or sorry,
+
+00:02:05.570 --> 00:02:08.690 align:middle line:84%
+2 to the negative 32,
+which is approximately 10
+
+00:02:08.690 --> 00:02:10.789 align:middle line:84%
+to the negative 10,
+which seems small.
+
+00:02:10.789 --> 00:02:13.550 align:middle line:84%
+But we saw, even with
+just a loop that added 0.1
+
+00:02:13.550 --> 00:02:17.090 align:middle line:84%
+to itself 10 times, we
+were already getting
+
+00:02:17.090 --> 00:02:18.950 align:middle line:90%
+very surprising results.
+
+00:02:18.950 --> 00:02:24.630 align:middle line:84%
+So the approximation method
+introduced the idea of, yes, we
+
+00:02:24.630 --> 00:02:27.360 align:middle line:84%
+can get an approximation for
+the square root of a number.
+
+00:02:27.360 --> 00:02:29.940 align:middle line:90%
+But we can't check for equality.
+
+00:02:29.940 --> 00:02:34.710 align:middle line:84%
+We can't say, I'm going to come
+up with this approximation such
+
+00:02:34.710 --> 00:02:37.543 align:middle line:84%
+that this approximation
+squared or whatever
+
+00:02:37.543 --> 00:02:39.210 align:middle line:84%
+problem we're trying
+to solve is exactly
+
+00:02:39.210 --> 00:02:40.990 align:middle line:84%
+equal to the number
+we're looking for.
+
+00:02:40.990 --> 00:02:42.780 align:middle line:84%
+So we had to have a
+little wiggle room.
+
+00:02:42.780 --> 00:02:46.200 align:middle line:84%
+And that wiggle room came
+in the form of an epsilon.
+
+00:02:46.200 --> 00:02:50.530 align:middle line:84%
+So we were approximating a
+solution by basically saying,
+
+00:02:50.530 --> 00:02:54.060 align:middle line:84%
+does this solution come
+within plus or minus epsilon
+
+00:02:54.060 --> 00:02:56.320 align:middle line:90%
+of my desired value?
+
+00:02:56.320 --> 00:02:59.040 align:middle line:84%
+So we came up with a nice
+algorithm, the approximation
+
+00:02:59.040 --> 00:02:59.580 align:middle line:90%
+algorithm.
+
+00:02:59.580 --> 00:03:02.190 align:middle line:84%
+And we tested it on a
+bunch of different values.
+
+00:03:02.190 --> 00:03:04.140 align:middle line:84%
+We were incrementing
+a small increment,
+
+00:03:04.140 --> 00:03:05.670 align:middle line:90%
+a little bit at a time.
+
+00:03:05.670 --> 00:03:07.950 align:middle line:84%
+And for the problem
+where we're trying
+
+00:03:07.950 --> 00:03:11.887 align:middle line:84%
+to approximate the square
+root of some value x, we were
+
+00:03:11.887 --> 00:03:13.470 align:middle line:84%
+saying, well, I'm
+going to keep making
+
+00:03:13.470 --> 00:03:15.960 align:middle line:84%
+these small incremental
+changes to my guess
+
+00:03:15.960 --> 00:03:18.720 align:middle line:84%
+until I come within
+plus or minus epsilon
+
+00:03:18.720 --> 00:03:19.920 align:middle line:90%
+of my actual value.
+
+00:03:19.920 --> 00:03:24.040 align:middle line:84%
+The guess squared was within
+plus or minus epsilon of my x.
+
+00:03:24.040 --> 00:03:27.820 align:middle line:84%
+And this was the
+nice slide that was
+
+00:03:27.820 --> 00:03:31.270 align:middle line:84%
+kind of the Big Bang
+of last lecture,
+
+00:03:31.270 --> 00:03:34.330 align:middle line:84%
+where we said we have to be
+careful about the way we write
+
+00:03:34.330 --> 00:03:38.380 align:middle line:84%
+these approximation algorithms
+because we might overshoot
+
+00:03:38.380 --> 00:03:39.590 align:middle line:90%
+our epsilon.
+
+00:03:39.590 --> 00:03:44.830 align:middle line:84%
+So if this is our guess and
+this is a guess squared,
+
+00:03:44.830 --> 00:03:47.710 align:middle line:84%
+the blue arrow
+increments normally,
+
+00:03:47.710 --> 00:03:49.480 align:middle line:90%
+whatever increment we choose.
+
+00:03:49.480 --> 00:03:51.910 align:middle line:84%
+But then it's possible
+that, at some point,
+
+00:03:51.910 --> 00:03:54.970 align:middle line:84%
+the guess squared comes
+just short of the epsilon,
+
+00:03:54.970 --> 00:03:58.760 align:middle line:90%
+the lower the x minus epsilon.
+
+00:03:58.760 --> 00:04:00.470 align:middle line:84%
+And with the
+following increment,
+
+00:04:00.470 --> 00:04:05.450 align:middle line:84%
+the guess squared becomes
+just past x plus epsilon.
+
+00:04:05.450 --> 00:04:08.840 align:middle line:84%
+And so the code that we ended
+up writing, which was-- it
+
+00:04:08.840 --> 00:04:11.120 align:middle line:84%
+made sense right when we
+wrote it-- actually ended up
+
+00:04:11.120 --> 00:04:14.580 align:middle line:84%
+giving us an infinite loop
+because it never stopped.
+
+00:04:14.580 --> 00:04:17.089 align:middle line:84%
+We never were within
+that plus minus epsilon.
+
+00:04:17.089 --> 00:04:20.459 align:middle line:84%
+And so we would just keep making
+guesses from there on out.
+
+00:04:20.459 --> 00:04:24.490 align:middle line:84%
+So we ended up getting an
+infinite loop for our program.
+
+00:04:24.490 --> 00:04:29.290 align:middle line:84%
+The solution was to take
+a little bit of code
+
+00:04:29.290 --> 00:04:31.660 align:middle line:84%
+from guess and check
+and said, let's
+
+00:04:31.660 --> 00:04:35.920 align:middle line:84%
+add an additional little sanity
+check stopping condition.
+
+00:04:35.920 --> 00:04:38.620 align:middle line:84%
+And so everything
+except for this box
+
+00:04:38.620 --> 00:04:40.360 align:middle line:90%
+was the approximation algorithm.
+
+00:04:40.360 --> 00:04:43.948 align:middle line:84%
+And we added the thing that I've
+boxed here as our sanity check
+
+00:04:43.948 --> 00:04:46.240 align:middle line:84%
+that we grabbed from the
+guess and check algorithm that
+
+00:04:46.240 --> 00:04:51.340 align:middle line:84%
+basically said, if we've
+made a guess that is just
+
+00:04:51.340 --> 00:04:54.190 align:middle line:90%
+past the reasonable number--
+
+00:04:54.190 --> 00:04:57.640 align:middle line:84%
+a reasonable guess, we know
+that all the guesses from here
+
+00:04:57.640 --> 00:04:59.770 align:middle line:84%
+on out will also
+be unreasonable.
+
+00:04:59.770 --> 00:05:02.050 align:middle line:84%
+And so there's no need
+to keep searching.
+
+00:05:02.050 --> 00:05:07.300 align:middle line:84%
+And that condition will cause
+us to stop our infinite loop
+
+00:05:07.300 --> 00:05:10.340 align:middle line:90%
+or our potential infinite loop.
+
+00:05:10.340 --> 00:05:12.800 align:middle line:84%
+So this guest squared is
+less than or equal to x
+
+00:05:12.800 --> 00:05:17.210 align:middle line:84%
+basically says stop when we go
+past the last reasonable guess.
+
+00:05:17.210 --> 00:05:20.090 align:middle line:84%
+And that condition plus
+the regular condition
+
+00:05:20.090 --> 00:05:22.950 align:middle line:84%
+from an approximation
+algorithm, which says,
+
+00:05:22.950 --> 00:05:26.630 align:middle line:84%
+I want my guess squared to
+be plus or minus epsilon
+
+00:05:26.630 --> 00:05:29.960 align:middle line:90%
+of the actual x--
+
+00:05:29.960 --> 00:05:32.900 align:middle line:84%
+those two conditions together
+made up my algorithm.
+
+00:05:32.900 --> 00:05:34.470 align:middle line:90%
+And that's the algorithm.
+
+00:05:34.470 --> 00:05:36.470 align:middle line:84%
+It's just this loop right
+here, this while loop
+
+00:05:36.470 --> 00:05:38.450 align:middle line:90%
+with this increment.
+
+00:05:38.450 --> 00:05:40.470 align:middle line:84%
+So it looks really,
+really simple.
+
+00:05:40.470 --> 00:05:43.820 align:middle line:84%
+And so what we ended up having
+is these two conditions.
+
+00:05:43.820 --> 00:05:47.420 align:middle line:84%
+So I want to be within epsilon
+and I want to still be making
+
+00:05:47.420 --> 00:05:49.880 align:middle line:90%
+reasonable guesses to be--
+
+00:05:49.880 --> 00:05:51.980 align:middle line:84%
+sorry, I want to be--
+sorry, outside of the bounds
+
+00:05:51.980 --> 00:05:54.680 align:middle line:84%
+of epsilon and still be
+making reasonable guesses.
+
+00:05:54.680 --> 00:05:58.700 align:middle line:84%
+That's the condition that causes
+me to keep making more guesses.
+
+00:05:58.700 --> 00:06:01.640 align:middle line:84%
+And when either one of
+these becomes false,
+
+00:06:01.640 --> 00:06:03.800 align:middle line:84%
+I'm going to stop
+making guesses.
+
+00:06:03.800 --> 00:06:07.250 align:middle line:84%
+And that's what the if/m
+else down here says.
+
+00:06:07.250 --> 00:06:10.880 align:middle line:84%
+It says, one of these conditions
+became false, either this one,
+
+00:06:10.880 --> 00:06:12.770 align:middle line:84%
+I'm making unreasonable
+guesses now,
+
+00:06:12.770 --> 00:06:15.720 align:middle line:84%
+or I've come within
+plus or minus epsilon.
+
+00:06:15.720 --> 00:06:17.560 align:middle line:90%
+So which one is it?
+
+00:06:17.560 --> 00:06:20.560 align:middle line:84%
+So here, I'm making
+unreasonable guesses.
+
+00:06:20.560 --> 00:06:22.800 align:middle line:84%
+So I've exited the
+loop because I've
+
+00:06:22.800 --> 00:06:27.600 align:middle line:84%
+gone too far, in which case I
+failed to find the square root.
+
+00:06:27.600 --> 00:06:31.110 align:middle line:84%
+And otherwise, I've
+exited because I am now
+
+00:06:31.110 --> 00:06:33.400 align:middle line:90%
+within plus or minus epsilon.
+
+00:06:33.400 --> 00:06:36.270 align:middle line:84%
+So let me just run the
+code to remind ourselves
+
+00:06:36.270 --> 00:06:39.260 align:middle line:90%
+what it looked like.
+
+00:06:39.260 --> 00:06:43.180 align:middle line:84%
+So here, we're
+trying to find 54,321
+
+00:06:43.180 --> 00:06:47.980 align:middle line:84%
+was this troublesome value
+being within plus or minus 0.01,
+
+00:06:47.980 --> 00:06:53.350 align:middle line:84%
+our guess squared to be
+plus mins 0.01 of 54,321.
+
+00:06:53.350 --> 00:06:58.290 align:middle line:84%
+Our increment seemed
+really small, 0.0001.
+
+00:06:58.290 --> 00:07:02.830 align:middle line:84%
+But when we ran it, it
+took a couple of seconds.
+
+00:07:02.830 --> 00:07:06.400 align:middle line:84%
+And we made about
+2.3 million guesses.
+
+00:07:06.400 --> 00:07:09.970 align:middle line:84%
+And the code says we failed
+to find the square root.
+
+00:07:09.970 --> 00:07:12.460 align:middle line:84%
+And we're also reporting
+what the last guess was
+
+00:07:12.460 --> 00:07:16.200 align:middle line:84%
+and what the last guess
+squared was as well.
+
+00:07:16.200 --> 00:07:18.530 align:middle line:90%
+So what's the solution to this?
+
+00:07:18.530 --> 00:07:22.640 align:middle line:84%
+The solution was, well, we
+can make our epsilon bigger.
+
+00:07:22.640 --> 00:07:25.190 align:middle line:90%
+So if we made our epsilon be 1--
+
+00:07:25.190 --> 00:07:31.700 align:middle line:84%
+so if we want it to be within
+plus or minus 1 of 54,321,
+
+00:07:31.700 --> 00:07:33.710 align:middle line:90%
+yeah, that code works.
+
+00:07:33.710 --> 00:07:34.970 align:middle line:90%
+It didn't fail.
+
+00:07:34.970 --> 00:07:37.790 align:middle line:84%
+It made still about
+2.3 million guesses.
+
+00:07:37.790 --> 00:07:39.410 align:middle line:84%
+And it came up
+with this estimate.
+
+00:07:39.410 --> 00:07:42.620 align:middle line:84%
+So as soon as we came with
+an epsilon, that boundary,
+
+00:07:42.620 --> 00:07:44.390 align:middle line:90%
+we stopped the program.
+
+00:07:44.390 --> 00:07:46.020 align:middle line:90%
+It didn't try to do better.
+
+00:07:46.020 --> 00:07:49.180 align:middle line:84%
+It didn't try to
+get closer to x.
+
+00:07:49.180 --> 00:07:52.300 align:middle line:84%
+The other solution, if we
+were unhappy with the fact
+
+00:07:52.300 --> 00:07:56.160 align:middle line:84%
+that we failed, was to
+make our steps smaller.
+
+00:07:56.160 --> 00:07:58.810 align:middle line:84%
+But what's the problem if
+we make our steps smaller?
+
+00:07:58.810 --> 00:08:02.145 align:middle line:84%
+Do you guys remember
+when I run the program?
+
+00:08:02.145 --> 00:08:03.527 align:middle line:90%
+STUDENT: It takes a bit longer.
+
+00:08:03.527 --> 00:08:04.860 align:middle line:90%
+ANA BELL: Yeah, it takes longer.
+
+00:08:04.860 --> 00:08:07.560 align:middle line:84%
+And can you approximate
+how much longer it'll take?
+
+00:08:07.560 --> 00:08:10.770 align:middle line:90%
+
+
+00:08:10.770 --> 00:08:12.700 align:middle line:90%
+I decreased my step size by 10.
+
+00:08:12.700 --> 00:08:15.180 align:middle line:84%
+So every one step
+I made last run,
+
+00:08:15.180 --> 00:08:17.520 align:middle line:90%
+I'm now going to take 10 steps.
+
+00:08:17.520 --> 00:08:20.700 align:middle line:84%
+So I'm waiting basically,
+what, 15-20 seconds here
+
+00:08:20.700 --> 00:08:24.610 align:middle line:84%
+if the last run took
+two seconds to run.
+
+00:08:24.610 --> 00:08:27.990 align:middle line:84%
+And now, I've also doubled
+the number of guesses--
+
+00:08:27.990 --> 00:08:29.760 align:middle line:90%
+or sorry, not doubled--
+
+00:08:29.760 --> 00:08:32.520 align:middle line:84%
+10 times-- I'm making 10
+times the number of guesses,
+
+00:08:32.520 --> 00:08:35.730 align:middle line:84%
+23 million as opposed
+to 2.3 million.
+
+00:08:35.730 --> 00:08:38.580 align:middle line:90%
+But the code didn't fail.
+
+00:08:38.580 --> 00:08:41.429 align:middle line:84%
+It found something that's
+pretty close to the square root
+
+00:08:41.429 --> 00:08:47.630 align:middle line:90%
+of 54,321.
+
+00:08:47.630 --> 00:08:49.620 align:middle line:90%
+So that's where we left off.
+
+00:08:49.620 --> 00:08:51.530 align:middle line:84%
+And I don't know
+about you, but I
+
+00:08:51.530 --> 00:08:54.410 align:middle line:84%
+don't want to wait 20
+seconds to figure out what
+
+00:08:54.410 --> 00:08:56.180 align:middle line:90%
+the square root of 54,000 is.
+
+00:08:56.180 --> 00:08:59.060 align:middle line:84%
+That seems like an unreasonably
+long amount of time
+
+00:08:59.060 --> 00:09:02.030 align:middle line:84%
+to come up with
+an approximation.
+
+00:09:02.030 --> 00:09:05.150 align:middle line:84%
+And we don't wait that long
+when we do it on the computer
+
+00:09:05.150 --> 00:09:07.040 align:middle line:84%
+or when we do it
+on the calculator.
+
+00:09:07.040 --> 00:09:10.110 align:middle line:84%
+And so that leads me to the
+bisection search algorithm.
+
+00:09:10.110 --> 00:09:12.410 align:middle line:84%
+It's got to be a
+better way for us
+
+00:09:12.410 --> 00:09:16.550 align:middle line:84%
+to solve certain types
+of problems much faster,
+
+00:09:16.550 --> 00:09:19.290 align:middle line:84%
+but only certain
+types of problems.
+
+00:09:19.290 --> 00:09:22.220 align:middle line:84%
+So to motivate the bisection
+search, before we even
+
+00:09:22.220 --> 00:09:24.650 align:middle line:84%
+look at code, I just want to
+give you a bit of motivation
+
+00:09:24.650 --> 00:09:26.630 align:middle line:90%
+with a few different examples.
+
+00:09:26.630 --> 00:09:29.480 align:middle line:84%
+The first one is I'm
+going to give you guys
+
+00:09:29.480 --> 00:09:32.240 align:middle line:90%
+a chance to win some money.
+
+00:09:32.240 --> 00:09:37.850 align:middle line:84%
+So suppose I put a $100 bill
+at one page in this book.
+
+00:09:37.850 --> 00:09:41.060 align:middle line:84%
+This is actually the last
+edition, not the edition
+
+00:09:41.060 --> 00:09:42.170 align:middle line:90%
+we're using this year.
+
+00:09:42.170 --> 00:09:45.710 align:middle line:84%
+But I don't have this year's
+edition, unfortunately,
+
+00:09:45.710 --> 00:09:46.490 align:middle line:90%
+in my office.
+
+00:09:46.490 --> 00:09:50.840 align:middle line:90%
+So this book is 448 pages long.
+
+00:09:50.840 --> 00:09:52.790 align:middle line:84%
+And I've put some
+money in this book.
+
+00:09:52.790 --> 00:09:55.880 align:middle line:84%
+And if you can guess
+where the money is
+
+00:09:55.880 --> 00:09:58.740 align:middle line:84%
+in eight or fewer guesses,
+I will give you the money.
+
+00:09:58.740 --> 00:10:02.600 align:middle line:84%
+And if you fail, you
+get an F, not really.
+
+00:10:02.600 --> 00:10:07.400 align:middle line:84%
+Is this a game anyone
+would want to play?
+
+00:10:07.400 --> 00:10:08.780 align:middle line:90%
+That's what I thought.
+
+00:10:08.780 --> 00:10:13.520 align:middle line:84%
+And in fact, your chances of
+winning are about 1 in 56.
+
+00:10:13.520 --> 00:10:17.330 align:middle line:84%
+And yeah, I don't want
+to play that game either.
+
+00:10:17.330 --> 00:10:21.410 align:middle line:84%
+But now, let's say I give you
+some additional information.
+
+00:10:21.410 --> 00:10:24.860 align:middle line:84%
+With each guess you
+make, I will tell you
+
+00:10:24.860 --> 00:10:30.570 align:middle line:84%
+whether you are correct,
+too low, or too high.
+
+00:10:30.570 --> 00:10:32.320 align:middle line:84%
+So I give you some
+additional information.
+
+00:10:32.320 --> 00:10:35.660 align:middle line:84%
+Is this a game that now
+you would want to play?
+
+00:10:35.660 --> 00:10:37.775 align:middle line:84%
+Would anyone like to
+play the game with me?
+
+00:10:37.775 --> 00:10:38.650 align:middle line:90%
+STUDENT: [INAUDIBLE].
+
+00:10:38.650 --> 00:10:40.300 align:middle line:84%
+ANA BELL: You want
+to play the game?
+
+00:10:40.300 --> 00:10:41.410 align:middle line:90%
+OK, all right.
+
+00:10:41.410 --> 00:10:43.555 align:middle line:90%
+So you're up, OK?
+
+00:10:43.555 --> 00:10:46.120 align:middle line:90%
+
+
+00:10:46.120 --> 00:10:49.495 align:middle line:84%
+All right, so I'm going to write
+down your guesses because you
+
+00:10:49.495 --> 00:10:50.620 align:middle line:90%
+only have eight, all right?
+
+00:10:50.620 --> 00:10:52.300 align:middle line:84%
+You remember that there's
+only eight guesses.
+
+00:10:52.300 --> 00:10:53.883 align:middle line:84%
+All right, so what's
+your first guess?
+
+00:10:53.883 --> 00:10:55.360 align:middle line:90%
+There's 448 pages.
+
+00:10:55.360 --> 00:10:56.140 align:middle line:90%
+So between--
+
+00:10:56.140 --> 00:10:57.307 align:middle line:90%
+STUDENT: So I pick 1 to 448?
+
+00:10:57.307 --> 00:11:00.190 align:middle line:84%
+ANA BELL: Yeah,
+you pick 1 to 448.
+
+00:11:00.190 --> 00:11:02.530 align:middle line:90%
+OK, what's your first guess?
+
+00:11:02.530 --> 00:11:03.420 align:middle line:90%
+STUDENT: 224.
+
+00:11:03.420 --> 00:11:05.140 align:middle line:90%
+ANA BELL: 224?
+
+00:11:05.140 --> 00:11:07.060 align:middle line:84%
+All right, smack in the
+middle, right there.
+
+00:11:07.060 --> 00:11:08.410 align:middle line:90%
+All right, 224.
+
+00:11:08.410 --> 00:11:10.300 align:middle line:90%
+Don't look.
+
+00:11:10.300 --> 00:11:11.390 align:middle line:90%
+All right.
+
+00:11:11.390 --> 00:11:13.110 align:middle line:90%
+STUDENT: [INAUDIBLE].
+
+00:11:13.110 --> 00:11:16.020 align:middle line:90%
+STUDENT: [INAUDIBLE].
+
+00:11:16.020 --> 00:11:16.950 align:middle line:90%
+ANA BELL: No money.
+
+00:11:16.950 --> 00:11:19.560 align:middle line:84%
+All right, but now, I give
+you extra information.
+
+00:11:19.560 --> 00:11:21.938 align:middle line:90%
+The guess is too high.
+
+00:11:21.938 --> 00:11:23.230 align:middle line:90%
+STUDENT: My guess was too high?
+
+00:11:23.230 --> 00:11:25.440 align:middle line:84%
+ANA BELL: Yes, your guess
+was too high, so not to 24.
+
+00:11:25.440 --> 00:11:26.710 align:middle line:90%
+STUDENT: 112.
+
+00:11:26.710 --> 00:11:27.460 align:middle line:90%
+ANA BELL: 112.
+
+00:11:27.460 --> 00:11:29.440 align:middle line:90%
+So you want to go here?
+
+00:11:29.440 --> 00:11:31.690 align:middle line:90%
+112, all right.
+
+00:11:31.690 --> 00:11:33.220 align:middle line:90%
+That's two guesses now.
+
+00:11:33.220 --> 00:11:45.280 align:middle line:90%
+
+
+00:11:45.280 --> 00:11:49.080 align:middle line:84%
+Nope, the guess is
+too high as well.
+
+00:11:49.080 --> 00:11:49.900 align:middle line:90%
+Still too high.
+
+00:11:49.900 --> 00:11:53.596 align:middle line:90%
+
+
+00:11:53.596 --> 00:11:55.450 align:middle line:90%
+STUDENT: 56.
+
+00:11:55.450 --> 00:11:57.407 align:middle line:90%
+ANA BELL: 56?
+
+00:11:57.407 --> 00:12:01.270 align:middle line:90%
+OK, so here somewhere.
+
+00:12:01.270 --> 00:12:02.852 align:middle line:90%
+All right, 56.
+
+00:12:02.852 --> 00:12:06.490 align:middle line:90%
+
+
+00:12:06.490 --> 00:12:11.474 align:middle line:90%
+The guess is too high.
+
+00:12:11.474 --> 00:12:13.338 align:middle line:84%
+STUDENT: Too high,
+still too high.
+
+00:12:13.338 --> 00:12:14.380 align:middle line:90%
+ANA BELL: Still too high.
+
+00:12:14.380 --> 00:12:17.092 align:middle line:90%
+
+
+00:12:17.092 --> 00:12:18.900 align:middle line:90%
+STUDENT: [INAUDIBLE].
+
+00:12:18.900 --> 00:12:19.680 align:middle line:90%
+ANA BELL: 28?
+
+00:12:19.680 --> 00:12:20.490 align:middle line:90%
+All right, 28.
+
+00:12:20.490 --> 00:12:23.220 align:middle line:84%
+I'm going to start
+writing up here, 28.
+
+00:12:23.220 --> 00:12:27.090 align:middle line:84%
+You have 1, 2, 3, you're
+at four guesses now.
+
+00:12:27.090 --> 00:12:29.390 align:middle line:90%
+28, OK.
+
+00:12:29.390 --> 00:12:40.740 align:middle line:84%
+It is-- no, wait, now I have
+to remember where I put it.
+
+00:12:40.740 --> 00:12:41.760 align:middle line:90%
+It's too high.
+
+00:12:41.760 --> 00:12:43.110 align:middle line:90%
+It's too high, sorry.
+
+00:12:43.110 --> 00:12:44.610 align:middle line:84%
+STUDENT: [INAUDIBLE]
+still too high.
+
+00:12:44.610 --> 00:12:45.860 align:middle line:90%
+ANA BELL: It's still too high.
+
+00:12:45.860 --> 00:12:46.410 align:middle line:90%
+STUDENT: 14.
+
+00:12:46.410 --> 00:12:47.250 align:middle line:90%
+ANA BELL: 14?
+
+00:12:47.250 --> 00:12:51.180 align:middle line:90%
+OK, 14, right there.
+
+00:12:51.180 --> 00:12:52.537 align:middle line:90%
+OK, now, 14.
+
+00:12:52.537 --> 00:12:55.200 align:middle line:90%
+
+
+00:12:55.200 --> 00:12:56.850 align:middle line:90%
+Now, it's too low.
+
+00:12:56.850 --> 00:13:02.260 align:middle line:84%
+Now that I remembered where I
+actually put it, it's too low.
+
+00:13:02.260 --> 00:13:04.110 align:middle line:84%
+STUDENT: Turns out
+it's on page like 400.
+
+00:13:04.110 --> 00:13:06.210 align:middle line:90%
+STUDENT: [INAUDIBLE].
+
+00:13:06.210 --> 00:13:08.170 align:middle line:90%
+ANA BELL: Between 14 and 28.
+
+00:13:08.170 --> 00:13:09.690 align:middle line:90%
+So now, you know it's-- yeah.
+
+00:13:09.690 --> 00:13:10.440 align:middle line:90%
+STUDENT: Yeah, 21.
+
+00:13:10.440 --> 00:13:11.250 align:middle line:90%
+ANA BELL: 21?
+
+00:13:11.250 --> 00:13:13.830 align:middle line:90%
+OK, so right there, 21.
+
+00:13:13.830 --> 00:13:14.760 align:middle line:90%
+OK, let's see.
+
+00:13:14.760 --> 00:13:20.400 align:middle line:90%
+
+
+00:13:20.400 --> 00:13:22.608 align:middle line:90%
+You guys, I'm shaking.
+
+00:13:22.608 --> 00:13:28.360 align:middle line:90%
+[APPLAUSE]
+
+00:13:28.360 --> 00:13:34.660 align:middle line:84%
+It's not 100, but there is a 1
+and a 0 in it, so there you go.
+
+00:13:34.660 --> 00:13:38.260 align:middle line:90%
+All right, that was awesome.
+
+00:13:38.260 --> 00:13:40.870 align:middle line:84%
+So yes, I'm really
+glad you played.
+
+00:13:40.870 --> 00:13:44.290 align:middle line:84%
+And actually, you only took
+seven guesses to get it.
+
+00:13:44.290 --> 00:13:47.500 align:middle line:84%
+So I could have probably
+rigged it a little bit better
+
+00:13:47.500 --> 00:13:51.510 align:middle line:84%
+because your chances of winning
+this game are about 1 in 3.
+
+00:13:51.510 --> 00:13:53.600 align:middle line:90%
+And you did a really good job.
+
+00:13:53.600 --> 00:13:57.160 align:middle line:84%
+So what was your thought
+process basically?
+
+00:13:57.160 --> 00:13:59.450 align:middle line:84%
+And I think once you
+did a couple of them,
+
+00:13:59.450 --> 00:14:02.460 align:middle line:84%
+anyone who maybe didn't
+think about this way
+
+00:14:02.460 --> 00:14:03.490 align:middle line:90%
+kind of figured it out.
+
+00:14:03.490 --> 00:14:07.510 align:middle line:84%
+You were basically guessing
+the halfway point each time
+
+00:14:07.510 --> 00:14:09.890 align:middle line:90%
+I told you too high or too low.
+
+00:14:09.890 --> 00:14:12.520 align:middle line:84%
+And so bisection
+search is a method
+
+00:14:12.520 --> 00:14:15.400 align:middle line:84%
+that you can use
+to solve problems
+
+00:14:15.400 --> 00:14:19.120 align:middle line:84%
+where there's some sort
+of order to the thing
+
+00:14:19.120 --> 00:14:20.860 align:middle line:90%
+you're trying to search.
+
+00:14:20.860 --> 00:14:25.030 align:middle line:84%
+So let's say we
+know our interval.
+
+00:14:25.030 --> 00:14:31.400 align:middle line:84%
+In this case, in the book, we
+knew that we had page 1 to 448.
+
+00:14:31.400 --> 00:14:35.960 align:middle line:84%
+So we had this low point, page
+1, and this high point, 448.
+
+00:14:35.960 --> 00:14:39.080 align:middle line:84%
+And we know that our answer
+lies within this interval.
+
+00:14:39.080 --> 00:14:41.420 align:middle line:84%
+And it can be integers,
+like in this book,
+
+00:14:41.420 --> 00:14:45.330 align:middle line:84%
+or it can be fractional
+pieces as well.
+
+00:14:45.330 --> 00:14:47.630 align:middle line:84%
+And the idea is you're
+just guessing the midpoint
+
+00:14:47.630 --> 00:14:48.680 align:middle line:90%
+between this interval.
+
+00:14:48.680 --> 00:14:50.960 align:middle line:84%
+It's as good a guess
+as anything, right?
+
+00:14:50.960 --> 00:14:53.810 align:middle line:84%
+But based on the answer that
+I give you, because now I
+
+00:14:53.810 --> 00:14:56.910 align:middle line:84%
+give you extra information,
+if it's too high or too low,
+
+00:14:56.910 --> 00:15:00.950 align:middle line:84%
+you can basically eliminate
+half of the search space.
+
+00:15:00.950 --> 00:15:04.940 align:middle line:84%
+So with the guess 224,
+what ended up happening is
+
+00:15:04.940 --> 00:15:09.170 align:middle line:84%
+you eliminated this
+entire half of the book.
+
+00:15:09.170 --> 00:15:12.260 align:middle line:84%
+So it's like I take this
+original book, 448 pages,
+
+00:15:12.260 --> 00:15:14.990 align:middle line:84%
+get the midpoint,
+rip it in half,
+
+00:15:14.990 --> 00:15:17.310 align:middle line:90%
+throw away these upper pages.
+
+00:15:17.310 --> 00:15:20.780 align:middle line:84%
+And now, you think of it like
+having this skinnier book.
+
+00:15:20.780 --> 00:15:24.860 align:middle line:84%
+And this is now the book
+you're searching through.
+
+00:15:24.860 --> 00:15:28.010 align:middle line:84%
+And then you're repeating
+the process all over again.
+
+00:15:28.010 --> 00:15:33.380 align:middle line:84%
+The low endpoint is still page
+1 because I have no information
+
+00:15:33.380 --> 00:15:34.970 align:middle line:90%
+about how low I need to go.
+
+00:15:34.970 --> 00:15:37.640 align:middle line:84%
+But my high endpoint
+becomes the guess
+
+00:15:37.640 --> 00:15:42.000 align:middle line:90%
+that I had just made, 224.
+
+00:15:42.000 --> 00:15:47.670 align:middle line:84%
+And now, I make another guess,
+midpoint in this skinnier book.
+
+00:15:47.670 --> 00:15:50.850 align:middle line:84%
+And so this should
+trigger something
+
+00:15:50.850 --> 00:15:53.910 align:middle line:84%
+in your brain about computation
+and things that we've learned.
+
+00:15:53.910 --> 00:15:55.980 align:middle line:84%
+As soon as we're
+saying I'm repeating
+
+00:15:55.980 --> 00:15:59.700 align:middle line:84%
+this process of now just
+doing the guess again
+
+00:15:59.700 --> 00:16:04.890 align:middle line:84%
+with this smaller version of a
+book, basically we have a loop.
+
+00:16:04.890 --> 00:16:07.620 align:middle line:84%
+That's something that you
+should be thinking about.
+
+00:16:07.620 --> 00:16:10.200 align:middle line:84%
+And this loop is
+going to be something
+
+00:16:10.200 --> 00:16:13.290 align:middle line:84%
+that just repeats the same
+process over and over again.
+
+00:16:13.290 --> 00:16:15.810 align:middle line:84%
+Once I've eliminated this
+upper half of the book,
+
+00:16:15.810 --> 00:16:18.510 align:middle line:84%
+now I'm looking through
+this lower half, midpoint.
+
+00:16:18.510 --> 00:16:20.370 align:middle line:84%
+Based on the answer
+I give you, you
+
+00:16:20.370 --> 00:16:23.340 align:middle line:84%
+can rip the book again in
+half where you are now.
+
+00:16:23.340 --> 00:16:27.220 align:middle line:84%
+And now, you're searching the
+skinnier version of the book.
+
+00:16:27.220 --> 00:16:29.650 align:middle line:84%
+So we're basically
+cutting the number
+
+00:16:29.650 --> 00:16:33.490 align:middle line:84%
+of things we need to search
+for in half every time
+
+00:16:33.490 --> 00:16:37.390 align:middle line:84%
+we make a guess, which
+is really powerful.
+
+00:16:37.390 --> 00:16:41.470 align:middle line:84%
+With guess and check or with
+approximation method, if we're
+
+00:16:41.470 --> 00:16:43.270 align:middle line:84%
+going to do guess and
+check on this book,
+
+00:16:43.270 --> 00:16:46.270 align:middle line:84%
+we'd be asking is it page 1,
+is it page 2, is it page 3,
+
+00:16:46.270 --> 00:16:47.050 align:middle line:90%
+is it page 4?
+
+00:16:47.050 --> 00:16:48.370 align:middle line:90%
+And that's tedious.
+
+00:16:48.370 --> 00:16:50.913 align:middle line:84%
+We're not doing we're not
+eliminating half the book
+
+00:16:50.913 --> 00:16:51.580 align:middle line:90%
+with each guess.
+
+00:16:51.580 --> 00:16:57.020 align:middle line:84%
+We're just eliminating
+one page with each guess.
+
+00:16:57.020 --> 00:17:00.240 align:middle line:84%
+So this idea of
+logarithmic growth,
+
+00:17:00.240 --> 00:17:02.840 align:middle line:84%
+which is what happens when
+you eliminate the search
+
+00:17:02.840 --> 00:17:05.780 align:middle line:84%
+space in half with each
+stage is logarithmic growth.
+
+00:17:05.780 --> 00:17:07.369 align:middle line:84%
+And we'll come back
+to this idea again
+
+00:17:07.369 --> 00:17:09.589 align:middle line:84%
+towards the last
+few weeks of lecture
+
+00:17:09.589 --> 00:17:13.575 align:middle line:84%
+when we talk about comparing
+algorithms in this class
+
+00:17:13.575 --> 00:17:15.200 align:middle line:84%
+and what does it mean
+for one algorithm
+
+00:17:15.200 --> 00:17:17.450 align:middle line:84%
+to be more efficient than
+another algorithm, what
+
+00:17:17.450 --> 00:17:18.589 align:middle line:90%
+does it mean to run faster.
+
+00:17:18.589 --> 00:17:21.349 align:middle line:90%
+
+
+00:17:21.349 --> 00:17:22.950 align:middle line:84%
+So that's just
+something I mentioned.
+
+00:17:22.950 --> 00:17:24.325 align:middle line:84%
+When we do guess
+and check, where
+
+00:17:24.325 --> 00:17:26.180 align:middle line:84%
+we ask one page
+at a time, that's
+
+00:17:26.180 --> 00:17:28.430 align:middle line:84%
+linear growth
+because if the book--
+
+00:17:28.430 --> 00:17:31.400 align:middle line:84%
+if I give you now a book
+that's double the size and just
+
+00:17:31.400 --> 00:17:34.010 align:middle line:84%
+by bad luck I put the
+money away at the end,
+
+00:17:34.010 --> 00:17:38.130 align:middle line:84%
+if I put the money at the end in
+this book that's twice as big,
+
+00:17:38.130 --> 00:17:41.060 align:middle line:84%
+then you're going to have to
+ask me twice as many questions
+
+00:17:41.060 --> 00:17:42.540 align:middle line:90%
+until you get to the answer.
+
+00:17:42.540 --> 00:17:44.720 align:middle line:84%
+But with logarithmic
+growth, if I still
+
+00:17:44.720 --> 00:17:47.450 align:middle line:84%
+put the money in
+this book that's
+
+00:17:47.450 --> 00:17:49.640 align:middle line:84%
+double the size somewhere,
+all you need to do
+
+00:17:49.640 --> 00:17:53.030 align:middle line:84%
+is make one extra guess,
+not 400 extra guesses
+
+00:17:53.030 --> 00:17:54.920 align:middle line:84%
+to figure out which
+interval it's in.
+
+00:17:54.920 --> 00:17:58.160 align:middle line:84%
+You take from this double
+book, make your first guess.
+
+00:17:58.160 --> 00:18:01.450 align:middle line:84%
+And all of a sudden, we
+are at this book again.
+
+00:18:01.450 --> 00:18:05.050 align:middle line:84%
+All right, so let's
+do another analogy,
+
+00:18:05.050 --> 00:18:08.930 align:middle line:84%
+just so we get the sense
+of where this is going.
+
+00:18:08.930 --> 00:18:11.990 align:middle line:84%
+So suppose that-- we don't
+just need to work with numbers.
+
+00:18:11.990 --> 00:18:13.630 align:middle line:84%
+We can also work
+with anything that
+
+00:18:13.630 --> 00:18:15.740 align:middle line:90%
+has an ordering property to it.
+
+00:18:15.740 --> 00:18:17.860 align:middle line:84%
+So suppose when
+you came in I asked
+
+00:18:17.860 --> 00:18:19.300 align:middle line:90%
+you to sit alphabetically.
+
+00:18:19.300 --> 00:18:24.670 align:middle line:84%
+Front left is last name A.
+Back right is last name Z.
+
+00:18:24.670 --> 00:18:27.700 align:middle line:84%
+And then I'm looking
+for a particular person.
+
+00:18:27.700 --> 00:18:30.160 align:middle line:84%
+For me, the bisection
+search algorithm
+
+00:18:30.160 --> 00:18:32.200 align:middle line:84%
+could be basically
+ask the person
+
+00:18:32.200 --> 00:18:34.645 align:middle line:84%
+in the middle of the class
+what is their last name.
+
+00:18:34.645 --> 00:18:37.180 align:middle line:90%
+
+
+00:18:37.180 --> 00:18:38.020 align:middle line:90%
+They say what it is.
+
+00:18:38.020 --> 00:18:42.880 align:middle line:84%
+And depending on what
+they say, I can basically
+
+00:18:42.880 --> 00:18:44.920 align:middle line:90%
+dismiss half of the people.
+
+00:18:44.920 --> 00:18:47.080 align:middle line:84%
+If their last name starts
+with a letter later
+
+00:18:47.080 --> 00:18:48.955 align:middle line:84%
+than the one I'm looking
+for in the alphabet,
+
+00:18:48.955 --> 00:18:51.940 align:middle line:84%
+I dismiss the upper
+half and vice versa.
+
+00:18:51.940 --> 00:18:54.070 align:middle line:84%
+And then I have this
+only half of the people
+
+00:18:54.070 --> 00:18:54.820 align:middle line:90%
+to search through.
+
+00:18:54.820 --> 00:18:57.400 align:middle line:84%
+And I keep repeating
+this process until I
+
+00:18:57.400 --> 00:18:59.200 align:middle line:90%
+have only one person left.
+
+00:18:59.200 --> 00:19:01.880 align:middle line:84%
+And either that person is
+the one I'm looking for,
+
+00:19:01.880 --> 00:19:03.980 align:middle line:84%
+in which case I've
+decreased by half
+
+00:19:03.980 --> 00:19:06.470 align:middle line:84%
+the size of the
+class with each guess
+
+00:19:06.470 --> 00:19:10.020 align:middle line:84%
+and I have one person left to
+ask is the one I'm looking for,
+
+00:19:10.020 --> 00:19:13.880 align:middle line:84%
+or that person that
+just isn't here.
+
+00:19:13.880 --> 00:19:19.190 align:middle line:84%
+So let's try to apply the
+same idea of bisection search
+
+00:19:19.190 --> 00:19:20.960 align:middle line:90%
+to programming.
+
+00:19:20.960 --> 00:19:23.090 align:middle line:84%
+And specifically,
+let's do the problem
+
+00:19:23.090 --> 00:19:25.970 align:middle line:84%
+we've been trying to
+solve as a common thread
+
+00:19:25.970 --> 00:19:28.160 align:middle line:84%
+throughout these
+algorithms, figuring out
+
+00:19:28.160 --> 00:19:29.540 align:middle line:90%
+the square root of a number.
+
+00:19:29.540 --> 00:19:31.430 align:middle line:84%
+Not exact, actually,
+we're still going
+
+00:19:31.430 --> 00:19:33.260 align:middle line:84%
+to be looking only
+for an approximation
+
+00:19:33.260 --> 00:19:35.750 align:middle line:90%
+to the square root of a number.
+
+00:19:35.750 --> 00:19:39.535 align:middle line:84%
+So the idea here is
+that our interval is--
+
+00:19:39.535 --> 00:19:41.410 align:middle line:84%
+if we're trying to find
+the square root of x,
+
+00:19:41.410 --> 00:19:43.870 align:middle line:90%
+is going to be between 0 and x.
+
+00:19:43.870 --> 00:19:49.680 align:middle line:84%
+So basically, I can just
+reuse this number line here.
+
+00:19:49.680 --> 00:19:56.000 align:middle line:84%
+And I have my interval for
+the square root is 0 and x,
+
+00:19:56.000 --> 00:19:59.500 align:middle line:90%
+so like that.
+
+00:19:59.500 --> 00:20:02.670 align:middle line:84%
+So with approximation
+method, we would start at 0
+
+00:20:02.670 --> 00:20:07.090 align:middle line:84%
+and painstakingly make
+our way little by little.
+
+00:20:07.090 --> 00:20:10.810 align:middle line:84%
+But with bisection search,
+we're making our initial guess
+
+00:20:10.810 --> 00:20:13.290 align:middle line:90%
+to be the halfway point.
+
+00:20:13.290 --> 00:20:14.710 align:middle line:84%
+Again, we're working
+with numbers.
+
+00:20:14.710 --> 00:20:17.410 align:middle line:84%
+So the ordering property
+is very intuitive.
+
+00:20:17.410 --> 00:20:20.250 align:middle line:90%
+We ask, at this halfway point--
+
+00:20:20.250 --> 00:20:21.960 align:middle line:84%
+with this guess at
+the halfway point,
+
+00:20:21.960 --> 00:20:24.790 align:middle line:90%
+what is the guess squared?
+
+00:20:24.790 --> 00:20:30.330 align:middle line:84%
+So if the guess
+squared is up here--
+
+00:20:30.330 --> 00:20:32.350 align:middle line:90%
+so g squared is up here--
+
+00:20:32.350 --> 00:20:34.590 align:middle line:84%
+then I know this
+guess is too big.
+
+00:20:34.590 --> 00:20:41.190 align:middle line:84%
+So I know I do not need to make
+any further guesses up here.
+
+00:20:41.190 --> 00:20:44.820 align:middle line:90%
+So that's this case here.
+
+00:20:44.820 --> 00:20:49.160 align:middle line:84%
+If I know this guess is too big,
+then my interval now becomes--
+
+00:20:49.160 --> 00:20:50.930 align:middle line:84%
+this is going to
+be the low still.
+
+00:20:50.930 --> 00:20:53.540 align:middle line:84%
+But now, this is going
+to be my high point.
+
+00:20:53.540 --> 00:20:57.030 align:middle line:84%
+And this is this new
+interval I'm looking through.
+
+00:20:57.030 --> 00:20:59.510 align:middle line:84%
+But if you think about it,
+it's the exact same problem
+
+00:20:59.510 --> 00:21:02.900 align:middle line:84%
+I started with when my
+interval was larger.
+
+00:21:02.900 --> 00:21:05.210 align:middle line:84%
+I still have an interval
+with a low and a high.
+
+00:21:05.210 --> 00:21:09.440 align:middle line:84%
+I'm still going to make a
+guess halfway, this new g here.
+
+00:21:09.440 --> 00:21:13.430 align:middle line:84%
+And I'm going to ask
+again, is this new guess
+
+00:21:13.430 --> 00:21:16.910 align:middle line:84%
+squared less than
+or greater than x?
+
+00:21:16.910 --> 00:21:19.010 align:middle line:84%
+Let's say this
+case is less than.
+
+00:21:19.010 --> 00:21:22.100 align:middle line:84%
+So if the new guess,
+new g, is less than x--
+
+00:21:22.100 --> 00:21:26.000 align:middle line:84%
+the new g squared is less
+than x, then I know--
+
+00:21:26.000 --> 00:21:28.091 align:middle line:90%
+this is new g--
+
+00:21:28.091 --> 00:21:33.170 align:middle line:84%
+then I know that anything lower
+than this is definitely not
+
+00:21:33.170 --> 00:21:35.880 align:middle line:84%
+going to be closer to the
+answer I'm looking for.
+
+00:21:35.880 --> 00:21:39.950 align:middle line:84%
+So now, I'm eliminating this
+half of the search space.
+
+00:21:39.950 --> 00:21:43.590 align:middle line:84%
+And then I keep making
+the same guesses.
+
+00:21:43.590 --> 00:21:46.010 align:middle line:90%
+Next g, g, latest g.
+
+00:21:46.010 --> 00:21:48.950 align:middle line:84%
+This is like when you guys
+name your files, remember?
+
+00:21:48.950 --> 00:21:54.805 align:middle line:84%
+And you've got new file, final
+file, latest file, version 2,
+
+00:21:54.805 --> 00:21:55.430 align:middle line:90%
+all that stuff.
+
+00:21:55.430 --> 00:21:56.690 align:middle line:90%
+That's basically what I did.
+
+00:21:56.690 --> 00:22:00.350 align:middle line:84%
+So anyway, I have this latest g
+here, which is my new midpoint.
+
+00:22:00.350 --> 00:22:03.590 align:middle line:84%
+And I keep making these
+guesses and asking the question
+
+00:22:03.590 --> 00:22:07.400 align:middle line:84%
+whether this guess squared is
+greater than or less than x.
+
+00:22:07.400 --> 00:22:11.810 align:middle line:84%
+And I adjust my
+boundaries accordingly.
+
+00:22:11.810 --> 00:22:16.310 align:middle line:84%
+So at each stage, the number of
+values I have to search through
+
+00:22:16.310 --> 00:22:21.920 align:middle line:84%
+are just half of what I had
+to search through last guess.
+
+00:22:21.920 --> 00:22:26.210 align:middle line:84%
+So the bisection search takes
+advantage of two properties.
+
+00:22:26.210 --> 00:22:29.450 align:middle line:84%
+And you can only use it when you
+have these properties in hand.
+
+00:22:29.450 --> 00:22:31.990 align:middle line:84%
+There's some sort of ordering
+to the thing you're searching.
+
+00:22:31.990 --> 00:22:34.760 align:middle line:84%
+So you know last names
+are alphabetical.
+
+00:22:34.760 --> 00:22:38.510 align:middle line:84%
+You know you have
+this range of values.
+
+00:22:38.510 --> 00:22:40.970 align:middle line:84%
+And you have some
+sort of feedback.
+
+00:22:40.970 --> 00:22:44.510 align:middle line:84%
+The feedback, it tells you
+whether the guess that you made
+
+00:22:44.510 --> 00:22:47.840 align:middle line:84%
+was too low, or
+too high, or exact,
+
+00:22:47.840 --> 00:22:51.000 align:middle line:84%
+or approximate,
+whatever you want.
+
+00:22:51.000 --> 00:22:51.510 align:middle line:90%
+OK.
+
+00:22:51.510 --> 00:22:56.110 align:middle line:84%
+So think about this for a
+second and answer the question.
+
+00:22:56.110 --> 00:22:59.310 align:middle line:84%
+So you're guessing a
+four digit PIN code
+
+00:22:59.310 --> 00:23:00.540 align:middle line:90%
+on a phone or whatever.
+
+00:23:00.540 --> 00:23:03.090 align:middle line:84%
+And the feedback
+the phone tells you
+
+00:23:03.090 --> 00:23:06.310 align:middle line:84%
+is whether the guess
+is correct or not.
+
+00:23:06.310 --> 00:23:08.860 align:middle line:84%
+Can you use bisection
+search in this situation
+
+00:23:08.860 --> 00:23:11.960 align:middle line:84%
+to quickly and correctly
+guess the code?
+
+00:23:11.960 --> 00:23:12.460 align:middle line:90%
+STUDENT: No.
+
+00:23:12.460 --> 00:23:13.002 align:middle line:90%
+ANA BELL: No.
+
+00:23:13.002 --> 00:23:13.960 align:middle line:90%
+Why is that?
+
+00:23:13.960 --> 00:23:15.100 align:middle line:90%
+What are we missing?
+
+00:23:15.100 --> 00:23:17.050 align:middle line:84%
+STUDENT: It doesn't tell you
+if it's too big or too small.
+
+00:23:17.050 --> 00:23:18.592 align:middle line:84%
+ANA BELL: It doesn't
+tell you if it's
+
+00:23:18.592 --> 00:23:20.020 align:middle line:90%
+too big or too small, yeah.
+
+00:23:20.020 --> 00:23:22.690 align:middle line:84%
+So guessing random-- I mean,
+you could use bisection search.
+
+00:23:22.690 --> 00:23:24.700 align:middle line:84%
+And you could choose which
+have to look through.
+
+00:23:24.700 --> 00:23:27.400 align:middle line:84%
+But then basically you
+just have to search through
+
+00:23:27.400 --> 00:23:29.950 align:middle line:84%
+all the values
+anyway in worst case.
+
+00:23:29.950 --> 00:23:32.960 align:middle line:84%
+And then you might as well
+have just gone from 0000, 0001,
+
+00:23:32.960 --> 00:23:34.870 align:middle line:90%
+0002--
+
+00:23:34.870 --> 00:23:39.610 align:middle line:84%
+just have gone
+incrementally upward.
+
+00:23:39.610 --> 00:23:40.150 align:middle line:90%
+OK.
+
+00:23:40.150 --> 00:23:43.180 align:middle line:84%
+So how about this
+extreme guessing game?
+
+00:23:43.180 --> 00:23:45.490 align:middle line:90%
+All right, so you have a friend.
+
+00:23:45.490 --> 00:23:49.810 align:middle line:84%
+And you like to play this
+extreme guessing game where you
+
+00:23:49.810 --> 00:23:53.560 align:middle line:90%
+want to guess a number exactly.
+
+00:23:53.560 --> 00:23:57.140 align:middle line:84%
+So your friend has a
+decimal number in mind.
+
+00:23:57.140 --> 00:24:01.620 align:middle line:84%
+So it can be the decimal point
+like any real number from 0
+
+00:24:01.620 --> 00:24:03.700 align:middle line:84%
+to 10, let's say,
+including 0, including
+
+00:24:03.700 --> 00:24:05.900 align:middle line:90%
+10 to any precision in mind.
+
+00:24:05.900 --> 00:24:08.272 align:middle line:84%
+So the feedback your
+friend gives you
+
+00:24:08.272 --> 00:24:09.730 align:middle line:84%
+when you play this
+extreme guessing
+
+00:24:09.730 --> 00:24:13.480 align:middle line:84%
+game is whether your guess was
+correct, too low, or too high.
+
+00:24:13.480 --> 00:24:16.155 align:middle line:84%
+In this case, can you
+use bisection search
+
+00:24:16.155 --> 00:24:17.905 align:middle line:84%
+to quickly and correctly
+guess the number?
+
+00:24:17.905 --> 00:24:20.480 align:middle line:90%
+
+
+00:24:20.480 --> 00:24:23.642 align:middle line:84%
+STUDENT: You could, but the
+number might be really long.
+
+00:24:23.642 --> 00:24:25.100 align:middle line:84%
+And then it would
+take a long time.
+
+00:24:25.100 --> 00:24:27.280 align:middle line:90%
+ANA BELL: Yeah, yeah.
+
+00:24:27.280 --> 00:24:30.735 align:middle line:84%
+So I included this
+word exactly here.
+
+00:24:30.735 --> 00:24:32.110 align:middle line:84%
+If I didn't include
+that, I think
+
+00:24:32.110 --> 00:24:35.350 align:middle line:84%
+the answer could
+be yes because you
+
+00:24:35.350 --> 00:24:38.350 align:middle line:84%
+could play the game to
+around or approximation
+
+00:24:38.350 --> 00:24:41.420 align:middle line:84%
+to two decimal places
+or something like that.
+
+00:24:41.420 --> 00:24:44.260 align:middle line:84%
+But I guess if your
+friend wants to flex
+
+00:24:44.260 --> 00:24:48.040 align:middle line:84%
+with pi in your
+extreme guessing game,
+
+00:24:48.040 --> 00:24:51.250 align:middle line:84%
+then bisection search wouldn't
+work because if you're
+
+00:24:51.250 --> 00:24:53.800 align:middle line:84%
+trying to find that
+number exactly,
+
+00:24:53.800 --> 00:24:56.710 align:middle line:90%
+then you'll never get to it.
+
+00:24:56.710 --> 00:24:58.690 align:middle line:84%
+So yeah, you're using
+bisection search.
+
+00:24:58.690 --> 00:25:01.600 align:middle line:84%
+But it's going to basically
+be an infinite algorithm.
+
+00:25:01.600 --> 00:25:02.710 align:middle line:90%
+It won't terminate.
+
+00:25:02.710 --> 00:25:07.600 align:middle line:90%
+
+
+00:25:07.600 --> 00:25:08.620 align:middle line:90%
+OK.
+
+00:25:08.620 --> 00:25:13.000 align:middle line:84%
+So this is the same slide I had
+at the beginning of lecture,
+
+00:25:13.000 --> 00:25:16.600 align:middle line:84%
+just to remind ourselves what
+the code looks like when we use
+
+00:25:16.600 --> 00:25:18.960 align:middle line:90%
+the approximation algorithm.
+
+00:25:18.960 --> 00:25:20.230 align:middle line:90%
+And nothing new here.
+
+00:25:20.230 --> 00:25:22.920 align:middle line:84%
+So we had the thing
+that basically did
+
+00:25:22.920 --> 00:25:25.500 align:middle line:90%
+the work was this while loop.
+
+00:25:25.500 --> 00:25:27.720 align:middle line:84%
+While we were still
+farther away from epsilon
+
+00:25:27.720 --> 00:25:30.300 align:middle line:84%
+and we were still making
+reasonable guesses,
+
+00:25:30.300 --> 00:25:34.880 align:middle line:90%
+increment our guess by 0.0001.
+
+00:25:34.880 --> 00:25:38.210 align:middle line:84%
+Now, let's write the code
+for the approximating
+
+00:25:38.210 --> 00:25:41.400 align:middle line:84%
+the square root of a number,
+but with bisection search.
+
+00:25:41.400 --> 00:25:43.700 align:middle line:84%
+So we're going to follow
+the same kind of procedure
+
+00:25:43.700 --> 00:25:44.550 align:middle line:90%
+we did here.
+
+00:25:44.550 --> 00:25:46.610 align:middle line:84%
+And we're actually going
+to write it together
+
+00:25:46.610 --> 00:25:47.390 align:middle line:90%
+on the slides.
+
+00:25:47.390 --> 00:25:49.460 align:middle line:84%
+And I'm going to explain
+the thought process that
+
+00:25:49.460 --> 00:25:53.150 align:middle line:90%
+goes behind each step.
+
+00:25:53.150 --> 00:25:53.660 align:middle line:90%
+OK.
+
+00:25:53.660 --> 00:25:55.400 align:middle line:84%
+So the first thing
+we're doing is
+
+00:25:55.400 --> 00:25:57.540 align:middle line:84%
+we're initializing
+some stuff up here.
+
+00:25:57.540 --> 00:26:01.790 align:middle line:84%
+So the thing we want to find
+the square root of, let's
+
+00:26:01.790 --> 00:26:04.790 align:middle line:84%
+why not do the same number
+that gave us trouble last time?
+
+00:26:04.790 --> 00:26:08.180 align:middle line:84%
+And we still want to be within
+some plus or minus epsilon,
+
+00:26:08.180 --> 00:26:12.660 align:middle line:84%
+again, because we do not
+want to be comparing floats.
+
+00:26:12.660 --> 00:26:15.660 align:middle line:84%
+And this num_guesses
+is going to keep track
+
+00:26:15.660 --> 00:26:17.280 align:middle line:90%
+of how many guesses we've made.
+
+00:26:17.280 --> 00:26:19.950 align:middle line:84%
+Basically, when we played the
+guessing game, how many guesses
+
+00:26:19.950 --> 00:26:24.040 align:middle line:90%
+did you do to get to the money?
+
+00:26:24.040 --> 00:26:27.170 align:middle line:90%
+All right, good.
+
+00:26:27.170 --> 00:26:28.960 align:middle line:84%
+And then at the
+bottom here, we're
+
+00:26:28.960 --> 00:26:34.390 align:middle line:84%
+going to print out
+the number of guesses
+
+00:26:34.390 --> 00:26:38.530 align:middle line:84%
+and what the guess was that
+brought us close to the plus
+
+00:26:38.530 --> 00:26:40.620 align:middle line:90%
+or minus epsilon.
+
+00:26:40.620 --> 00:26:41.220 align:middle line:90%
+OK.
+
+00:26:41.220 --> 00:26:45.330 align:middle line:84%
+So the first thing we do is we
+notice there was a repetition.
+
+00:26:45.330 --> 00:26:49.500 align:middle line:84%
+And the while loop here is
+exactly the same as the while
+
+00:26:49.500 --> 00:26:52.350 align:middle line:84%
+loop for the
+approximation method.
+
+00:26:52.350 --> 00:26:56.070 align:middle line:84%
+While we're still farther
+than epsilon away,
+
+00:26:56.070 --> 00:27:04.030 align:middle line:84%
+while our guess squared is plus
+or minus epsilon away from x--
+
+00:27:04.030 --> 00:27:07.510 align:middle line:84%
+so absolute value of
+guess squared minus
+
+00:27:07.510 --> 00:27:10.180 align:middle line:84%
+x is greater or
+equal to epsilon--
+
+00:27:10.180 --> 00:27:14.980 align:middle line:84%
+I guess this could just
+be greater than, details--
+
+00:27:14.980 --> 00:27:18.090 align:middle line:90%
+let's keep making guesses.
+
+00:27:18.090 --> 00:27:20.940 align:middle line:84%
+Now, the guesses-- we're
+not incrementing anything.
+
+00:27:20.940 --> 00:27:22.500 align:middle line:84%
+This isn't the
+approximation method.
+
+00:27:22.500 --> 00:27:26.840 align:middle line:84%
+We need to make the
+guesses in a smart way.
+
+00:27:26.840 --> 00:27:30.050 align:middle line:84%
+So we're going to initialize
+some stuff for our algorithm
+
+00:27:30.050 --> 00:27:34.390 align:middle line:84%
+to work, like our
+original endpoints.
+
+00:27:34.390 --> 00:27:38.470 align:middle line:84%
+And then we're going to do some
+stuff inside the loop, whatever
+
+00:27:38.470 --> 00:27:39.010 align:middle line:90%
+is repeated.
+
+00:27:39.010 --> 00:27:42.310 align:middle line:84%
+Whatever we noted when we were
+talking about the algorithm,
+
+00:27:42.310 --> 00:27:45.570 align:middle line:84%
+what did we note that
+gets repeated every time?
+
+00:27:45.570 --> 00:27:49.790 align:middle line:84%
+Let's talk about
+the initializations.
+
+00:27:49.790 --> 00:27:52.490 align:middle line:84%
+We need to initialize
+our two endpoints.
+
+00:27:52.490 --> 00:27:54.140 align:middle line:84%
+For the bisection
+search to work,
+
+00:27:54.140 --> 00:27:56.450 align:middle line:84%
+we need to know what
+our endpoints are.
+
+00:27:56.450 --> 00:27:58.350 align:middle line:90%
+So the low is going to be 0.
+
+00:27:58.350 --> 00:28:00.350 align:middle line:84%
+So if we're trying to
+find the square root of x,
+
+00:28:00.350 --> 00:28:02.890 align:middle line:90%
+we might as well make our low 0.
+
+00:28:02.890 --> 00:28:06.850 align:middle line:90%
+And let's make our high point x.
+
+00:28:06.850 --> 00:28:08.350 align:middle line:90%
+Our high point can be 2x.
+
+00:28:08.350 --> 00:28:09.890 align:middle line:84%
+It could be 3x,
+whatever we want.
+
+00:28:09.890 --> 00:28:10.900 align:middle line:90%
+But that's too big.
+
+00:28:10.900 --> 00:28:12.520 align:middle line:84%
+We know, if you're
+using algebra,
+
+00:28:12.520 --> 00:28:14.390 align:middle line:84%
+that definitely it
+won't be that big.
+
+00:28:14.390 --> 00:28:18.230 align:middle line:84%
+So we can just make
+our high point x.
+
+00:28:18.230 --> 00:28:21.590 align:middle line:84%
+And then we just kick
+off this algorithm
+
+00:28:21.590 --> 00:28:23.540 align:middle line:90%
+with our initial guess.
+
+00:28:23.540 --> 00:28:27.230 align:middle line:84%
+It's going to be the midpoint of
+low and high, so high plus low
+
+00:28:27.230 --> 00:28:29.310 align:middle line:90%
+divided by 2.
+
+00:28:29.310 --> 00:28:32.040 align:middle line:84%
+So that brings us to just
+before the while loop here,
+
+00:28:32.040 --> 00:28:34.300 align:middle line:90%
+right here.
+
+00:28:34.300 --> 00:28:34.840 align:middle line:90%
+OK.
+
+00:28:34.840 --> 00:28:37.990 align:middle line:84%
+And now, we're going
+to repeat some stuff
+
+00:28:37.990 --> 00:28:44.550 align:middle line:84%
+while we're still farther than
+epsilon away from our answer.
+
+00:28:44.550 --> 00:28:46.340 align:middle line:84%
+So the thing that
+we're repeating
+
+00:28:46.340 --> 00:28:51.020 align:middle line:84%
+is going to be checking if
+we are too low or too high.
+
+00:28:51.020 --> 00:28:54.530 align:middle line:84%
+We have a guess in hand
+now, this midpoint here.
+
+00:28:54.530 --> 00:28:58.430 align:middle line:84%
+And now, with this guess in hand
+that kicked off our algorithm,
+
+00:28:58.430 --> 00:29:02.900 align:middle line:84%
+we're going to say, is this
+guess too low or too high?
+
+00:29:02.900 --> 00:29:06.280 align:middle line:90%
+That's what the algorithm needs.
+
+00:29:06.280 --> 00:29:10.080 align:middle line:84%
+So that's an if/else, a
+little conditional here.
+
+00:29:10.080 --> 00:29:13.300 align:middle line:84%
+If the guess squared
+is less than x,
+
+00:29:13.300 --> 00:29:15.060 align:middle line:90%
+then the guess is too low.
+
+00:29:15.060 --> 00:29:17.590 align:middle line:90%
+
+
+00:29:17.590 --> 00:29:23.860 align:middle line:84%
+So if this guess squared
+brings us to somewhere here,
+
+00:29:23.860 --> 00:29:27.300 align:middle line:84%
+then we know this
+guess is too low.
+
+00:29:27.300 --> 00:29:28.700 align:middle line:90%
+What do I do in this case?
+
+00:29:28.700 --> 00:29:30.260 align:middle line:84%
+What does the
+algorithm say to do?
+
+00:29:30.260 --> 00:29:34.610 align:middle line:90%
+
+
+00:29:34.610 --> 00:29:35.877 align:middle line:90%
+Yes?
+
+00:29:35.877 --> 00:29:40.015 align:middle line:84%
+STUDENT: Set high equal to yes,
+or is it the other way around?
+
+00:29:40.015 --> 00:29:41.140 align:middle line:90%
+ANA BELL: Other way around.
+
+00:29:41.140 --> 00:29:42.650 align:middle line:90%
+Yeah, so this is too low.
+
+00:29:42.650 --> 00:29:45.370 align:middle line:84%
+So I definitely don't want
+anything lower than here,
+
+00:29:45.370 --> 00:29:46.360 align:middle line:90%
+exactly.
+
+00:29:46.360 --> 00:29:49.510 align:middle line:84%
+So we're going to set our low
+endpoint-- if the guess is
+
+00:29:49.510 --> 00:29:52.210 align:middle line:84%
+too low, let's set
+our low endpoint
+
+00:29:52.210 --> 00:29:54.250 align:middle line:84%
+to be whatever guess
+we just made because we
+
+00:29:54.250 --> 00:29:55.960 align:middle line:90%
+know this is too low.
+
+00:29:55.960 --> 00:29:58.930 align:middle line:84%
+Anything lower than this
+is definitely too low.
+
+00:29:58.930 --> 00:30:02.550 align:middle line:90%
+So I don't care about these.
+
+00:30:02.550 --> 00:30:05.370 align:middle line:84%
+Else-- we don't need
+an elif because we
+
+00:30:05.370 --> 00:30:07.890 align:middle line:84%
+know the else is the
+other way around.
+
+00:30:07.890 --> 00:30:10.350 align:middle line:90%
+Else, our guess was too high.
+
+00:30:10.350 --> 00:30:13.260 align:middle line:84%
+So if the next time around
+we make a guess here,
+
+00:30:13.260 --> 00:30:16.390 align:middle line:84%
+something like that, then
+we know we're too high.
+
+00:30:16.390 --> 00:30:21.630 align:middle line:84%
+And then we need to set our
+high endpoint to be the guess.
+
+00:30:21.630 --> 00:30:24.840 align:middle line:90%
+Is everyone OK with that so far?
+
+00:30:24.840 --> 00:30:26.500 align:middle line:90%
+OK.
+
+00:30:26.500 --> 00:30:27.740 align:middle line:90%
+What remains?
+
+00:30:27.740 --> 00:30:29.890 align:middle line:84%
+So I've changed one
+of my boundaries,
+
+00:30:29.890 --> 00:30:32.080 align:middle line:84%
+either my low or
+my high boundary,
+
+00:30:32.080 --> 00:30:34.180 align:middle line:84%
+to be whatever
+guess I just made.
+
+00:30:34.180 --> 00:30:36.100 align:middle line:90%
+What is the next step?
+
+00:30:36.100 --> 00:30:39.235 align:middle line:84%
+What does this algorithm
+do or this loop do as is?
+
+00:30:39.235 --> 00:30:43.020 align:middle line:90%
+
+
+00:30:43.020 --> 00:30:45.930 align:middle line:84%
+It finished doing
+whatever is inside.
+
+00:30:45.930 --> 00:30:50.160 align:middle line:84%
+And it goes back and
+uses the guess and check
+
+00:30:50.160 --> 00:30:51.780 align:middle line:84%
+whether the guess
+squared minus x
+
+00:30:51.780 --> 00:30:55.180 align:middle line:90%
+is greater or equal to epsilon.
+
+00:30:55.180 --> 00:30:57.970 align:middle line:84%
+Have I changed my guess
+inside this loop yet?
+
+00:30:57.970 --> 00:30:59.230 align:middle line:90%
+No.
+
+00:30:59.230 --> 00:31:02.080 align:middle line:84%
+So that's the last
+step that remains.
+
+00:31:02.080 --> 00:31:06.810 align:middle line:84%
+Make the guess be
+the new midpoint
+
+00:31:06.810 --> 00:31:12.640 align:middle line:84%
+using either the changed
+high or the changed low.
+
+00:31:12.640 --> 00:31:15.270 align:middle line:84%
+So each time
+through my loop, I'm
+
+00:31:15.270 --> 00:31:18.330 align:middle line:84%
+either changing my
+low to be the guess
+
+00:31:18.330 --> 00:31:20.280 align:middle line:84%
+or changing my high
+to be the guess.
+
+00:31:20.280 --> 00:31:23.200 align:middle line:84%
+So I'm making one of
+those two changes.
+
+00:31:23.200 --> 00:31:27.350 align:middle line:84%
+After I've made that change, I
+need to find the new midpoint.
+
+00:31:27.350 --> 00:31:30.865 align:middle line:84%
+So if I changed my low, now
+I need to make my new guess.
+
+00:31:30.865 --> 00:31:33.560 align:middle line:90%
+
+
+00:31:33.560 --> 00:31:37.640 align:middle line:84%
+And with this new guess, then
+I'm happy for the while loop
+
+00:31:37.640 --> 00:31:39.680 align:middle line:90%
+to check it again.
+
+00:31:39.680 --> 00:31:44.250 align:middle line:84%
+Take that guess squared, see
+how far away it is from x.
+
+00:31:44.250 --> 00:31:51.060 align:middle line:84%
+And then it does the changing
+of the boundary all over again.
+
+00:31:51.060 --> 00:31:52.030 align:middle line:90%
+And that's it.
+
+00:31:52.030 --> 00:31:56.167 align:middle line:84%
+There's no other
+lines of code in here.
+
+00:31:56.167 --> 00:31:57.750 align:middle line:84%
+So in some sense,
+there's a little bit
+
+00:31:57.750 --> 00:32:01.410 align:middle line:84%
+of trust with this loop,
+that it does the right thing.
+
+00:32:01.410 --> 00:32:05.970 align:middle line:84%
+But if you do a little bit
+of iteration in your brain
+
+00:32:05.970 --> 00:32:08.670 align:middle line:84%
+or through the
+Python Tutor, you'll
+
+00:32:08.670 --> 00:32:12.300 align:middle line:84%
+see that it actually
+does it correctly.
+
+00:32:12.300 --> 00:32:16.480 align:middle line:84%
+So we can just use
+that same number line.
+
+00:32:16.480 --> 00:32:18.520 align:middle line:84%
+And let's look at
+the square root--
+
+00:32:18.520 --> 00:32:22.460 align:middle line:84%
+let's find an approximation
+to the square root of 36.
+
+00:32:22.460 --> 00:32:24.700 align:middle line:84%
+The epsilon, I made
+it 1, just because I
+
+00:32:24.700 --> 00:32:28.120 align:middle line:84%
+don't want to do so many
+steps in the Python Tutor.
+
+00:32:28.120 --> 00:32:29.860 align:middle line:84%
+But you can imagine
+if it's smaller,
+
+00:32:29.860 --> 00:32:33.490 align:middle line:84%
+it'll just give us a
+better approximation.
+
+00:32:33.490 --> 00:32:36.480 align:middle line:84%
+So we're initializing
+the x, the thing
+
+00:32:36.480 --> 00:32:39.120 align:middle line:84%
+we want to find the square
+root of, and epsilon, the low,
+
+00:32:39.120 --> 00:32:44.740 align:middle line:84%
+and the high, 0 and 36,
+in this particular case.
+
+00:32:44.740 --> 00:32:47.330 align:middle line:90%
+
+
+00:32:47.330 --> 00:32:47.830 align:middle line:90%
+OK.
+
+00:32:47.830 --> 00:32:51.430 align:middle line:84%
+Stepping through, the first
+guess is half of 36 and 0,
+
+00:32:51.430 --> 00:32:53.500 align:middle line:90%
+so 18.
+
+00:32:53.500 --> 00:32:55.480 align:middle line:90%
+So here's my guess is 18.
+
+00:32:55.480 --> 00:32:58.720 align:middle line:84%
+And now, we kick off our
+while loop by saying,
+
+00:32:58.720 --> 00:33:00.500 align:middle line:90%
+what is 18 squared?
+
+00:33:00.500 --> 00:33:04.010 align:middle line:84%
+Oh, it's pretty big,
+definitely bigger than 36.
+
+00:33:04.010 --> 00:33:06.910 align:middle line:84%
+So I'm going to go
+inside this else
+
+00:33:06.910 --> 00:33:09.280 align:middle line:90%
+because my guess is too high.
+
+00:33:09.280 --> 00:33:12.880 align:middle line:90%
+So my high becomes this.
+
+00:33:12.880 --> 00:33:15.040 align:middle line:90%
+And this is still the low.
+
+00:33:15.040 --> 00:33:18.980 align:middle line:84%
+I know nothing about the
+low end at this point.
+
+00:33:18.980 --> 00:33:23.260 align:middle line:84%
+So then my guess becomes
+the high plus low, 0 plus 18
+
+00:33:23.260 --> 00:33:25.270 align:middle line:90%
+divided by 2.
+
+00:33:25.270 --> 00:33:27.070 align:middle line:90%
+So that's going to be 9.
+
+00:33:27.070 --> 00:33:30.340 align:middle line:84%
+So you can see my
+guess has updated to 9.
+
+00:33:30.340 --> 00:33:32.380 align:middle line:84%
+And now, I find
+the guest squared.
+
+00:33:32.380 --> 00:33:33.820 align:middle line:90%
+What is 9 squared?
+
+00:33:33.820 --> 00:33:38.470 align:middle line:84%
+Is it still farther than plus
+or minus 36 plus minus 1?
+
+00:33:38.470 --> 00:33:39.280 align:middle line:90%
+Yes.
+
+00:33:39.280 --> 00:33:41.410 align:middle line:90%
+In fact, it's still way too big.
+
+00:33:41.410 --> 00:33:44.140 align:middle line:90%
+So now, my high--
+
+00:33:44.140 --> 00:33:47.350 align:middle line:84%
+since I know 9 is still
+way too big for my guess,
+
+00:33:47.350 --> 00:33:56.060 align:middle line:90%
+my high becomes 9 like that.
+
+00:33:56.060 --> 00:33:59.960 align:middle line:84%
+And then I make a new
+guess based on 0 and 9
+
+00:33:59.960 --> 00:34:04.010 align:middle line:84%
+and the halfway point
+between there, so 4 and 1/2.
+
+00:34:04.010 --> 00:34:06.610 align:middle line:90%
+
+
+00:34:06.610 --> 00:34:08.260 align:middle line:90%
+So there it is, updated.
+
+00:34:08.260 --> 00:34:11.620 align:middle line:84%
+And using this guess,
+square it and see
+
+00:34:11.620 --> 00:34:15.940 align:middle line:84%
+whether it's less than
+36 or greater than 36.
+
+00:34:15.940 --> 00:34:18.050 align:middle line:90%
+It's less than 36.
+
+00:34:18.050 --> 00:34:23.949 align:middle line:84%
+So now, this 4.5
+becomes my low endpoint.
+
+00:34:23.949 --> 00:34:27.460 align:middle line:84%
+Now, I have some information
+about the low endpoint,
+
+00:34:27.460 --> 00:34:29.719 align:middle line:90%
+like that.
+
+00:34:29.719 --> 00:34:32.989 align:middle line:84%
+So I know my final answer is
+within this little interval
+
+00:34:32.989 --> 00:34:34.909 align:middle line:90%
+right here.
+
+00:34:34.909 --> 00:34:35.409 align:middle line:90%
+OK.
+
+00:34:35.409 --> 00:34:37.701 align:middle line:84%
+And then I'm just going to
+go quicker because now we're
+
+00:34:37.701 --> 00:34:40.030 align:middle line:90%
+dealing with some fractions.
+
+00:34:40.030 --> 00:34:42.340 align:middle line:90%
+My low endpoint becomes 4.5.
+
+00:34:42.340 --> 00:34:45.880 align:middle line:84%
+And now, I get the midpoint
+between 4 and 1/2 and 9.
+
+00:34:45.880 --> 00:34:48.100 align:middle line:90%
+And that's 6.75.
+
+00:34:48.100 --> 00:34:51.130 align:middle line:84%
+And then we keep doing the same
+process over and over again--
+
+00:34:51.130 --> 00:34:53.260 align:middle line:84%
+hopefully, you
+get the idea now--
+
+00:34:53.260 --> 00:34:56.199 align:middle line:84%
+where we keep
+changing this while
+
+00:34:56.199 --> 00:34:59.980 align:middle line:90%
+the guess squared is still 36--
+
+00:34:59.980 --> 00:35:02.770 align:middle line:84%
+outside of the boundary
+of 36 plus or minus 1.
+
+00:35:02.770 --> 00:35:05.770 align:middle line:84%
+So if it's less than
+35 or greater than 37,
+
+00:35:05.770 --> 00:35:08.120 align:middle line:90%
+keep making guesses.
+
+00:35:08.120 --> 00:35:11.720 align:middle line:84%
+So we're going to go till
+probably 6.0-something.
+
+00:35:11.720 --> 00:35:13.370 align:middle line:84%
+There, I think
+that's the end, yep.
+
+00:35:13.370 --> 00:35:18.410 align:middle line:84%
+So the guess being
+6.0469 brings us
+
+00:35:18.410 --> 00:35:22.360 align:middle line:84%
+to a guess squared
+within plus or minus 1.
+
+00:35:22.360 --> 00:35:23.650 align:middle line:90%
+Yes, question?
+
+00:35:23.650 --> 00:35:27.970 align:middle line:84%
+STUDENT: What about if your
+guess was right [INAUDIBLE]??
+
+00:35:27.970 --> 00:35:29.215 align:middle line:90%
+ANA BELL: If the guest was--
+
+00:35:29.215 --> 00:35:30.210 align:middle line:90%
+STUDENT: --was correct.
+
+00:35:30.210 --> 00:35:32.070 align:middle line:84%
+ANA BELL: If my
+guess was correct?
+
+00:35:32.070 --> 00:35:43.490 align:middle line:84%
+Then we would break
+immediately because this
+
+00:35:43.490 --> 00:35:45.830 align:middle line:90%
+becomes-- this is false.
+
+00:35:45.830 --> 00:35:47.870 align:middle line:84%
+Yeah, we don't even
+enter the while loop.
+
+00:35:47.870 --> 00:35:53.510 align:middle line:90%
+
+
+00:35:53.510 --> 00:35:57.530 align:middle line:90%
+OK, so let's run the code.
+
+00:35:57.530 --> 00:36:02.240 align:middle line:84%
+So this is the
+bisection search code
+
+00:36:02.240 --> 00:36:04.160 align:middle line:84%
+that I just ran through
+the Python Tutor.
+
+00:36:04.160 --> 00:36:09.980 align:middle line:84%
+We looked on the slides,
+but running with 54,321.
+
+00:36:09.980 --> 00:36:12.350 align:middle line:84%
+So just to recap,
+the number of guesses
+
+00:36:12.350 --> 00:36:16.820 align:middle line:84%
+we did with the approximation
+method was 23 million
+
+00:36:16.820 --> 00:36:19.940 align:middle line:84%
+to give us an answer that
+said the square root of 23--
+
+00:36:19.940 --> 00:36:23.630 align:middle line:84%
+the square root of
+54,000 is about 233.
+
+00:36:23.630 --> 00:36:26.360 align:middle line:84%
+And now, we run it with
+our bisection search.
+
+00:36:26.360 --> 00:36:28.670 align:middle line:84%
+And I didn't even have to
+wait-- that took less than a
+
+00:36:28.670 --> 00:36:33.020 align:middle line:84%
+second compared to 20 seconds
+that we had to wait for.
+
+00:36:33.020 --> 00:36:36.060 align:middle line:90%
+And it didn't fail.
+
+00:36:36.060 --> 00:36:38.490 align:middle line:84%
+It gave us a very
+similar answer.
+
+00:36:38.490 --> 00:36:43.140 align:middle line:84%
+It's this 233.068 is close
+to the square root of 54,000.
+
+00:36:43.140 --> 00:36:47.175 align:middle line:90%
+And we did 30 guesses.
+
+00:36:47.175 --> 00:36:50.300 align:middle line:90%
+
+
+00:36:50.300 --> 00:36:52.360 align:middle line:90%
+Dramatic pause.
+
+00:36:52.360 --> 00:36:58.590 align:middle line:84%
+23 million for the approximation
+method 20 seconds later
+
+00:36:58.590 --> 00:37:03.010 align:middle line:84%
+versus 30 guesses less
+than a second later.
+
+00:37:03.010 --> 00:37:07.980 align:middle line:84%
+So it's not like we went from
+23 million to 5 million guesses.
+
+00:37:07.980 --> 00:37:12.060 align:middle line:84%
+We went from the order
+of millions to just tens,
+
+00:37:12.060 --> 00:37:16.230 align:middle line:84%
+which is really,
+really cool, right?
+
+00:37:16.230 --> 00:37:19.480 align:middle line:90%
+That's very impressive.
+
+00:37:19.480 --> 00:37:22.440 align:middle line:84%
+And that's what
+logarithmic growth means.
+
+00:37:22.440 --> 00:37:24.270 align:middle line:84%
+That's the power of
+logarithmic growth
+
+00:37:24.270 --> 00:37:27.390 align:middle line:84%
+and recognizing that we
+can apply bisection search
+
+00:37:27.390 --> 00:37:28.140 align:middle line:90%
+to these problems.
+
+00:37:28.140 --> 00:37:32.270 align:middle line:90%
+
+
+00:37:32.270 --> 00:37:35.000 align:middle line:84%
+So with approximation
+method, again, we're
+
+00:37:35.000 --> 00:37:39.590 align:middle line:84%
+decreasing our search space
+by 0.0001 with each guess.
+
+00:37:39.590 --> 00:37:41.750 align:middle line:84%
+But with the bisection
+search, we're
+
+00:37:41.750 --> 00:37:46.130 align:middle line:84%
+decreasing our search space
+by half with each guess.
+
+00:37:46.130 --> 00:37:51.860 align:middle line:84%
+So if we had however many things
+to search for-- in the book,
+
+00:37:51.860 --> 00:37:54.050 align:middle line:84%
+we had 400 pages to
+search through, right?
+
+00:37:54.050 --> 00:37:55.730 align:middle line:84%
+With our first
+guess, we now only
+
+00:37:55.730 --> 00:37:58.520 align:middle line:84%
+have 200 pages to
+search through.
+
+00:37:58.520 --> 00:38:00.500 align:middle line:84%
+With the second
+guess, we only have
+
+00:38:00.500 --> 00:38:01.765 align:middle line:90%
+100 pages to search through.
+
+00:38:01.765 --> 00:38:03.140 align:middle line:84%
+With the next
+guess, we only have
+
+00:38:03.140 --> 00:38:05.520 align:middle line:90%
+50 pages to search through.
+
+00:38:05.520 --> 00:38:07.190 align:middle line:84%
+And the idea of
+bisection search,
+
+00:38:07.190 --> 00:38:09.770 align:middle line:84%
+just that it's logarithmic,
+comes from the fact
+
+00:38:09.770 --> 00:38:13.370 align:middle line:84%
+that we have to ask
+ourselves, how many guesses
+
+00:38:13.370 --> 00:38:17.600 align:middle line:84%
+do we make until we
+have only, for example,
+
+00:38:17.600 --> 00:38:19.940 align:middle line:84%
+one page left to search
+through for the money?
+
+00:38:19.940 --> 00:38:22.070 align:middle line:84%
+Or how many guesses
+do we have to make
+
+00:38:22.070 --> 00:38:23.450 align:middle line:90%
+till we are within epsilon?
+
+00:38:23.450 --> 00:38:25.790 align:middle line:90%
+There's only that one--
+
+00:38:25.790 --> 00:38:29.750 align:middle line:84%
+we reach the one value that
+gives us within epsilon.
+
+00:38:29.750 --> 00:38:33.020 align:middle line:84%
+And so this many
+guesses means that we've
+
+00:38:33.020 --> 00:38:38.710 align:middle line:84%
+divided our search space by 2
+to the power of k many times.
+
+00:38:38.710 --> 00:38:41.300 align:middle line:84%
+And that's when we've
+converged on the answer.
+
+00:38:41.300 --> 00:38:43.210 align:middle line:84%
+And so to converge
+on the answer means
+
+00:38:43.210 --> 00:38:47.560 align:middle line:84%
+you've divided your
+search space by 2 k times.
+
+00:38:47.560 --> 00:38:51.100 align:middle line:84%
+So n divided by 2 to
+the power of k equals 1.
+
+00:38:51.100 --> 00:38:53.380 align:middle line:84%
+You have reached
+your one answer.
+
+00:38:53.380 --> 00:38:54.940 align:middle line:90%
+The money is at this page.
+
+00:38:54.940 --> 00:38:56.770 align:middle line:90%
+The student is sitting there.
+
+00:38:56.770 --> 00:39:02.120 align:middle line:84%
+Or we have come within
+0.01 of the actual answer.
+
+00:39:02.120 --> 00:39:05.530 align:middle line:84%
+And so when this is true,
+n is equal to 2 to the k.
+
+00:39:05.530 --> 00:39:10.480 align:middle line:84%
+And what we want is to solve
+this problem in terms of n.
+
+00:39:10.480 --> 00:39:12.425 align:middle line:90%
+So k is equal to log of n.
+
+00:39:12.425 --> 00:39:14.050 align:middle line:84%
+And that's where the
+logarithmic growth
+
+00:39:14.050 --> 00:39:17.050 align:middle line:84%
+comes from for this
+particular problem.
+
+00:39:17.050 --> 00:39:20.530 align:middle line:84%
+So in terms of loops,
+yes, it took us k times
+
+00:39:20.530 --> 00:39:23.390 align:middle line:84%
+through the while loop
+to figure out the answer.
+
+00:39:23.390 --> 00:39:25.840 align:middle line:84%
+But in terms of the size
+of our search space,
+
+00:39:25.840 --> 00:39:31.520 align:middle line:84%
+it took us log of n times
+to get to our answer.
+
+00:39:31.520 --> 00:39:32.390 align:middle line:90%
+OK.
+
+00:39:32.390 --> 00:39:34.550 align:middle line:84%
+So let's look at a
+couple of nuances
+
+00:39:34.550 --> 00:39:35.820 align:middle line:90%
+of the code we just wrote.
+
+00:39:35.820 --> 00:39:43.430 align:middle line:84%
+So if we try to run the code
+for values between 0 and 1,
+
+00:39:43.430 --> 00:39:45.060 align:middle line:90%
+what actually happens?
+
+00:39:45.060 --> 00:39:46.398 align:middle line:90%
+So if we run it with--
+
+00:39:46.398 --> 00:39:48.190 align:middle line:84%
+for example, what's
+the square root of 0.5?
+
+00:39:48.190 --> 00:39:56.870 align:middle line:90%
+
+
+00:39:56.870 --> 00:39:59.610 align:middle line:90%
+It's running.
+
+00:39:59.610 --> 00:40:01.040 align:middle line:90%
+It's still running.
+
+00:40:01.040 --> 00:40:03.660 align:middle line:84%
+I'm pretty sure it should have
+given us an answer by now.
+
+00:40:03.660 --> 00:40:05.750 align:middle line:90%
+So let's just stop it.
+
+00:40:05.750 --> 00:40:08.680 align:middle line:90%
+We've entered an infinite loop.
+
+00:40:08.680 --> 00:40:13.150 align:middle line:84%
+So in that case, let's see what
+actually it's printing out.
+
+00:40:13.150 --> 00:40:15.160 align:middle line:84%
+So when you've entered
+an infinite loop,
+
+00:40:15.160 --> 00:40:17.460 align:middle line:84%
+it's time to put some
+print statements.
+
+00:40:17.460 --> 00:40:19.350 align:middle line:84%
+Best place to put
+print statements is
+
+00:40:19.350 --> 00:40:22.110 align:middle line:84%
+within the loop itself
+and just print out
+
+00:40:22.110 --> 00:40:24.250 align:middle line:90%
+some values for things.
+
+00:40:24.250 --> 00:40:26.940 align:middle line:84%
+So here I have this
+print statement
+
+00:40:26.940 --> 00:40:28.830 align:middle line:84%
+where we print out
+what-- oops, let
+
+00:40:28.830 --> 00:40:33.610 align:middle line:84%
+me get that out of the
+way-- what the low value is.
+
+00:40:33.610 --> 00:40:35.312 align:middle line:90%
+So we've got low equals--
+
+00:40:35.312 --> 00:40:37.520 align:middle line:84%
+and actually, I don't need
+to convert this to string.
+
+00:40:37.520 --> 00:40:38.710 align:middle line:90%
+It should just be low.
+
+00:40:38.710 --> 00:40:45.010 align:middle line:84%
+And oops-- and then the
+high value, and then the
+
+00:40:45.010 --> 00:40:51.130 align:middle line:90%
+guess itself, just like that.
+
+00:40:51.130 --> 00:40:57.567 align:middle line:84%
+So if we run it,
+that's what we get.
+
+00:40:57.567 --> 00:40:59.150 align:middle line:84%
+And it looks like
+it's just repeating,
+
+00:40:59.150 --> 00:41:02.777 align:middle line:90%
+repeating over and over again.
+
+00:41:02.777 --> 00:41:04.860 align:middle line:84%
+So what happens when I'm
+looking for a square root
+
+00:41:04.860 --> 00:41:08.040 align:middle line:90%
+of a value between 0 and 1?
+
+00:41:08.040 --> 00:41:10.720 align:middle line:90%
+
+
+00:41:10.720 --> 00:41:15.800 align:middle line:90%
+So this is my 0 to x.
+
+00:41:15.800 --> 00:41:23.130 align:middle line:84%
+But if x is between 0 and 1,
+the square root of x, it's
+
+00:41:23.130 --> 00:41:25.810 align:middle line:90%
+bigger than x itself.
+
+00:41:25.810 --> 00:41:29.560 align:middle line:84%
+So the square root of
+0.5 is bigger than 0.5.
+
+00:41:29.560 --> 00:41:35.170 align:middle line:90%
+It's not smaller than 0.5.
+
+00:41:35.170 --> 00:41:42.340 align:middle line:84%
+So what this program is doing is
+it's making its initial guess,
+
+00:41:42.340 --> 00:41:44.965 align:middle line:84%
+high plus low
+divided by 2, so 0--
+
+00:41:44.965 --> 00:41:47.860 align:middle line:90%
+
+
+00:41:47.860 --> 00:41:50.170 align:middle line:84%
+if my initial guess
+is 0 to x, it's
+
+00:41:50.170 --> 00:41:51.760 align:middle line:90%
+making an initial guess there.
+
+00:41:51.760 --> 00:41:54.460 align:middle line:84%
+And then at some point, it
+just gets stuck in this loop
+
+00:41:54.460 --> 00:41:58.750 align:middle line:84%
+because the low becomes
+0.5 after our first guess.
+
+00:41:58.750 --> 00:42:01.300 align:middle line:90%
+The high becomes 0.5 as well.
+
+00:42:01.300 --> 00:42:06.680 align:middle line:84%
+And the halfway point between
+0.5 and 0.5 is just 0.5.
+
+00:42:06.680 --> 00:42:10.270 align:middle line:84%
+So now, it's just reassigning
+the new guess to itself
+
+00:42:10.270 --> 00:42:11.290 align:middle line:90%
+over and over again.
+
+00:42:11.290 --> 00:42:14.440 align:middle line:90%
+
+
+00:42:14.440 --> 00:42:15.620 align:middle line:90%
+OK.
+
+00:42:15.620 --> 00:42:18.050 align:middle line:84%
+So we need to make
+a fix to that.
+
+00:42:18.050 --> 00:42:21.890 align:middle line:84%
+And I'm going to have you
+guys make the fix to that.
+
+00:42:21.890 --> 00:42:25.400 align:middle line:84%
+So you don't need to
+account for both cases,
+
+00:42:25.400 --> 00:42:31.490 align:middle line:84%
+but change the endpoints
+for this particular problem
+
+00:42:31.490 --> 00:42:35.880 align:middle line:84%
+such that it works with
+values of x between 0 and 1.
+
+00:42:35.880 --> 00:42:39.780 align:middle line:84%
+So if we're trying to find the
+square root of a decimal number
+
+00:42:39.780 --> 00:42:42.210 align:middle line:84%
+between 0 and 1, what
+are the endpoints
+
+00:42:42.210 --> 00:42:45.030 align:middle line:84%
+that you want to choose
+for the code to now work?
+
+00:42:45.030 --> 00:42:47.790 align:middle line:84%
+And the code is exactly
+the same as before, OK?
+
+00:42:47.790 --> 00:42:49.990 align:middle line:84%
+So all you need to do is
+choose different endpoints.
+
+00:42:49.990 --> 00:42:51.480 align:middle line:90%
+Yes?
+
+00:42:51.480 --> 00:42:54.390 align:middle line:84%
+STUDENT: I don't understand
+why it got stuck, how
+
+00:42:54.390 --> 00:42:56.232 align:middle line:90%
+the high and low [INAUDIBLE].
+
+00:42:56.232 --> 00:42:56.940 align:middle line:90%
+ANA BELL: Oh, OK.
+
+00:42:56.940 --> 00:43:00.250 align:middle line:84%
+We can run it with
+the Python Tutor.
+
+00:43:00.250 --> 00:43:02.940 align:middle line:90%
+And so if this is 0.5--
+
+00:43:02.940 --> 00:43:05.550 align:middle line:90%
+
+
+00:43:05.550 --> 00:43:08.960 align:middle line:84%
+all right, so basically we've
+made our guess like that.
+
+00:43:08.960 --> 00:43:12.150 align:middle line:84%
+And then we're
+changing our guesses.
+
+00:43:12.150 --> 00:43:14.070 align:middle line:84%
+And so you can see
+that it's actually
+
+00:43:14.070 --> 00:43:19.160 align:middle line:90%
+changing the low and the high.
+
+00:43:19.160 --> 00:43:24.290 align:middle line:84%
+And it originally
+did the right thing.
+
+00:43:24.290 --> 00:43:26.690 align:middle line:84%
+The first few guesses,
+it's making the changes
+
+00:43:26.690 --> 00:43:27.890 align:middle line:90%
+appropriately.
+
+00:43:27.890 --> 00:43:29.720 align:middle line:84%
+But then the
+floating point errors
+
+00:43:29.720 --> 00:43:32.420 align:middle line:84%
+come into play
+where, at some point,
+
+00:43:32.420 --> 00:43:37.700 align:middle line:84%
+this 0.4999 in this low
+that it keeps dividing
+
+00:43:37.700 --> 00:43:41.080 align:middle line:90%
+is just going to become 0.5.
+
+00:43:41.080 --> 00:43:44.140 align:middle line:84%
+And 0.5 is a power
+of 2, remember,
+
+00:43:44.140 --> 00:43:46.540 align:middle line:90%
+as floating points are.
+
+00:43:46.540 --> 00:43:51.280 align:middle line:84%
+And in this particular case,
+once it reaches the 0.5,
+
+00:43:51.280 --> 00:43:53.710 align:middle line:84%
+then floating point errors
+don't come into play
+
+00:43:53.710 --> 00:43:56.920 align:middle line:84%
+anymore because that 0.5 can
+just be represented exactly.
+
+00:43:56.920 --> 00:44:00.110 align:middle line:84%
+So I'm going to have to probably
+hit Next for quite a few more
+
+00:44:00.110 --> 00:44:00.610 align:middle line:90%
+times.
+
+00:44:00.610 --> 00:44:06.010 align:middle line:84%
+But you can kind of see where
+that's getting that 0.5 from.
+
+00:44:06.010 --> 00:44:09.600 align:middle line:90%
+Does that help?
+
+00:44:09.600 --> 00:44:11.940 align:middle line:84%
+STUDENT: Yeah, so the floating
+point error just causes
+
+00:44:11.940 --> 00:44:15.050 align:middle line:90%
+it to skip the [INAUDIBLE]?
+
+00:44:15.050 --> 00:44:19.790 align:middle line:84%
+ANA BELL: That and also the fact
+that we didn't really account--
+
+00:44:19.790 --> 00:44:22.500 align:middle line:84%
+this code doesn't actually work
+correctly with these values.
+
+00:44:22.500 --> 00:44:26.660 align:middle line:84%
+So it enters an infinite loop
+because of the floating point
+
+00:44:26.660 --> 00:44:28.590 align:middle line:90%
+error towards the end.
+
+00:44:28.590 --> 00:44:32.220 align:middle line:84%
+And that causes us to
+see just 0.5, 0.5, 0.5.
+
+00:44:32.220 --> 00:44:36.020 align:middle line:84%
+But if we were doing it
+to infinite precision,
+
+00:44:36.020 --> 00:44:39.140 align:middle line:84%
+you would start to see numbers
+that approach 0.5, but never
+
+00:44:39.140 --> 00:44:41.090 align:middle line:90%
+quite get there, yeah.
+
+00:44:41.090 --> 00:44:44.060 align:middle line:84%
+But I think our code--
+the reason we saw 0.5 here
+
+00:44:44.060 --> 00:44:47.960 align:middle line:84%
+is because it already ran
+like 100 times, 200 times.
+
+00:44:47.960 --> 00:44:52.940 align:middle line:84%
+And so now, we're just seeing
+this, the tail end of it, yeah.
+
+00:44:52.940 --> 00:45:04.860 align:middle line:90%
+
+
+00:45:04.860 --> 00:45:11.653 align:middle line:84%
+So here is the code
+for fixing that.
+
+00:45:11.653 --> 00:45:13.820 align:middle line:84%
+So what do you guys think
+the low endpoint should be
+
+00:45:13.820 --> 00:45:16.195 align:middle line:84%
+and the high endpoint should
+be if we wanted this to work
+
+00:45:16.195 --> 00:45:21.310 align:middle line:90%
+with values between 0 and 1?
+
+00:45:21.310 --> 00:45:22.455 align:middle line:90%
+So if this is our--
+
+00:45:22.455 --> 00:45:25.410 align:middle line:90%
+
+
+00:45:25.410 --> 00:45:26.460 align:middle line:90%
+this is our x.
+
+00:45:26.460 --> 00:45:30.660 align:middle line:84%
+And we know x is less
+than 1, greater than 0.
+
+00:45:30.660 --> 00:45:34.080 align:middle line:84%
+The square root of x is going
+to be somewhere up here.
+
+00:45:34.080 --> 00:45:38.450 align:middle line:84%
+And we know the maximum
+place it will be is 1.
+
+00:45:38.450 --> 00:45:41.930 align:middle line:84%
+And what's a minimum place
+that the square root of x
+
+00:45:41.930 --> 00:45:44.690 align:middle line:84%
+could be for values
+within this range?
+
+00:45:44.690 --> 00:45:46.850 align:middle line:90%
+I heard-- yeah, x.
+
+00:45:46.850 --> 00:45:51.020 align:middle line:84%
+So this is the minimum value
+for the square root of x.
+
+00:45:51.020 --> 00:45:54.050 align:middle line:84%
+And this is the maximum
+value for the square root
+
+00:45:54.050 --> 00:46:01.430 align:middle line:84%
+of x So all we need to do
+is say the low is equal to x
+
+00:46:01.430 --> 00:46:04.680 align:middle line:90%
+and the high is equal to 1.
+
+00:46:04.680 --> 00:46:06.585 align:middle line:84%
+And then I think this
+code should work.
+
+00:46:06.585 --> 00:46:08.790 align:middle line:90%
+
+
+00:46:08.790 --> 00:46:09.290 align:middle line:90%
+Yeah.
+
+00:46:09.290 --> 00:46:17.020 align:middle line:90%
+
+
+00:46:17.020 --> 00:46:18.060 align:middle line:90%
+OK.
+
+00:46:18.060 --> 00:46:20.740 align:middle line:84%
+And so I did just
+that down here.
+
+00:46:20.740 --> 00:46:25.410 align:middle line:84%
+So here is the code with
+actually allowing for the user
+
+00:46:25.410 --> 00:46:28.800 align:middle line:84%
+to give us any value,
+not just between 0 and 1
+
+00:46:28.800 --> 00:46:31.650 align:middle line:90%
+or greater than 1.
+
+00:46:31.650 --> 00:46:34.440 align:middle line:84%
+So all I did here to
+make the code work
+
+00:46:34.440 --> 00:46:41.480 align:middle line:84%
+and be robust is add an
+if/else right at the beginning.
+
+00:46:41.480 --> 00:46:45.110 align:middle line:84%
+So I allow the user to give
+me whatever x they'd like.
+
+00:46:45.110 --> 00:46:46.870 align:middle line:84%
+But then I do a
+little check here
+
+00:46:46.870 --> 00:46:52.320 align:middle line:84%
+that says, if the x is
+greater or equal to 1,
+
+00:46:52.320 --> 00:46:54.900 align:middle line:84%
+then my low and high
+endpoints become 0
+
+00:46:54.900 --> 00:46:57.060 align:middle line:84%
+to x because I know the
+square root is going
+
+00:46:57.060 --> 00:46:59.320 align:middle line:90%
+to be within that boundary.
+
+00:46:59.320 --> 00:47:01.470 align:middle line:84%
+But then otherwise,
+if the user gave me
+
+00:47:01.470 --> 00:47:04.820 align:middle line:90%
+a value that's less than 1--
+
+00:47:04.820 --> 00:47:09.770 align:middle line:84%
+and I guess I should do
+greater than 0, just in case
+
+00:47:09.770 --> 00:47:11.720 align:middle line:84%
+the user gives me
+negative numbers--
+
+00:47:11.720 --> 00:47:14.390 align:middle line:84%
+then I would choose the
+boundary for the low
+
+00:47:14.390 --> 00:47:17.600 align:middle line:84%
+to be x and the high
+to be 1, so just
+
+00:47:17.600 --> 00:47:19.470 align:middle line:90%
+a very simple if/else here.
+
+00:47:19.470 --> 00:47:22.655 align:middle line:84%
+And otherwise, the rest of
+the code works just the same.
+
+00:47:22.655 --> 00:47:33.230 align:middle line:90%
+
+
+00:47:33.230 --> 00:47:33.740 align:middle line:90%
+OK.
+
+00:47:33.740 --> 00:47:37.340 align:middle line:84%
+Yeah, so this is exactly what we
+just saw in the slides, right?
+
+00:47:37.340 --> 00:47:42.910 align:middle line:84%
+An if and an else where I choose
+the endpoints accordingly.
+
+00:47:42.910 --> 00:47:45.040 align:middle line:90%
+Any questions about this code?
+
+00:47:45.040 --> 00:47:47.120 align:middle line:90%
+Does it make sense?
+
+00:47:47.120 --> 00:47:47.630 align:middle line:90%
+Yeah?
+
+00:47:47.630 --> 00:47:49.040 align:middle line:84%
+STUDENT: I made
+the low equal to 0.
+
+00:47:49.040 --> 00:47:50.540 align:middle line:84%
+And it still give
+me the same answer
+
+00:47:50.540 --> 00:47:52.720 align:middle line:90%
+for the square root of 0.5.
+
+00:47:52.720 --> 00:47:53.440 align:middle line:90%
+Why is that?
+
+00:47:53.440 --> 00:47:56.020 align:middle line:84%
+ANA BELL: Oh, if you make
+the low equal to 0 here?
+
+00:47:56.020 --> 00:47:59.870 align:middle line:90%
+STUDENT: [INAUDIBLE].
+
+00:47:59.870 --> 00:48:01.580 align:middle line:84%
+ANA BELL: I think
+that's fine, right?
+
+00:48:01.580 --> 00:48:03.350 align:middle line:84%
+Because then that
+means you're looking--
+
+00:48:03.350 --> 00:48:06.390 align:middle line:84%
+you're making your lower
+than it needs to be.
+
+00:48:06.390 --> 00:48:10.490 align:middle line:84%
+And so your first guess is
+basically the halfway point,
+
+00:48:10.490 --> 00:48:11.510 align:middle line:90%
+x itself.
+
+00:48:11.510 --> 00:48:13.910 align:middle line:90%
+And then it fixes--
+
+00:48:13.910 --> 00:48:15.588 align:middle line:90%
+I think it just fixes it.
+
+00:48:15.588 --> 00:48:17.630 align:middle line:84%
+STUDENT: So it just goes
+through one extra guess?
+
+00:48:17.630 --> 00:48:19.580 align:middle line:84%
+ANA BELL: It goes through
+one extra guess, exactly.
+
+00:48:19.580 --> 00:48:21.770 align:middle line:84%
+And that's, again, the
+power of bisection search.
+
+00:48:21.770 --> 00:48:25.080 align:middle line:90%
+
+
+00:48:25.080 --> 00:48:30.090 align:middle line:84%
+For values greater than 1, if
+we made our high boundary be 2x,
+
+00:48:30.090 --> 00:48:31.980 align:middle line:84%
+it would just make
+one extra guess
+
+00:48:31.980 --> 00:48:36.310 align:middle line:84%
+to bring us to x, and then
+below, and so on, and so on.
+
+00:48:36.310 --> 00:48:38.740 align:middle line:84%
+So one extra guess is nothing
+to the computer, right?
+
+00:48:38.740 --> 00:48:39.240 align:middle line:90%
+Yeah.
+
+00:48:39.240 --> 00:48:43.730 align:middle line:90%
+
+
+00:48:43.730 --> 00:48:47.820 align:middle line:84%
+OK, so a couple of observations
+for bisection search--
+
+00:48:47.820 --> 00:48:54.460 align:middle line:84%
+so it takes a significantly
+less amount of time
+
+00:48:54.460 --> 00:48:58.540 align:middle line:84%
+to solve problems using
+bisection search than it does
+
+00:48:58.540 --> 00:48:59.950 align:middle line:90%
+using the approximation method.
+
+00:48:59.950 --> 00:49:02.780 align:middle line:84%
+And it gives us an
+approximation to, in this case,
+
+00:49:02.780 --> 00:49:06.610 align:middle line:84%
+the square root of a number
+that was pretty-- no, just
+
+00:49:06.610 --> 00:49:10.960 align:middle line:84%
+as good as the
+approximation method itself.
+
+00:49:10.960 --> 00:49:12.655 align:middle line:90%
+When we did the book example--
+
+00:49:12.655 --> 00:49:14.030 align:middle line:84%
+and that's the
+second point here.
+
+00:49:14.030 --> 00:49:15.405 align:middle line:84%
+It might be easier
+to illustrate.
+
+00:49:15.405 --> 00:49:19.480 align:middle line:84%
+When we did the book
+example, the very first guess
+
+00:49:19.480 --> 00:49:25.390 align:middle line:84%
+eliminated more number of
+pages than later guesses.
+
+00:49:25.390 --> 00:49:30.610 align:middle line:84%
+Our first guess eliminated
+200 pages right off the bat.
+
+00:49:30.610 --> 00:49:34.690 align:middle line:84%
+Our second guest only eliminated
+100 pages, our third only 50.
+
+00:49:34.690 --> 00:49:36.340 align:middle line:84%
+And at some point,
+you can imagine
+
+00:49:36.340 --> 00:49:39.610 align:middle line:84%
+that we're only eliminating
+something like four pages.
+
+00:49:39.610 --> 00:49:43.210 align:middle line:84%
+And then we're eliminating
+only two pages at a time
+
+00:49:43.210 --> 00:49:44.800 align:middle line:84%
+the more and more
+guesses you make.
+
+00:49:44.800 --> 00:49:50.890 align:middle line:84%
+So it feels more dramatic at
+first, but then it dies down.
+
+00:49:50.890 --> 00:49:53.470 align:middle line:84%
+But that's just
+logarithmic growth.
+
+00:49:53.470 --> 00:49:55.090 align:middle line:90%
+It feels dramatic at first.
+
+00:49:55.090 --> 00:49:57.220 align:middle line:84%
+But then as you get
+closer and closer
+
+00:49:57.220 --> 00:49:59.800 align:middle line:84%
+to the actual approximation,
+the actual answer,
+
+00:49:59.800 --> 00:50:02.650 align:middle line:84%
+you're not taking
+as big of steps
+
+00:50:02.650 --> 00:50:07.520 align:middle line:84%
+or you're not making such
+dramatic cuts to the book.
+
+00:50:07.520 --> 00:50:11.780 align:middle line:84%
+And so the bisection search
+algorithm is really awesome.
+
+00:50:11.780 --> 00:50:13.730 align:middle line:84%
+But again, there
+are some limitations
+
+00:50:13.730 --> 00:50:15.350 align:middle line:90%
+to when you can use it.
+
+00:50:15.350 --> 00:50:18.860 align:middle line:84%
+You have to have your
+search space have endpoints.
+
+00:50:18.860 --> 00:50:22.580 align:middle line:84%
+That search space needs to
+be ordered alphabetically,
+
+00:50:22.580 --> 00:50:25.490 align:middle line:90%
+in order by numeric or whatever.
+
+00:50:25.490 --> 00:50:28.100 align:middle line:84%
+And you have to be able
+to get the feedback.
+
+00:50:28.100 --> 00:50:30.080 align:middle line:84%
+Is this guess too
+low or too high?
+
+00:50:30.080 --> 00:50:31.820 align:middle line:84%
+If you don't have
+those, then you
+
+00:50:31.820 --> 00:50:34.130 align:middle line:84%
+can't use bisection
+search for this.
+
+00:50:34.130 --> 00:50:36.980 align:middle line:84%
+OK, I'm going to give you
+a couple of moments to work
+
+00:50:36.980 --> 00:50:38.250 align:middle line:90%
+on this code by yourself.
+
+00:50:38.250 --> 00:50:41.090 align:middle line:84%
+So this is you writing the
+bisection search algorithm
+
+00:50:41.090 --> 00:50:44.720 align:middle line:84%
+to find the cube root
+of positive cubes.
+
+00:50:44.720 --> 00:50:46.790 align:middle line:84%
+So don't worry about
+negatives or whatever.
+
+00:50:46.790 --> 00:50:50.030 align:middle line:84%
+Just assume the user
+gives you a positive cube.
+
+00:50:50.030 --> 00:50:52.890 align:middle line:84%
+I'm initializing the
+values for you here.
+
+00:50:52.890 --> 00:50:55.710 align:middle line:90%
+So the cube is 27.
+
+00:50:55.710 --> 00:50:58.950 align:middle line:84%
+I want you to be within
+plus or minus 0.01.
+
+00:50:58.950 --> 00:51:02.100 align:middle line:84%
+So your guess squared should
+be within plus or minus 0.01
+
+00:51:02.100 --> 00:51:03.360 align:middle line:90%
+of 27.
+
+00:51:03.360 --> 00:51:07.000 align:middle line:84%
+Start with a low of
+0 and a high of cube
+
+00:51:07.000 --> 00:51:09.580 align:middle line:84%
+and write the rest
+of the algorithm.
+
+00:51:09.580 --> 00:51:13.660 align:middle line:84%
+Don't copy and paste
+what we did for square.
+
+00:51:13.660 --> 00:51:16.900 align:middle line:84%
+Try to write it all by
+yourself all over again.
+
+00:51:16.900 --> 00:51:19.180 align:middle line:84%
+It'll, A, give you
+practice coding, B,
+
+00:51:19.180 --> 00:51:21.370 align:middle line:84%
+make sure that you
+understand the actual steps
+
+00:51:21.370 --> 00:51:22.092 align:middle line:90%
+of the algorithm.
+
+00:51:22.092 --> 00:51:23.800 align:middle line:84%
+You don't need to
+write it top to bottom.
+
+00:51:23.800 --> 00:51:26.740 align:middle line:84%
+You can write the inside of the
+while loop first or whatever,
+
+00:51:26.740 --> 00:51:28.720 align:middle line:84%
+whatever feels
+comfortable for you.
+
+00:51:28.720 --> 00:51:31.270 align:middle line:84%
+But as long as you
+try to write it
+
+00:51:31.270 --> 00:51:36.010 align:middle line:84%
+all by yourself to try to make
+this coding second nature,
+
+00:51:36.010 --> 00:51:37.100 align:middle line:90%
+I'm all for that.
+
+00:51:37.100 --> 00:51:38.570 align:middle line:84%
+So I'll give you a couple
+of moments to do that.
+
+00:51:38.570 --> 00:51:39.987 align:middle line:84%
+And then we can
+write it together.
+
+00:51:39.987 --> 00:51:43.480 align:middle line:84%
+But basically, it's going to be
+almost the same as what we've
+
+00:51:43.480 --> 00:51:45.130 align:middle line:90%
+been seeing on the slides.
+
+00:51:45.130 --> 00:51:49.600 align:middle line:90%
+
+
+00:51:49.600 --> 00:51:51.400 align:middle line:84%
+All right, does anyone
+have a start for me?
+
+00:51:51.400 --> 00:51:53.140 align:middle line:90%
+What do you want to start with?
+
+00:51:53.140 --> 00:51:55.540 align:middle line:84%
+Do you want to do a
+while loop or a for loop?
+
+00:51:55.540 --> 00:51:57.030 align:middle line:90%
+Let's ask that.
+
+00:51:57.030 --> 00:51:58.030 align:middle line:90%
+STUDENT: A while loop.
+
+00:51:58.030 --> 00:51:59.800 align:middle line:90%
+ANA BELL: A while loop, OK.
+
+00:51:59.800 --> 00:52:01.670 align:middle line:90%
+Let's do while.
+
+00:52:01.670 --> 00:52:06.430 align:middle line:84%
+And what's the condition going
+to be for the approximation?
+
+00:52:06.430 --> 00:52:07.093 align:middle line:90%
+Yep?
+
+00:52:07.093 --> 00:52:08.093 align:middle line:90%
+STUDENT: Define a guess.
+
+00:52:08.093 --> 00:52:10.400 align:middle line:84%
+ANA BELL: Oh, I need to
+define a guess, perfect.
+
+00:52:10.400 --> 00:52:13.046 align:middle line:90%
+OK, what should my guess be?
+
+00:52:13.046 --> 00:52:16.450 align:middle line:90%
+STUDENT: [INAUDIBLE].
+
+00:52:16.450 --> 00:52:23.170 align:middle line:84%
+ANA BELL: Yes, high
+plus low over 2.
+
+00:52:23.170 --> 00:52:25.150 align:middle line:90%
+OK, so I have my initial guess.
+
+00:52:25.150 --> 00:52:31.000 align:middle line:84%
+And then what is
+happening with my loop?
+
+00:52:31.000 --> 00:52:34.844 align:middle line:84%
+I want to keep doing
+things as long as--
+
+00:52:34.844 --> 00:52:36.305 align:middle line:90%
+STUDENT: [INAUDIBLE].
+
+00:52:36.305 --> 00:52:40.690 align:middle line:90%
+
+
+00:52:40.690 --> 00:52:49.682 align:middle line:84%
+ANA BELL: Guess to
+the third minus cube.
+
+00:52:49.682 --> 00:52:51.170 align:middle line:90%
+STUDENT: [INAUDIBLE].
+
+00:52:51.170 --> 00:52:59.367 align:middle line:90%
+
+
+00:52:59.367 --> 00:53:02.034 align:middle line:84%
+ANA BELL: Yep, absolute
+value of guess-- yep.
+
+00:53:02.034 --> 00:53:03.970 align:middle line:90%
+STUDENT: [INAUDIBLE].
+
+00:53:03.970 --> 00:53:05.125 align:middle line:90%
+ANA BELL: OK.
+
+00:53:05.125 --> 00:53:07.570 align:middle line:90%
+STUDENT: [INAUDIBLE].
+
+00:53:07.570 --> 00:53:08.320 align:middle line:90%
+ANA BELL: Exactly.
+
+00:53:08.320 --> 00:53:10.153 align:middle line:84%
+We want it to be larger,
+or larger or equal,
+
+00:53:10.153 --> 00:53:11.530 align:middle line:90%
+whatever you'd like epsilon.
+
+00:53:11.530 --> 00:53:12.190 align:middle line:90%
+Yep.
+
+00:53:12.190 --> 00:53:14.530 align:middle line:84%
+So while I'm still
+too far away--
+
+00:53:14.530 --> 00:53:17.950 align:middle line:90%
+
+
+00:53:17.950 --> 00:53:20.510 align:middle line:90%
+STUDENT: [INAUDIBLE].
+
+00:53:20.510 --> 00:53:24.100 align:middle line:84%
+ANA BELL: No, because then
+we're comparing floats.
+
+00:53:24.100 --> 00:53:32.000 align:middle line:84%
+We want to be farther
+because if it's not equal to,
+
+00:53:32.000 --> 00:53:38.940 align:middle line:84%
+you only stop when it
+becomes exactly 0.01 away.
+
+00:53:38.940 --> 00:53:41.730 align:middle line:90%
+STUDENT: And-- wait.
+
+00:53:41.730 --> 00:53:43.690 align:middle line:90%
+ANA BELL: Yeah, so we can draw.
+
+00:53:43.690 --> 00:53:46.200 align:middle line:90%
+It's easier if we draw.
+
+00:53:46.200 --> 00:53:49.620 align:middle line:90%
+This is our x.
+
+00:53:49.620 --> 00:53:52.890 align:middle line:90%
+And this is epsilon, right?
+
+00:53:52.890 --> 00:53:54.360 align:middle line:90%
+And our guess cubed--
+
+00:53:54.360 --> 00:53:57.150 align:middle line:90%
+
+
+00:53:57.150 --> 00:54:03.720 align:middle line:84%
+if it's equal to, that means
+g cubed is exactly here,
+
+00:54:03.720 --> 00:54:05.670 align:middle line:90%
+I guess, or exactly here.
+
+00:54:05.670 --> 00:54:07.560 align:middle line:90%
+STUDENT: Oh, so [INAUDIBLE].
+
+00:54:07.560 --> 00:54:09.990 align:middle line:84%
+ANA BELL: Yeah, so you
+want to be out of bounds
+
+00:54:09.990 --> 00:54:16.030 align:middle line:90%
+to still be making guesses, yep.
+
+00:54:16.030 --> 00:54:18.550 align:middle line:84%
+What's our process
+for making a new guess
+
+00:54:18.550 --> 00:54:20.780 align:middle line:90%
+using bisection search?
+
+00:54:20.780 --> 00:54:22.190 align:middle line:90%
+So we have a guess.
+
+00:54:22.190 --> 00:54:23.730 align:middle line:90%
+And now, what do we need to do?
+
+00:54:23.730 --> 00:54:26.660 align:middle line:84%
+We need to decide whether it's
+too low or too high, right?
+
+00:54:26.660 --> 00:54:30.500 align:middle line:84%
+That's what the
+bisection search says.
+
+00:54:30.500 --> 00:54:36.810 align:middle line:84%
+So guess or guess cubed
+is too low or too high?
+
+00:54:36.810 --> 00:54:38.550 align:middle line:90%
+STUDENT: [INAUDIBLE].
+
+00:54:38.550 --> 00:54:40.090 align:middle line:90%
+ANA BELL: Exactly.
+
+00:54:40.090 --> 00:54:42.975 align:middle line:90%
+If the guess cubed--
+
+00:54:42.975 --> 00:54:46.182 align:middle line:90%
+
+
+00:54:46.182 --> 00:54:47.570 align:middle line:90%
+STUDENT: Larger than cube.
+
+00:54:47.570 --> 00:54:52.290 align:middle line:84%
+ANA BELL: Yep, larger than cube,
+then our guess is too high.
+
+00:54:52.290 --> 00:54:57.950 align:middle line:84%
+So I can even make a note for
+myself here, guess too high.
+
+00:54:57.950 --> 00:55:02.090 align:middle line:84%
+So if it's too high, I know
+anything bigger than it
+
+00:55:02.090 --> 00:55:03.270 align:middle line:90%
+I don't want.
+
+00:55:03.270 --> 00:55:06.050 align:middle line:84%
+So I need to set my
+high boundary or--
+
+00:55:06.050 --> 00:55:08.254 align:middle line:84%
+my high endpoint
+or my low endpoint?
+
+00:55:08.254 --> 00:55:10.230 align:middle line:90%
+STUDENT: [INAUDIBLE].
+
+00:55:10.230 --> 00:55:13.800 align:middle line:84%
+ANA BELL: Yeah, my high
+endpoint becomes my guess.
+
+00:55:13.800 --> 00:55:16.110 align:middle line:84%
+I'm resetting my high to
+be the guess because I know
+
+00:55:16.110 --> 00:55:19.720 align:middle line:90%
+that guess is too big anyway.
+
+00:55:19.720 --> 00:55:23.410 align:middle line:84%
+Else, opposite, my low
+endpoint is my guess.
+
+00:55:23.410 --> 00:55:26.790 align:middle line:90%
+
+
+00:55:26.790 --> 00:55:28.040 align:middle line:90%
+Am I done?
+
+00:55:28.040 --> 00:55:28.555 align:middle line:90%
+STUDENT: No.
+
+00:55:28.555 --> 00:55:29.180 align:middle line:90%
+ANA BELL: Nope.
+
+00:55:29.180 --> 00:55:31.446 align:middle line:90%
+OK, what do I need to do?
+
+00:55:31.446 --> 00:55:33.097 align:middle line:90%
+STUDENT: Redefine guess.
+
+00:55:33.097 --> 00:55:34.680 align:middle line:84%
+ANA BELL: I need to
+redefine my guess.
+
+00:55:34.680 --> 00:55:37.990 align:middle line:84%
+If I don't redefine my guess,
+my code has an infinite loop.
+
+00:55:37.990 --> 00:55:43.350 align:middle line:84%
+So my guess is, exactly as
+before, high plus low divided
+
+00:55:43.350 --> 00:55:44.310 align:middle line:90%
+by 2.
+
+00:55:44.310 --> 00:55:48.620 align:middle line:90%
+
+
+00:55:48.620 --> 00:55:51.680 align:middle line:84%
+And then at the end,
+same indentation level
+
+00:55:51.680 --> 00:55:54.980 align:middle line:84%
+as the while loop, we
+can just print our guess
+
+00:55:54.980 --> 00:55:58.460 align:middle line:84%
+because I know I'm going to
+break as soon as I become
+
+00:55:58.460 --> 00:56:01.720 align:middle line:90%
+within or equal to epsilon.
+
+00:56:01.720 --> 00:56:07.630 align:middle line:90%
+
+
+00:56:07.630 --> 00:56:09.820 align:middle line:84%
+Yay, that's what we
+were expecting, right?
+
+00:56:09.820 --> 00:56:13.270 align:middle line:84%
+And it's fine that it's
+3.0000-something, right?
+
+00:56:13.270 --> 00:56:16.210 align:middle line:84%
+I wouldn't expect it to be
+exactly 3, even though we
+
+00:56:16.210 --> 00:56:20.080 align:middle line:84%
+as humans know it is 3
+because the algorithm says
+
+00:56:20.080 --> 00:56:23.710 align:middle line:84%
+to stop as soon as we came
+within epsilon, right?
+
+00:56:23.710 --> 00:56:27.040 align:middle line:84%
+Yes, we can find a better
+answer if we keep going.
+
+00:56:27.040 --> 00:56:29.200 align:middle line:84%
+But that's not what
+we ask the code to do.
+
+00:56:29.200 --> 00:56:30.880 align:middle line:84%
+We asked the code
+to stop as soon
+
+00:56:30.880 --> 00:56:36.390 align:middle line:84%
+as we came within plus or
+minus epsilon of this, right?
+
+00:56:36.390 --> 00:56:38.860 align:middle line:84%
+STUDENT: Does it matter
+of whether the high goes
+
+00:56:38.860 --> 00:56:40.612 align:middle line:90%
+in the if or the low?
+
+00:56:40.612 --> 00:56:42.070 align:middle line:84%
+ANA BELL: It does
+not matter if you
+
+00:56:42.070 --> 00:56:44.527 align:middle line:84%
+put the high in the if
+or-- yeah, or the low.
+
+00:56:44.527 --> 00:56:46.360 align:middle line:84%
+I mean, as long as
+you're consistent, right?
+
+00:56:46.360 --> 00:56:48.850 align:middle line:84%
+If it's greater than, you
+have to reassign the high.
+
+00:56:48.850 --> 00:56:51.760 align:middle line:84%
+If this is less than, you
+reassign the low, yeah.
+
+00:56:51.760 --> 00:56:56.555 align:middle line:90%
+
+
+00:56:56.555 --> 00:56:57.055 align:middle line:90%
+OK.
+
+00:56:57.055 --> 00:57:00.840 align:middle line:90%
+
+
+00:57:00.840 --> 00:57:04.110 align:middle line:84%
+OK, so we're going to
+look at one more algorithm
+
+00:57:04.110 --> 00:57:09.180 align:middle line:84%
+to figure out an approximation
+to the square root of a number,
+
+00:57:09.180 --> 00:57:13.920 align:middle line:84%
+just to show you that there
+is something else, yet
+
+00:57:13.920 --> 00:57:14.700 align:middle line:90%
+another thing.
+
+00:57:14.700 --> 00:57:16.980 align:middle line:84%
+And this particular
+algorithm only
+
+00:57:16.980 --> 00:57:20.480 align:middle line:84%
+works to find roots
+of a polynomial.
+
+00:57:20.480 --> 00:57:22.590 align:middle line:84%
+So this is a
+Newton-Raphson algorithm.
+
+00:57:22.590 --> 00:57:24.860 align:middle line:84%
+And basically, we don't
+need to prove this.
+
+00:57:24.860 --> 00:57:28.370 align:middle line:90%
+But basically, he showed that--
+
+00:57:28.370 --> 00:57:33.800 align:middle line:84%
+they showed that if you have
+a polynomial of this form--
+
+00:57:33.800 --> 00:57:37.790 align:middle line:84%
+so ax squared plus bx plus
+c or ax to the power of 4
+
+00:57:37.790 --> 00:57:41.360 align:middle line:84%
+plus bx cubed plus cx plus
+d, something like that--
+
+00:57:41.360 --> 00:57:43.130 align:middle line:84%
+if you have a
+polynomial like that,
+
+00:57:43.130 --> 00:57:50.000 align:middle line:84%
+then you can start with a
+guess, any guess you'd like.
+
+00:57:50.000 --> 00:57:55.370 align:middle line:84%
+And you can come up with
+a better approximation
+
+00:57:55.370 --> 00:57:59.750 align:middle line:84%
+to the square root by
+saying a new guess--
+
+00:57:59.750 --> 00:58:02.030 align:middle line:84%
+so the new better
+approximation for the guess--
+
+00:58:02.030 --> 00:58:06.230 align:middle line:84%
+is whatever your current
+guess is minus that polynomial
+
+00:58:06.230 --> 00:58:09.860 align:middle line:84%
+evaluated at the guess-- so
+replace x with your guess--
+
+00:58:09.860 --> 00:58:12.320 align:middle line:84%
+divided by the
+derivative of that
+
+00:58:12.320 --> 00:58:14.480 align:middle line:84%
+polynomial evaluated
+at the guess--
+
+00:58:14.480 --> 00:58:18.710 align:middle line:84%
+so get the derivative and
+replace x with your guess.
+
+00:58:18.710 --> 00:58:23.420 align:middle line:84%
+This should sound familiar
+because lecture 2 we actually
+
+00:58:23.420 --> 00:58:26.450 align:middle line:90%
+implemented just this part.
+
+00:58:26.450 --> 00:58:28.700 align:middle line:84%
+Remember when we were
+learning about expressions
+
+00:58:28.700 --> 00:58:30.590 align:middle line:90%
+and combining them together?
+
+00:58:30.590 --> 00:58:31.880 align:middle line:90%
+I mentioned this algorithm.
+
+00:58:31.880 --> 00:58:34.422 align:middle line:84%
+And I said, we're not going to
+be writing the whole algorithm
+
+00:58:34.422 --> 00:58:36.320 align:middle line:84%
+today, but we are going
+to be implementing
+
+00:58:36.320 --> 00:58:39.200 align:middle line:84%
+the part that makes a new
+better guess for the square root
+
+00:58:39.200 --> 00:58:40.230 align:middle line:90%
+of a number.
+
+00:58:40.230 --> 00:58:41.960 align:middle line:84%
+Well, today, we're
+actually going
+
+00:58:41.960 --> 00:58:46.160 align:middle line:84%
+to take that line, put a
+wrapper around it, the wrapper
+
+00:58:46.160 --> 00:58:50.270 align:middle line:84%
+being a little loop, that makes
+successive guesses, better
+
+00:58:50.270 --> 00:58:54.080 align:middle line:84%
+and better guesses using
+guesses that we have just
+
+00:58:54.080 --> 00:58:57.810 align:middle line:84%
+made to get us close
+to the approximation
+
+00:58:57.810 --> 00:59:00.260 align:middle line:90%
+for a square root.
+
+00:59:00.260 --> 00:59:02.370 align:middle line:90%
+So let's start with this.
+
+00:59:02.370 --> 00:59:05.300 align:middle line:84%
+So the idea here for finding
+the square root of a number
+
+00:59:05.300 --> 00:59:09.410 align:middle line:84%
+is to realize that if we want to
+find the square root of, let's
+
+00:59:09.410 --> 00:59:15.140 align:middle line:84%
+say, 24, that's essentially
+us applying this algorithm
+
+00:59:15.140 --> 00:59:17.870 align:middle line:84%
+to the polynomial that
+says that's x squared
+
+00:59:17.870 --> 00:59:24.320 align:middle line:84%
+minus 24 because if x
+squared minus 24 equals 0,
+
+00:59:24.320 --> 00:59:26.750 align:middle line:84%
+then basically x
+squared is equal to 24.
+
+00:59:26.750 --> 00:59:29.810 align:middle line:84%
+And to solve for x means
+that we are looking
+
+00:59:29.810 --> 00:59:31.250 align:middle line:90%
+for the square root of 24.
+
+00:59:31.250 --> 00:59:35.930 align:middle line:84%
+So we can try to apply this
+Newton-Raphson method to find
+
+00:59:35.930 --> 00:59:39.020 align:middle line:84%
+an approximation to the square
+root of a number by simply
+
+00:59:39.020 --> 00:59:40.310 align:middle line:90%
+solving--
+
+00:59:40.310 --> 00:59:44.000 align:middle line:84%
+using their method applied
+to this polynomial,
+
+00:59:44.000 --> 00:59:46.280 align:middle line:84%
+x squared minus
+whatever value you want
+
+00:59:46.280 --> 00:59:48.620 align:middle line:90%
+to find the square root of.
+
+00:59:48.620 --> 00:59:51.920 align:middle line:84%
+So just to give you a little
+intuition for how this works is
+
+00:59:51.920 --> 00:59:53.960 align:middle line:90%
+so we have an initial guess.
+
+00:59:53.960 --> 00:59:56.420 align:middle line:84%
+Let's say it's
+this x1 right here.
+
+00:59:56.420 --> 00:59:58.910 align:middle line:90%
+And you take f of x1.
+
+00:59:58.910 --> 01:00:03.020 align:middle line:84%
+That brings you-- whoops,
+that brings you up here.
+
+01:00:03.020 --> 01:00:05.750 align:middle line:84%
+You find the
+derivative over here.
+
+01:00:05.750 --> 01:00:08.720 align:middle line:84%
+And you follow the
+tangent line to the x-axis
+
+01:00:08.720 --> 01:00:10.460 align:middle line:90%
+for the next guess.
+
+01:00:10.460 --> 01:00:12.090 align:middle line:90%
+And you repeat the process--
+
+01:00:12.090 --> 01:00:16.190 align:middle line:84%
+evaluate this guess to
+get f of that guess.
+
+01:00:16.190 --> 01:00:17.870 align:middle line:90%
+This is the tangent line.
+
+01:00:17.870 --> 01:00:20.930 align:middle line:84%
+Follow it down to the
+x-axis for a better guess.
+
+01:00:20.930 --> 01:00:23.840 align:middle line:84%
+And you keep doing this until
+you get as close as you'd
+
+01:00:23.840 --> 01:00:26.690 align:middle line:90%
+like to the square root here.
+
+01:00:26.690 --> 01:00:30.065 align:middle line:84%
+So just for completeness
+sake, since I did link it,
+
+01:00:30.065 --> 01:00:31.190 align:middle line:90%
+this is what it looks like.
+
+01:00:31.190 --> 01:00:32.000 align:middle line:90%
+That's your initial guess.
+
+01:00:32.000 --> 01:00:32.600 align:middle line:90%
+That's your f.
+
+01:00:32.600 --> 01:00:33.683 align:middle line:90%
+There's your tangent line.
+
+01:00:33.683 --> 01:00:35.240 align:middle line:90%
+That gives you the next guess.
+
+01:00:35.240 --> 01:00:39.170 align:middle line:84%
+Evaluate that, get your tangent
+line, get your next guess.
+
+01:00:39.170 --> 01:00:42.440 align:middle line:84%
+Evaluate that, get the tangent
+line, there's your next guess.
+
+01:00:42.440 --> 01:00:45.710 align:middle line:84%
+And it basically works
+for any polynomial.
+
+01:00:45.710 --> 01:00:48.020 align:middle line:84%
+But we are applying
+it to just finding
+
+01:00:48.020 --> 01:00:49.320 align:middle line:90%
+the square root of a number.
+
+01:00:49.320 --> 01:00:53.248 align:middle line:84%
+So our polynomial
+is pretty simple.
+
+01:00:53.248 --> 01:00:55.040 align:middle line:84%
+So if we want to find
+the square root of k,
+
+01:00:55.040 --> 01:00:59.690 align:middle line:84%
+the polynomial we're interested
+in here is x squared minus k.
+
+01:00:59.690 --> 01:01:03.250 align:middle line:84%
+The derivative, I think-- have
+you guys done derivatives yet
+
+01:01:03.250 --> 01:01:03.750 align:middle line:90%
+in math?
+
+01:01:03.750 --> 01:01:04.410 align:middle line:90%
+OK, good.
+
+01:01:04.410 --> 01:01:09.000 align:middle line:84%
+The derivative of x
+squared minus k is just 2x.
+
+01:01:09.000 --> 01:01:14.740 align:middle line:84%
+And then we can initialize our
+guess to be whatever we'd like.
+
+01:01:14.740 --> 01:01:17.370 align:middle line:84%
+And then all we need
+to do for a better
+
+01:01:17.370 --> 01:01:19.320 align:middle line:84%
+guess than the one
+we currently have
+
+01:01:19.320 --> 01:01:24.690 align:middle line:84%
+is to take our current guess
+minus that guess plugged
+
+01:01:24.690 --> 01:01:26.530 align:middle line:90%
+into the polynomial of interest.
+
+01:01:26.530 --> 01:01:31.140 align:middle line:84%
+So g squared minus k divided by
+the derivative with the guess
+
+01:01:31.140 --> 01:01:33.690 align:middle line:90%
+plugged in 2 times g.
+
+01:01:33.690 --> 01:01:36.030 align:middle line:84%
+And if we repeat this
+many, many, many times,
+
+01:01:36.030 --> 01:01:38.670 align:middle line:84%
+this will eventually get
+us to a nice approximation
+
+01:01:38.670 --> 01:01:40.620 align:middle line:84%
+for the square
+root of the number.
+
+01:01:40.620 --> 01:01:42.900 align:middle line:90%
+And this is the code.
+
+01:01:42.900 --> 01:01:47.190 align:middle line:84%
+It's even simpler than
+the bisection search code.
+
+01:01:47.190 --> 01:01:52.970 align:middle line:84%
+So let's say we want to be
+within plus or minus 0.01 of 24
+
+01:01:52.970 --> 01:01:55.730 align:middle line:90%
+with our guess.
+
+01:01:55.730 --> 01:01:58.050 align:middle line:84%
+We can start with
+any guess we'd like.
+
+01:01:58.050 --> 01:01:59.810 align:middle line:84%
+But I guess a
+reasonable guess is
+
+01:01:59.810 --> 01:02:02.300 align:middle line:84%
+to just take that
+k, the thing you
+
+01:02:02.300 --> 01:02:04.370 align:middle line:84%
+want to find the square
+root of, divide by 2.
+
+01:02:04.370 --> 01:02:07.730 align:middle line:84%
+Once again, we can keep track
+of how many guesses we do.
+
+01:02:07.730 --> 01:02:12.680 align:middle line:84%
+And surprise, the while
+loop condition for.
+
+01:02:12.680 --> 01:03:11.830 align:middle line:90%
+[AUDIO OUT]
+
+01:03:11.830 --> 01:13:00.000 align:middle line:90%

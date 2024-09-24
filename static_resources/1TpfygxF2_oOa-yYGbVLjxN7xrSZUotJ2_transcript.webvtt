@@ -1,0 +1,1664 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.367 align:middle line:84%
+[SQUEAKING]
+[RUSTLING] [CLICKING]
+
+00:00:03.367 --> 00:00:11.417 align:middle line:90%
+
+
+00:00:11.417 --> 00:00:12.250 align:middle line:90%
+ANA BELL: All right.
+
+00:00:12.250 --> 00:00:13.850 align:middle line:90%
+So hello, everyone.
+
+00:00:13.850 --> 00:00:16.910 align:middle line:90%
+Let's get started.
+
+00:00:16.910 --> 00:00:17.830 align:middle line:90%
+This is lecture 10.
+
+00:00:17.830 --> 00:00:21.880 align:middle line:84%
+So last lecture, we
+introduced two new data types.
+
+00:00:21.880 --> 00:00:25.690 align:middle line:84%
+We talked about a data type
+called a tuple and a data type
+
+00:00:25.690 --> 00:00:27.160 align:middle line:90%
+called a list.
+
+00:00:27.160 --> 00:00:30.142 align:middle line:84%
+So today, we're not going
+to talk about tuples anymore
+
+00:00:30.142 --> 00:00:31.850 align:middle line:84%
+because they were
+pretty straightforward.
+
+00:00:31.850 --> 00:00:33.460 align:middle line:84%
+A lot of operations you
+could do with strings,
+
+00:00:33.460 --> 00:00:34.690 align:middle line:90%
+you could do with tuples.
+
+00:00:34.690 --> 00:00:36.558 align:middle line:90%
+They were immutable objects.
+
+00:00:36.558 --> 00:00:38.350 align:middle line:84%
+That means once you
+created them in memory,
+
+00:00:38.350 --> 00:00:40.130 align:middle line:84%
+you couldn't do
+anything to change them.
+
+00:00:40.130 --> 00:00:41.890 align:middle line:84%
+And so they were,
+I guess, pretty
+
+00:00:41.890 --> 00:00:46.180 align:middle line:84%
+boring except that you could
+populate tuples with objects
+
+00:00:46.180 --> 00:00:47.720 align:middle line:90%
+that were of any type.
+
+00:00:47.720 --> 00:00:50.020 align:middle line:84%
+So you could populate
+a tuple with integers,
+
+00:00:50.020 --> 00:00:52.960 align:middle line:84%
+and floats, and booleans,
+and other tuples,
+
+00:00:52.960 --> 00:00:55.480 align:middle line:90%
+all at the same time.
+
+00:00:55.480 --> 00:00:58.420 align:middle line:84%
+We introduced lists
+last time as well as
+
+00:00:58.420 --> 00:01:01.420 align:middle line:84%
+something that was really
+similar to tuples and strings
+
+00:01:01.420 --> 00:01:04.209 align:middle line:90%
+in terms of manipulations.
+
+00:01:04.209 --> 00:01:07.240 align:middle line:84%
+Lists were also nice because
+you could populate them, again,
+
+00:01:07.240 --> 00:01:11.170 align:middle line:84%
+with any kind of data objects,
+just like you could tuples.
+
+00:01:11.170 --> 00:01:13.060 align:middle line:84%
+Today what we're
+going to focus on,
+
+00:01:13.060 --> 00:01:15.220 align:middle line:84%
+though, is the
+idea of mutability
+
+00:01:15.220 --> 00:01:18.130 align:middle line:84%
+when talking about lists,
+which is something new.
+
+00:01:18.130 --> 00:01:20.990 align:middle line:84%
+We have never talked
+about this idea before.
+
+00:01:20.990 --> 00:01:24.550 align:middle line:84%
+And so this lecture is going to
+be pretty heavy on that idea,
+
+00:01:24.550 --> 00:01:26.650 align:middle line:84%
+and a little bit heavy
+on syntax and things
+
+00:01:26.650 --> 00:01:30.910 align:middle line:84%
+like that to remind you
+of how to manipulate
+
+00:01:30.910 --> 00:01:32.810 align:middle line:90%
+these compound data types.
+
+00:01:32.810 --> 00:01:35.560 align:middle line:84%
+So please, if there's any
+questions, feel free to stop me
+
+00:01:35.560 --> 00:01:38.680 align:middle line:84%
+and then I can go over what
+I just talked about, if there
+
+00:01:38.680 --> 00:01:40.370 align:middle line:90%
+was anything confusing.
+
+00:01:40.370 --> 00:01:43.540 align:middle line:84%
+So this slide is
+basically a copy
+
+00:01:43.540 --> 00:01:46.450 align:middle line:84%
+of the slide we had
+on lists last lecture.
+
+00:01:46.450 --> 00:01:48.460 align:middle line:84%
+It shows a bunch of
+different-- oops.
+
+00:01:48.460 --> 00:01:51.580 align:middle line:84%
+A bunch of different operations
+that you can do with lists.
+
+00:01:51.580 --> 00:01:53.740 align:middle line:84%
+They're very similar
+to operations
+
+00:01:53.740 --> 00:01:55.210 align:middle line:90%
+that you can do with strings.
+
+00:01:55.210 --> 00:01:57.670 align:middle line:84%
+So here, I'm just
+creating an empty list.
+
+00:01:57.670 --> 00:02:00.740 align:middle line:84%
+I'm creating a list with
+a bunch of elements in it.
+
+00:02:00.740 --> 00:02:04.600 align:middle line:84%
+So here, we can see that this
+list contains four elements
+
+00:02:04.600 --> 00:02:07.090 align:middle line:84%
+and they are all
+of different types.
+
+00:02:07.090 --> 00:02:09.528 align:middle line:84%
+This is an integer, this is
+a string, this is an integer,
+
+00:02:09.528 --> 00:02:10.570 align:middle line:90%
+and this is another list.
+
+00:02:10.570 --> 00:02:15.110 align:middle line:84%
+And that's totally OK to
+do with these data types.
+
+00:02:15.110 --> 00:02:18.260 align:middle line:84%
+Doing all of these operations,
+getting the length, indexing,
+
+00:02:18.260 --> 00:02:20.630 align:middle line:84%
+slicing, concatenation,
+getting the max,
+
+00:02:20.630 --> 00:02:24.140 align:middle line:84%
+all that should be
+review, as well as
+
+00:02:24.140 --> 00:02:28.200 align:middle line:84%
+iterating a for loop over the
+elements in a list directly.
+
+00:02:28.200 --> 00:02:30.320 align:middle line:84%
+So just like we
+iterated a for loop
+
+00:02:30.320 --> 00:02:34.400 align:middle line:84%
+over characters in a
+string, this loop basically
+
+00:02:34.400 --> 00:02:37.190 align:middle line:84%
+makes e, our loop
+variable, take on the value
+
+00:02:37.190 --> 00:02:40.430 align:middle line:84%
+of every single
+element in our list L.
+
+00:02:40.430 --> 00:02:41.690 align:middle line:90%
+What's new?
+
+00:02:41.690 --> 00:02:43.520 align:middle line:84%
+The bolded thing
+here is something we
+
+00:02:43.520 --> 00:02:45.420 align:middle line:90%
+haven't been able to do before.
+
+00:02:45.420 --> 00:02:49.220 align:middle line:84%
+And this basically
+goes into memory
+
+00:02:49.220 --> 00:02:53.600 align:middle line:84%
+and changes the element
+at index 3 and L.
+
+00:02:53.600 --> 00:02:55.850 align:middle line:84%
+So that's kind of
+how we read that.
+
+00:02:55.850 --> 00:02:58.670 align:middle line:84%
+And it changes that
+element to have the value
+
+00:02:58.670 --> 00:03:00.240 align:middle line:90%
+on the right-hand side.
+
+00:03:00.240 --> 00:03:01.933 align:middle line:90%
+So this is kind of--
+
+00:03:01.933 --> 00:03:03.350 align:middle line:84%
+I mean, we read
+it in the same way
+
+00:03:03.350 --> 00:03:05.280 align:middle line:84%
+as we do other
+assignment statements.
+
+00:03:05.280 --> 00:03:07.910 align:middle line:84%
+We look at the right-hand
+side and we evaluate that.
+
+00:03:07.910 --> 00:03:10.290 align:middle line:90%
+In this case, it's only a 10.
+
+00:03:10.290 --> 00:03:12.360 align:middle line:84%
+But the left-hand
+side looks different.
+
+00:03:12.360 --> 00:03:14.890 align:middle line:84%
+It's not a variable name
+as we have seen before.
+
+00:03:14.890 --> 00:03:19.230 align:middle line:84%
+But in fact, it's
+referencing the item
+
+00:03:19.230 --> 00:03:22.470 align:middle line:90%
+in list named L at index 3.
+
+00:03:22.470 --> 00:03:26.310 align:middle line:84%
+So that would be
+index 0, 1, 2, 3.
+
+00:03:26.310 --> 00:03:29.940 align:middle line:84%
+This line of code down there,
+L squared brackets 3 equals 10,
+
+00:03:29.940 --> 00:03:32.910 align:middle line:84%
+basically replaces this
+entire element here
+
+00:03:32.910 --> 00:03:36.450 align:middle line:90%
+with the number 10.
+
+00:03:36.450 --> 00:03:39.330 align:middle line:84%
+So on the next few
+slides, we're going
+
+00:03:39.330 --> 00:03:41.070 align:middle line:84%
+to talk about what
+exactly this means
+
+00:03:41.070 --> 00:03:44.940 align:middle line:84%
+inside memory, because
+it's different than what
+
+00:03:44.940 --> 00:03:46.620 align:middle line:90%
+we've been able to--
+
+00:03:46.620 --> 00:03:49.290 align:middle line:90%
+what we've been doing before.
+
+00:03:49.290 --> 00:03:52.550 align:middle line:84%
+So what exactly
+happens when we go
+
+00:03:52.550 --> 00:03:55.250 align:middle line:84%
+into a mutable
+object like a list
+
+00:03:55.250 --> 00:04:01.040 align:middle line:84%
+and we change an element
+using this exact syntax?
+
+00:04:01.040 --> 00:04:03.410 align:middle line:84%
+Well, let's draw our
+memory diagrams the way we
+
+00:04:03.410 --> 00:04:04.770 align:middle line:90%
+have been in the past.
+
+00:04:04.770 --> 00:04:07.220 align:middle line:84%
+Here's our little cloud
+representing the memory.
+
+00:04:07.220 --> 00:04:11.240 align:middle line:84%
+L equals 2, 4, 3, creates
+this list for me in memory,
+
+00:04:11.240 --> 00:04:12.680 align:middle line:90%
+this list object.
+
+00:04:12.680 --> 00:04:16.320 align:middle line:84%
+And L is the name that I'm
+referencing to this list object
+
+00:04:16.320 --> 00:04:16.820 align:middle line:90%
+right.
+
+00:04:16.820 --> 00:04:18.589 align:middle line:84%
+So I'm basically
+binding the name L
+
+00:04:18.589 --> 00:04:20.720 align:middle line:90%
+to that object in memory.
+
+00:04:20.720 --> 00:04:27.440 align:middle line:84%
+L squared brackets 1 equals 5
+tells Python to follow the name
+
+00:04:27.440 --> 00:04:31.230 align:middle line:84%
+L to the object in
+memory and then look up
+
+00:04:31.230 --> 00:04:33.160 align:middle line:84%
+the index in the
+square brackets.
+
+00:04:33.160 --> 00:04:34.320 align:middle line:90%
+In this case, index 1.
+
+00:04:34.320 --> 00:04:36.480 align:middle line:90%
+So that's 0, 1, this 4.
+
+00:04:36.480 --> 00:04:39.870 align:middle line:84%
+And take the element
+at this location
+
+00:04:39.870 --> 00:04:43.410 align:middle line:84%
+and override it to be whatever
+the right-hand side says.
+
+00:04:43.410 --> 00:04:45.060 align:middle line:84%
+So the right-hand
+side says five,
+
+00:04:45.060 --> 00:04:46.770 align:middle line:84%
+so basically we're
+going into memory
+
+00:04:46.770 --> 00:04:50.760 align:middle line:84%
+and changing that
+middle element.
+
+00:04:50.760 --> 00:04:52.980 align:middle line:84%
+So this is different
+than strings and tuples.
+
+00:04:52.980 --> 00:04:55.710 align:middle line:84%
+We were not allowed to
+do anything like this
+
+00:04:55.710 --> 00:04:57.460 align:middle line:90%
+with strings and tuples.
+
+00:04:57.460 --> 00:05:01.003 align:middle line:84%
+So let's look at an
+example on the next slide
+
+00:05:01.003 --> 00:05:01.920 align:middle line:90%
+about what this means.
+
+00:05:01.920 --> 00:05:03.960 align:middle line:84%
+But the idea here
+I'm trying to get
+
+00:05:03.960 --> 00:05:08.700 align:middle line:84%
+at is this object that we have
+changed one of the elements
+
+00:05:08.700 --> 00:05:10.770 align:middle line:90%
+inside--
+
+00:05:10.770 --> 00:05:12.900 align:middle line:84%
+for which we've changed
+one of the elements,
+
+00:05:12.900 --> 00:05:14.730 align:middle line:90%
+we've changed the object itself.
+
+00:05:14.730 --> 00:05:16.170 align:middle line:90%
+We didn't make a new copy.
+
+00:05:16.170 --> 00:05:18.450 align:middle line:84%
+We didn't make a
+version of that object.
+
+00:05:18.450 --> 00:05:21.850 align:middle line:84%
+We have changed
+the object itself.
+
+00:05:21.850 --> 00:05:25.740 align:middle line:84%
+So let's see maybe similar
+code that might have--
+
+00:05:25.740 --> 00:05:31.080 align:middle line:84%
+that you might think does the
+same thing, except with tuples.
+
+00:05:31.080 --> 00:05:34.270 align:middle line:84%
+So the first two lines of
+code are going to be the same.
+
+00:05:34.270 --> 00:05:37.920 align:middle line:84%
+We've got L in memory
+being the object 243,
+
+00:05:37.920 --> 00:05:41.880 align:middle line:84%
+or L being the name bound
+to the object 2, 4, 3, L,
+
+00:05:41.880 --> 00:05:42.780 align:middle line:90%
+square brackets, 1.
+
+00:05:42.780 --> 00:05:49.890 align:middle line:84%
+So L at index 1 equals 5 changes
+that middle element to be a 5.
+
+00:05:49.890 --> 00:05:51.580 align:middle line:90%
+Same as the previous slide.
+
+00:05:51.580 --> 00:05:54.360 align:middle line:84%
+Now what if we had
+these two lines of code?
+
+00:05:54.360 --> 00:05:59.096 align:middle line:84%
+t is going to be a variable name
+that's bound to the tuple 2,
+
+00:05:59.096 --> 00:06:00.030 align:middle line:90%
+4 3.
+
+00:06:00.030 --> 00:06:03.780 align:middle line:84%
+So notice this is now the
+tuple denoted in parentheses.
+
+00:06:03.780 --> 00:06:09.630 align:middle line:84%
+If I say t is equal to
+2, 5, 3 what happens?
+
+00:06:09.630 --> 00:06:11.970 align:middle line:84%
+Basically, with this
+line, I am creating
+
+00:06:11.970 --> 00:06:14.130 align:middle line:90%
+a new object in memory.
+
+00:06:14.130 --> 00:06:15.990 align:middle line:90%
+So there's my new object.
+
+00:06:15.990 --> 00:06:18.930 align:middle line:84%
+And I'm taking
+the name t and I'm
+
+00:06:18.930 --> 00:06:21.980 align:middle line:90%
+binding it to this new object.
+
+00:06:21.980 --> 00:06:27.380 align:middle line:84%
+The old object, 2, 4, 3 as a
+tuple, still remains in memory.
+
+00:06:27.380 --> 00:06:29.840 align:middle line:84%
+I have not modified
+that object at all.
+
+00:06:29.840 --> 00:06:32.760 align:middle line:84%
+It's still there, I've just
+lost the binding to it.
+
+00:06:32.760 --> 00:06:38.630 align:middle line:84%
+So the name t is separate from
+the actual object in memory.
+
+00:06:38.630 --> 00:06:41.270 align:middle line:84%
+In terms of tuples, what
+that means for us is
+
+00:06:41.270 --> 00:06:44.330 align:middle line:84%
+we can never change the
+tuple object in memory
+
+00:06:44.330 --> 00:06:45.620 align:middle line:90%
+once we've created it.
+
+00:06:45.620 --> 00:06:49.850 align:middle line:84%
+But with lists, using
+this specific operation,
+
+00:06:49.850 --> 00:06:52.760 align:middle line:84%
+this one right here L
+square brackets 1 equals 5,
+
+00:06:52.760 --> 00:06:55.340 align:middle line:84%
+this does allow us
+to go into memory
+
+00:06:55.340 --> 00:06:58.490 align:middle line:84%
+and literally change
+that object that
+
+00:06:58.490 --> 00:07:01.480 align:middle line:90%
+is associated with the name L.
+
+00:07:01.480 --> 00:07:02.860 align:middle line:90%
+Is everyone OK with this slide?
+
+00:07:02.860 --> 00:07:03.790 align:middle line:90%
+Does this make sense?
+
+00:07:03.790 --> 00:07:05.380 align:middle line:90%
+This showcases the difference.
+
+00:07:05.380 --> 00:07:06.850 align:middle line:84%
+So you need to
+think about what is
+
+00:07:06.850 --> 00:07:10.360 align:middle line:84%
+the name of the object versus
+the object itself in memory.
+
+00:07:10.360 --> 00:07:14.030 align:middle line:90%
+
+
+00:07:14.030 --> 00:07:17.120 align:middle line:84%
+So that shows you
+how to create a list
+
+00:07:17.120 --> 00:07:20.780 align:middle line:84%
+and then go ahead and change
+elements to different values
+
+00:07:20.780 --> 00:07:21.890 align:middle line:90%
+within that list.
+
+00:07:21.890 --> 00:07:27.350 align:middle line:84%
+But now that we have a list
+object that we can mutate,
+
+00:07:27.350 --> 00:07:30.320 align:middle line:84%
+other operations we can do
+with it is to, let's say,
+
+00:07:30.320 --> 00:07:32.220 align:middle line:84%
+add more items to
+the end of the list.
+
+00:07:32.220 --> 00:07:35.150 align:middle line:90%
+So we can make the list bigger.
+
+00:07:35.150 --> 00:07:37.790 align:middle line:84%
+We can mutate the object
+by doing that using
+
+00:07:37.790 --> 00:07:40.100 align:middle line:90%
+this append function.
+
+00:07:40.100 --> 00:07:44.150 align:middle line:84%
+Now I'm going to talk about the
+syntax of the append function
+
+00:07:44.150 --> 00:07:45.570 align:middle line:90%
+in a little bit.
+
+00:07:45.570 --> 00:07:48.020 align:middle line:84%
+But basically, if
+I want to mutate L,
+
+00:07:48.020 --> 00:07:51.140 align:middle line:84%
+to add an item to the end of
+it, I have to use the syntax.
+
+00:07:51.140 --> 00:07:55.800 align:middle line:84%
+There isn't a different form, a
+different function to do this.
+
+00:07:55.800 --> 00:08:00.050 align:middle line:84%
+So this specific
+syntax has to be used.
+
+00:08:00.050 --> 00:08:04.980 align:middle line:84%
+Append is basically
+the function name,
+
+00:08:04.980 --> 00:08:08.340 align:middle line:84%
+element is going to be the
+parameter, the thing that I
+
+00:08:08.340 --> 00:08:11.230 align:middle line:84%
+want to add on to
+the end of my list,
+
+00:08:11.230 --> 00:08:14.050 align:middle line:84%
+and L, the thing
+before the dot, is
+
+00:08:14.050 --> 00:08:18.010 align:middle line:84%
+going to be the object I
+want to add the element
+
+00:08:18.010 --> 00:08:19.840 align:middle line:90%
+to the end of the list.
+
+00:08:19.840 --> 00:08:23.840 align:middle line:84%
+So L, in this case, I'm
+using it generically.
+
+00:08:23.840 --> 00:08:25.660 align:middle line:84%
+But you can imagine
+creating a list
+
+00:08:25.660 --> 00:08:28.163 align:middle line:90%
+of employees in your company.
+
+00:08:28.163 --> 00:08:29.830 align:middle line:84%
+Then you might name
+that list employees.
+
+00:08:29.830 --> 00:08:33.549 align:middle line:84%
+In that case, we would say
+employees.append(Anna),
+
+00:08:33.549 --> 00:08:34.720 align:middle line:90%
+or whatever.
+
+00:08:34.720 --> 00:08:37.270 align:middle line:84%
+So that L is just kind
+of generic for now,
+
+00:08:37.270 --> 00:08:39.850 align:middle line:84%
+but it gets replaced with
+whatever variable name
+
+00:08:39.850 --> 00:08:41.320 align:middle line:90%
+your list is.
+
+00:08:41.320 --> 00:08:45.500 align:middle line:84%
+So this operation
+basically mutates the list.
+
+00:08:45.500 --> 00:08:49.510 align:middle line:84%
+So it mutates it to be
+one extra element longer.
+
+00:08:49.510 --> 00:08:51.742 align:middle line:84%
+And the element you're adding
+to the end of the list,
+
+00:08:51.742 --> 00:08:53.200 align:middle line:84%
+to the right-hand
+side of the list,
+
+00:08:53.200 --> 00:08:57.350 align:middle line:84%
+is going to be whatever is
+in the parentheses to append.
+
+00:08:57.350 --> 00:08:59.040 align:middle line:90%
+So let's look at an example.
+
+00:08:59.040 --> 00:09:02.910 align:middle line:84%
+So we're going to create L
+is equal to 213 in memory.
+
+00:09:02.910 --> 00:09:06.000 align:middle line:84%
+And then let's say
+we do L.append(5).
+
+00:09:06.000 --> 00:09:08.850 align:middle line:90%
+
+
+00:09:08.850 --> 00:09:11.460 align:middle line:84%
+Well, this line of
+code says, look up
+
+00:09:11.460 --> 00:09:14.850 align:middle line:84%
+L. It's this object in
+memory here, 2, 1, 3,
+
+00:09:14.850 --> 00:09:18.298 align:middle line:84%
+and add the object
+5 to the end of it.
+
+00:09:18.298 --> 00:09:20.340 align:middle line:84%
+So I'm going to add the
+5 to the end of the list.
+
+00:09:20.340 --> 00:09:22.230 align:middle line:84%
+Now it's no longer
+three elements long,
+
+00:09:22.230 --> 00:09:23.610 align:middle line:90%
+it's four elements long.
+
+00:09:23.610 --> 00:09:25.080 align:middle line:90%
+And again, I didn't make a copy.
+
+00:09:25.080 --> 00:09:28.530 align:middle line:84%
+I didn't preserve the original
+list with just 2, 1, 3 in it.
+
+00:09:28.530 --> 00:09:31.080 align:middle line:84%
+I have literally changed
+this list in memory
+
+00:09:31.080 --> 00:09:34.390 align:middle line:90%
+that's referenced by L.
+
+00:09:34.390 --> 00:09:39.710 align:middle line:84%
+Now this function append
+is being used basically
+
+00:09:39.710 --> 00:09:40.760 align:middle line:90%
+for its side effect.
+
+00:09:40.760 --> 00:09:44.525 align:middle line:84%
+And the side effect here
+is mutating the list.
+
+00:09:44.525 --> 00:09:48.345 align:middle line:90%
+
+
+00:09:48.345 --> 00:09:51.770 align:middle line:84%
+After the function adds the
+5 in this particular case
+
+00:09:51.770 --> 00:09:53.780 align:middle line:84%
+to the end of the
+list, the function
+
+00:09:53.780 --> 00:09:56.210 align:middle line:84%
+doesn't need to
+return anything back.
+
+00:09:56.210 --> 00:09:59.460 align:middle line:84%
+It's basically done its
+job to do the mutation.
+
+00:09:59.460 --> 00:10:02.950 align:middle line:84%
+And so functions like
+append, and we're
+
+00:10:02.950 --> 00:10:04.600 align:middle line:84%
+going to see other
+functions later,
+
+00:10:04.600 --> 00:10:08.200 align:middle line:90%
+don't have any return value.
+
+00:10:08.200 --> 00:10:13.240 align:middle line:84%
+So one really common mistake,
+as we're learning about mutable
+
+00:10:13.240 --> 00:10:16.030 align:middle line:84%
+excuse objects and using
+these functions that mutate,
+
+00:10:16.030 --> 00:10:21.160 align:middle line:84%
+is to say, well, I'm going to
+do L.append(5) and save this,
+
+00:10:21.160 --> 00:10:25.810 align:middle line:84%
+the result of this function,
+back into the variable named L.
+
+00:10:25.810 --> 00:10:27.350 align:middle line:90%
+And this would be incorrect.
+
+00:10:27.350 --> 00:10:29.210 align:middle line:84%
+So let's see if we
+do this line of code,
+
+00:10:29.210 --> 00:10:31.420 align:middle line:90%
+what exactly will happen.
+
+00:10:31.420 --> 00:10:33.170 align:middle line:90%
+So it's an assignment.
+
+00:10:33.170 --> 00:10:35.800 align:middle line:84%
+So the first thing we do is
+we look at the right-hand side
+
+00:10:35.800 --> 00:10:37.330 align:middle line:90%
+and we evaluate that.
+
+00:10:37.330 --> 00:10:40.900 align:middle line:84%
+Well, the right-hand side
+basically says L.append(5),
+
+00:10:40.900 --> 00:10:43.280 align:middle line:84%
+which is exactly the same
+as the previous line.
+
+00:10:43.280 --> 00:10:46.510 align:middle line:84%
+So we're going to put another
+5 to the end of our currently
+
+00:10:46.510 --> 00:10:48.740 align:middle line:90%
+mutated list.
+
+00:10:48.740 --> 00:10:52.810 align:middle line:84%
+Just going with these
+operations in order.
+
+00:10:52.810 --> 00:10:56.260 align:middle line:84%
+And then I said
+this append function
+
+00:10:56.260 --> 00:10:59.320 align:middle line:84%
+has done its job to
+mutate the list by adding
+
+00:10:59.320 --> 00:11:00.560 align:middle line:90%
+a 5 to the end of it.
+
+00:11:00.560 --> 00:11:01.967 align:middle line:90%
+So it returns nothing.
+
+00:11:01.967 --> 00:11:03.550 align:middle line:84%
+There's nothing of
+value that it could
+
+00:11:03.550 --> 00:11:06.320 align:middle line:84%
+return, because it already
+did its job of mutation.
+
+00:11:06.320 --> 00:11:10.090 align:middle line:90%
+So it actually returns none.
+
+00:11:10.090 --> 00:11:12.520 align:middle line:84%
+So the assignment,
+the equal sign,
+
+00:11:12.520 --> 00:11:16.330 align:middle line:84%
+then basically says take
+the name L and bind it
+
+00:11:16.330 --> 00:11:19.662 align:middle line:84%
+to the return of this
+function, L.append(5).
+
+00:11:19.662 --> 00:11:21.370 align:middle line:84%
+Well, the return of
+the function is none,
+
+00:11:21.370 --> 00:11:26.960 align:middle line:84%
+so basically now we're losing
+the binding from 2, 1, 3, 5, 5,
+
+00:11:26.960 --> 00:11:29.960 align:middle line:84%
+which was our mutated
+list, and rebinding it
+
+00:11:29.960 --> 00:11:32.260 align:middle line:90%
+to the return none.
+
+00:11:32.260 --> 00:11:36.910 align:middle line:84%
+So that is an incorrect way
+to do the mutation of adding
+
+00:11:36.910 --> 00:11:40.240 align:middle line:90%
+an item to the end of the list.
+
+00:11:40.240 --> 00:11:42.250 align:middle line:90%
+Everyone OK with that so far?
+
+00:11:42.250 --> 00:11:42.910 align:middle line:90%
+Yes.
+
+00:11:42.910 --> 00:11:43.840 align:middle line:90%
+OK, excellent.
+
+00:11:43.840 --> 00:11:46.390 align:middle line:84%
+So what should we
+have done instead?
+
+00:11:46.390 --> 00:11:50.620 align:middle line:84%
+Sorry, yes, be careful
+about the append operation.
+
+00:11:50.620 --> 00:11:54.460 align:middle line:84%
+You're doing a mutation and
+you return none as a result.
+
+00:11:54.460 --> 00:11:58.460 align:middle line:84%
+So you do not want to
+resave this to any variable.
+
+00:11:58.460 --> 00:12:04.210 align:middle line:84%
+So instead what we would do is
+we would just do the operation.
+
+00:12:04.210 --> 00:12:05.860 align:middle line:90%
+There's nothing to save.
+
+00:12:05.860 --> 00:12:08.300 align:middle line:84%
+Nothing to save in
+any return variable.
+
+00:12:08.300 --> 00:12:10.990 align:middle line:84%
+So if you wanted to add two
+5's to the end of that list,
+
+00:12:10.990 --> 00:12:15.250 align:middle line:84%
+you would just say L.append(5)
+again and L would then have
+
+00:12:15.250 --> 00:12:18.700 align:middle line:84%
+been mutated to
+be 2, 1, 3, 5, 5.
+
+00:12:18.700 --> 00:12:20.830 align:middle line:84%
+And so in your code,
+if you just print
+
+00:12:20.830 --> 00:12:23.080 align:middle line:90%
+L in between these appends--
+
+00:12:23.080 --> 00:12:27.220 align:middle line:84%
+the if you printed L
+after the first append(5),
+
+00:12:27.220 --> 00:12:29.200 align:middle line:90%
+it would print this 2, 1, 3, 5.
+
+00:12:29.200 --> 00:12:32.170 align:middle line:84%
+And then if we print L
+after the second append 5,
+
+00:12:32.170 --> 00:12:35.410 align:middle line:84%
+it would print 2, 1,
+3 5, 5, because it's
+
+00:12:35.410 --> 00:12:36.460 align:middle line:90%
+an ongoing operation.
+
+00:12:36.460 --> 00:12:38.560 align:middle line:84%
+It's mutating this
+list, and now you're
+
+00:12:38.560 --> 00:12:42.420 align:middle line:84%
+doing operations on
+the newly mutated list.
+
+00:12:42.420 --> 00:12:44.940 align:middle line:90%
+Everyone-- yeah?
+
+00:12:44.940 --> 00:12:47.790 align:middle line:84%
+AUDIENCE: For the element,
+can you only use one integer,
+
+00:12:47.790 --> 00:12:49.740 align:middle line:90%
+or can we do 5, comma, 5?
+
+00:12:49.740 --> 00:12:52.350 align:middle line:84%
+ANA BELL: For the element, do
+you have to do one integer,
+
+00:12:52.350 --> 00:12:53.910 align:middle line:90%
+or can use 5, comma, 5?
+
+00:12:53.910 --> 00:12:58.420 align:middle line:84%
+So you can-- the append
+only works with one thing.
+
+00:12:58.420 --> 00:13:02.010 align:middle line:84%
+So if you wanted
+to append a tuple,
+
+00:13:02.010 --> 00:13:03.870 align:middle line:84%
+you could append
+one tuple object
+
+00:13:03.870 --> 00:13:05.340 align:middle line:90%
+that has many things in it.
+
+00:13:05.340 --> 00:13:07.830 align:middle line:84%
+But it would just
+append that one tuple.
+
+00:13:07.830 --> 00:13:10.050 align:middle line:84%
+We're going to see towards
+the end of this lecture
+
+00:13:10.050 --> 00:13:12.330 align:middle line:84%
+an operation that
+allows us to extend
+
+00:13:12.330 --> 00:13:14.670 align:middle line:90%
+the list by a bunch of items.
+
+00:13:14.670 --> 00:13:18.730 align:middle line:84%
+But there is a way,
+just not with append.
+
+00:13:18.730 --> 00:13:19.230 align:middle line:90%
+Yeah?
+
+00:13:19.230 --> 00:13:21.410 align:middle line:84%
+AUDIENCE: Why did you
+[INAUDIBLE] again?
+
+00:13:21.410 --> 00:13:22.820 align:middle line:90%
+ANA BELL: So the other thing--
+
+00:13:22.820 --> 00:13:25.940 align:middle line:84%
+so this operation
+always returns none.
+
+00:13:25.940 --> 00:13:29.270 align:middle line:84%
+L.append(5) or whatever, the
+append always returns none.
+
+00:13:29.270 --> 00:13:32.030 align:middle line:84%
+But here, it's just sitting
+on a line by itself.
+
+00:13:32.030 --> 00:13:34.790 align:middle line:84%
+We're not saving it
+back to anything.
+
+00:13:34.790 --> 00:13:37.460 align:middle line:84%
+In the previous one,
+we took the return
+
+00:13:37.460 --> 00:13:39.650 align:middle line:84%
+and saved it back
+into L, and that's
+
+00:13:39.650 --> 00:13:42.635 align:middle line:84%
+why we lost the binding
+to the actual list.
+
+00:13:42.635 --> 00:13:46.290 align:middle line:90%
+
+
+00:13:46.290 --> 00:13:48.470 align:middle line:84%
+So what we usually
+say is that we
+
+00:13:48.470 --> 00:13:51.200 align:middle line:84%
+use append and a bunch of
+these other mutable functions
+
+00:13:51.200 --> 00:13:52.530 align:middle line:90%
+for their side effects.
+
+00:13:52.530 --> 00:13:54.200 align:middle line:84%
+And the side effect
+in this case is
+
+00:13:54.200 --> 00:13:59.420 align:middle line:84%
+to mutate the object that
+I'm calling the append on.
+
+00:13:59.420 --> 00:14:05.220 align:middle line:90%
+In this case, the list named L.
+
+00:14:05.220 --> 00:14:08.580 align:middle line:84%
+So let's have you think about
+this problem and while you do
+
+00:14:08.580 --> 00:14:09.220 align:middle line:90%
+it--
+
+00:14:09.220 --> 00:14:11.800 align:middle line:84%
+and then we can write it
+on the board together.
+
+00:14:11.800 --> 00:14:16.590 align:middle line:84%
+So as we go through these
+lines of code one at a time,
+
+00:14:16.590 --> 00:14:21.900 align:middle line:84%
+what will the values
+of the lists become?
+
+00:14:21.900 --> 00:14:25.920 align:middle line:84%
+So L1 is the string "re,"
+L2 is "me," L3 is "do."
+
+00:14:25.920 --> 00:14:29.130 align:middle line:84%
+What is L4 going to be
+right with that line
+
+00:14:29.130 --> 00:14:31.212 align:middle line:90%
+L4 equals L1 plus L2.
+
+00:14:31.212 --> 00:14:31.920 align:middle line:90%
+Does anyone know?
+
+00:14:31.920 --> 00:14:36.330 align:middle line:90%
+
+
+00:14:36.330 --> 00:14:37.560 align:middle line:90%
+What's the type?
+
+00:14:37.560 --> 00:14:41.080 align:middle line:90%
+
+
+00:14:41.080 --> 00:14:42.430 align:middle line:90%
+Its concatenation, right?
+
+00:14:42.430 --> 00:14:44.828 align:middle line:84%
+So concatenation with
+lists is like concatenation
+
+00:14:44.828 --> 00:14:45.370 align:middle line:90%
+with strings.
+
+00:14:45.370 --> 00:14:46.265 align:middle line:90%
+Yes?
+
+00:14:46.265 --> 00:14:47.140 align:middle line:90%
+AUDIENCE: [INAUDIBLE]
+
+00:14:47.140 --> 00:14:48.580 align:middle line:90%
+ANA BELL: Yep.
+
+00:14:48.580 --> 00:14:50.503 align:middle line:90%
+What are the elements in it?
+
+00:14:50.503 --> 00:14:51.290 align:middle line:90%
+AUDIENCE: "Re."
+
+00:14:51.290 --> 00:14:52.327 align:middle line:90%
+ANA BELL: Yep.
+
+00:14:52.327 --> 00:14:55.460 align:middle line:90%
+AUDIENCE: And then "mi."
+
+00:14:55.460 --> 00:14:57.740 align:middle line:90%
+ANA BELL: Yep, exactly.
+
+00:14:57.740 --> 00:15:01.230 align:middle line:84%
+I'm not going to do the strings,
+but you know what I mean.
+
+00:15:01.230 --> 00:15:05.310 align:middle line:84%
+So L4 with that line is
+just these two elements
+
+00:15:05.310 --> 00:15:07.320 align:middle line:90%
+in a new list.
+
+00:15:07.320 --> 00:15:13.170 align:middle line:84%
+Now what happens with the
+next line, L3.append(L4)?
+
+00:15:13.170 --> 00:15:16.890 align:middle line:84%
+Which one gets
+mutated, L3 or L4?
+
+00:15:16.890 --> 00:15:18.150 align:middle line:90%
+AUDIENCE: L3 gets mutated.
+
+00:15:18.150 --> 00:15:19.890 align:middle line:84%
+ANA BELL: L3 gets
+mutated, exactly.
+
+00:15:19.890 --> 00:15:23.840 align:middle line:90%
+And what does it get mutated to?
+
+00:15:23.840 --> 00:15:27.080 align:middle line:90%
+So L3 originally has "do" in it.
+
+00:15:27.080 --> 00:15:29.525 align:middle line:84%
+What am I adding
+to the end of L3?
+
+00:15:29.525 --> 00:15:35.164 align:middle line:90%
+
+
+00:15:35.164 --> 00:15:38.500 align:middle line:90%
+AUDIENCE: [INAUDIBLE]
+
+00:15:38.500 --> 00:15:39.250 align:middle line:90%
+ANA BELL: Exactly.
+
+00:15:39.250 --> 00:15:41.750 align:middle line:84%
+Yes, I'm adding one
+item, and it's linked
+
+00:15:41.750 --> 00:15:43.000 align:middle line:90%
+to the question that was here.
+
+00:15:43.000 --> 00:15:44.170 align:middle line:90%
+What am I appending?
+
+00:15:44.170 --> 00:15:45.430 align:middle line:90%
+I'm appending one item.
+
+00:15:45.430 --> 00:15:47.710 align:middle line:90%
+It's whatever L4 is.
+
+00:15:47.710 --> 00:15:49.520 align:middle line:90%
+And L4 is this list.
+
+00:15:49.520 --> 00:15:54.760 align:middle line:84%
+So I'm going to be adding "re"
+and "mi" within my list here.
+
+00:15:54.760 --> 00:15:57.550 align:middle line:84%
+And I've got to
+close this list here.
+
+00:15:57.550 --> 00:16:00.400 align:middle line:84%
+So this is one item, one
+object, one element, and this
+
+00:16:00.400 --> 00:16:04.140 align:middle line:90%
+is another element right here.
+
+00:16:04.140 --> 00:16:05.385 align:middle line:90%
+It just happens to be a list.
+
+00:16:05.385 --> 00:16:08.580 align:middle line:90%
+
+
+00:16:08.580 --> 00:16:12.030 align:middle line:84%
+What about the next line,
+L equals L1.append(3)?
+
+00:16:12.030 --> 00:16:16.650 align:middle line:84%
+What is the right-hand
+side going to give me?
+
+00:16:16.650 --> 00:16:19.770 align:middle line:90%
+Am I mutating L1 or L3?
+
+00:16:19.770 --> 00:16:20.610 align:middle line:90%
+AUDIENCE: L1.
+
+00:16:20.610 --> 00:16:21.480 align:middle line:90%
+ANA BELL: Yes.
+
+00:16:21.480 --> 00:16:23.670 align:middle line:90%
+And what am I mutating L1 to be?
+
+00:16:23.670 --> 00:16:25.020 align:middle line:90%
+L1 is originally "re."
+
+00:16:25.020 --> 00:16:27.945 align:middle line:84%
+And what am I adding
+to the end of it?
+
+00:16:27.945 --> 00:16:31.020 align:middle line:90%
+AUDIENCE: [INAUDIBLE]
+
+00:16:31.020 --> 00:16:32.020 align:middle line:90%
+ANA BELL: Yeah, exactly.
+
+00:16:32.020 --> 00:16:34.780 align:middle line:84%
+This L3, which is
+this big thing here.
+
+00:16:34.780 --> 00:16:39.190 align:middle line:84%
+So it's a list with two
+elements, the first one being
+
+00:16:39.190 --> 00:16:46.230 align:middle line:84%
+a string and the second one
+being another list like that.
+
+00:16:46.230 --> 00:16:47.520 align:middle line:90%
+So that's the right-hand side.
+
+00:16:47.520 --> 00:16:49.520 align:middle line:84%
+And then what is the
+left-hand side going to be.
+
+00:16:49.520 --> 00:16:51.400 align:middle line:90%
+What is L going to be?
+
+00:16:51.400 --> 00:16:52.117 align:middle line:90%
+None, exactly.
+
+00:16:52.117 --> 00:16:52.617 align:middle line:90%
+Yeah.
+
+00:16:52.617 --> 00:16:55.675 align:middle line:90%
+
+
+00:16:55.675 --> 00:16:56.175 align:middle line:90%
+Exactly.
+
+00:16:56.175 --> 00:17:00.010 align:middle line:90%
+
+
+00:17:00.010 --> 00:17:02.470 align:middle line:84%
+So now that we've
+introduced mutable objects,
+
+00:17:02.470 --> 00:17:05.020 align:middle line:84%
+we have to be careful about
+what functions we're using.
+
+00:17:05.020 --> 00:17:08.597 align:middle line:84%
+Some of them mutate the list
+and don't return anything.
+
+00:17:08.597 --> 00:17:10.180 align:middle line:84%
+Append is one of
+them, and we're going
+
+00:17:10.180 --> 00:17:12.280 align:middle line:84%
+to see a few more
+in today's lecture.
+
+00:17:12.280 --> 00:17:15.670 align:middle line:84%
+So these functions
+are just being
+
+00:17:15.670 --> 00:17:17.050 align:middle line:90%
+used for their side effect.
+
+00:17:17.050 --> 00:17:20.170 align:middle line:84%
+They mutate the thing you're
+calling the function on
+
+00:17:20.170 --> 00:17:21.460 align:middle line:90%
+and that's it.
+
+00:17:21.460 --> 00:17:23.710 align:middle line:84%
+They don't need to return--
+they don't return anything
+
+00:17:23.710 --> 00:17:25.210 align:middle line:84%
+they, don't need
+to return anything.
+
+00:17:25.210 --> 00:17:30.100 align:middle line:84%
+They have done their job purely
+by the mutation aspect of it.
+
+00:17:30.100 --> 00:17:34.830 align:middle line:84%
+So I want to just quickly
+make an aside on this dot
+
+00:17:34.830 --> 00:17:40.830 align:middle line:84%
+notation that we've introduced
+with this append function.
+
+00:17:40.830 --> 00:17:44.100 align:middle line:84%
+This is something we haven't
+actually seen before,
+
+00:17:44.100 --> 00:17:47.880 align:middle line:84%
+but it's something that we
+will learn about in the future
+
+00:17:47.880 --> 00:17:50.620 align:middle line:84%
+when we create our
+own object types.
+
+00:17:50.620 --> 00:17:52.350 align:middle line:84%
+So right now, we're
+using object types
+
+00:17:52.350 --> 00:17:55.122 align:middle line:84%
+that somebody else wrote,
+like a list, or a tuple,
+
+00:17:55.122 --> 00:17:56.080 align:middle line:90%
+or something like that.
+
+00:17:56.080 --> 00:17:57.840 align:middle line:84%
+But in a future
+class, we're going
+
+00:17:57.840 --> 00:18:00.520 align:middle line:84%
+to learn how to create
+our own object types.
+
+00:18:00.520 --> 00:18:04.380 align:middle line:84%
+And when we do, we're going to
+use this dot notation a lot.
+
+00:18:04.380 --> 00:18:08.310 align:middle line:84%
+But for now, you basically just
+kind of have to remember which
+
+00:18:08.310 --> 00:18:11.010 align:middle line:84%
+functions use dot
+notation and which don't.
+
+00:18:11.010 --> 00:18:14.070 align:middle line:84%
+But I'll give you a little bit
+of intuition for what this dot
+
+00:18:14.070 --> 00:18:15.520 align:middle line:90%
+notation actually means.
+
+00:18:15.520 --> 00:18:19.150 align:middle line:84%
+So when we have-- so everything
+in Python is an object.
+
+00:18:19.150 --> 00:18:22.260 align:middle line:84%
+And when we have
+objects in Python,
+
+00:18:22.260 --> 00:18:28.360 align:middle line:84%
+the idea here is that the
+objects that you have data
+
+00:18:28.360 --> 00:18:30.310 align:middle line:90%
+associated with them.
+
+00:18:30.310 --> 00:18:31.810 align:middle line:90%
+So what makes up the object.
+
+00:18:31.810 --> 00:18:34.150 align:middle line:90%
+And they have certain behaviors.
+
+00:18:34.150 --> 00:18:36.910 align:middle line:84%
+So we touched upon this
+on maybe the first lecture
+
+00:18:36.910 --> 00:18:40.180 align:middle line:84%
+where we said things
+you can do with integers
+
+00:18:40.180 --> 00:18:43.180 align:middle line:84%
+are different than the things
+you can do with strings.
+
+00:18:43.180 --> 00:18:44.980 align:middle line:90%
+That's pretty clear.
+
+00:18:44.980 --> 00:18:49.180 align:middle line:84%
+And that's different than the
+things you can do with lists.
+
+00:18:49.180 --> 00:18:51.397 align:middle line:84%
+And so the kinds
+of things that you
+
+00:18:51.397 --> 00:18:53.230 align:middle line:84%
+could do with each one
+of these object types
+
+00:18:53.230 --> 00:18:55.360 align:middle line:90%
+differs depending on the type.
+
+00:18:55.360 --> 00:18:58.030 align:middle line:84%
+And at its core,
+really, everything
+
+00:18:58.030 --> 00:19:00.550 align:middle line:84%
+can be written in terms
+of this dot notation.
+
+00:19:00.550 --> 00:19:03.460 align:middle line:84%
+But some of the more
+common operations,
+
+00:19:03.460 --> 00:19:04.990 align:middle line:84%
+like getting the
+length of something
+
+00:19:04.990 --> 00:19:09.190 align:middle line:84%
+or adding two numbers
+together, are actually-- we
+
+00:19:09.190 --> 00:19:10.810 align:middle line:84%
+do them in this
+shorthand notation,
+
+00:19:10.810 --> 00:19:13.420 align:middle line:84%
+like using the plus
+operator or using the L.
+
+00:19:13.420 --> 00:19:15.460 align:middle line:84%
+But at their core,
+really, we can
+
+00:19:15.460 --> 00:19:19.100 align:middle line:84%
+take all of those operations and
+convert them to a dot notation.
+
+00:19:19.100 --> 00:19:22.730 align:middle line:84%
+We're not doing this today,
+but that's what we can do.
+
+00:19:22.730 --> 00:19:24.640 align:middle line:84%
+And so when we see
+this dot notation,
+
+00:19:24.640 --> 00:19:26.900 align:middle line:84%
+the way we usually read
+it is we say, well,
+
+00:19:26.900 --> 00:19:28.400 align:middle line:90%
+what's to the left of the dot?
+
+00:19:28.400 --> 00:19:30.350 align:middle line:84%
+It's going to be our
+object, the thing that we
+
+00:19:30.350 --> 00:19:32.390 align:middle line:90%
+want to do an operation on.
+
+00:19:32.390 --> 00:19:36.170 align:middle line:84%
+In this particular case,
+it's a list named L,
+
+00:19:36.170 --> 00:19:39.410 align:middle line:84%
+but it could be a list
+name employees, or words,
+
+00:19:39.410 --> 00:19:40.460 align:middle line:90%
+or whatever.
+
+00:19:40.460 --> 00:19:43.430 align:middle line:84%
+Book, or whatever
+the list contains--
+
+00:19:43.430 --> 00:19:45.860 align:middle line:90%
+whatever the list name is.
+
+00:19:45.860 --> 00:19:49.130 align:middle line:84%
+The dot then comes
+for the dot notation
+
+00:19:49.130 --> 00:19:50.840 align:middle line:84%
+and then the thing on
+the right-hand side
+
+00:19:50.840 --> 00:19:52.790 align:middle line:84%
+is going to be the
+operation that you
+
+00:19:52.790 --> 00:19:56.480 align:middle line:84%
+want to perform on the object
+to the left of the dot.
+
+00:19:56.480 --> 00:20:00.290 align:middle line:84%
+So the operation-- if you
+basically cover up L dot,
+
+00:20:00.290 --> 00:20:02.450 align:middle line:84%
+the operation looks
+just like a function.
+
+00:20:02.450 --> 00:20:05.420 align:middle line:84%
+It's append, parentheses,
+some parameters.
+
+00:20:05.420 --> 00:20:08.690 align:middle line:84%
+And so the operation is
+basically just a function
+
+00:20:08.690 --> 00:20:12.200 align:middle line:84%
+that you want to run on
+an object of type list,
+
+00:20:12.200 --> 00:20:17.090 align:middle line:84%
+this specific object named L.
+And you can see it has a name,
+
+00:20:17.090 --> 00:20:19.760 align:middle line:84%
+append, and it has
+parameters or arguments.
+
+00:20:19.760 --> 00:20:21.410 align:middle line:84%
+In this case, it's
+the thing you want
+
+00:20:21.410 --> 00:20:23.990 align:middle line:90%
+to add to the end of the list.
+
+00:20:23.990 --> 00:20:27.090 align:middle line:84%
+So again, unfortunately,
+at this point in the class,
+
+00:20:27.090 --> 00:20:30.170 align:middle line:84%
+you just have to remember which
+functions are dot notation
+
+00:20:30.170 --> 00:20:31.490 align:middle line:90%
+and which ones are not.
+
+00:20:31.490 --> 00:20:35.150 align:middle line:84%
+But it will become clear what
+this dot notation actually
+
+00:20:35.150 --> 00:20:38.210 align:middle line:84%
+means towards the
+end of the class.
+
+00:20:38.210 --> 00:20:42.200 align:middle line:84%
+So let's have you work
+on this little code here.
+
+00:20:42.200 --> 00:20:44.390 align:middle line:84%
+It's going to use
+append, obviously,
+
+00:20:44.390 --> 00:20:46.680 align:middle line:84%
+and it's going to have
+you create a list.
+
+00:20:46.680 --> 00:20:49.880 align:middle line:84%
+So the name of the function you
+should make here is called--
+
+00:20:49.880 --> 00:20:53.530 align:middle line:90%
+[AUDIO OUT]
+
+00:20:53.530 --> 01:14:04.000 align:middle line:90%
