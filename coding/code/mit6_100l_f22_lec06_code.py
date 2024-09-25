@@ -102,6 +102,16 @@ high = cube
 
 # your code here
 
+# guess = (high + low)/2
+
+# while abs(guess**3 - cube) >= epsilon:
+#     if guess**3 < cube:
+#         low = guess
+#     else:
+#         high = guess
+#     guess = (high + low)/2.0
+
+# print(f'{str(guess)} is close to cube root of {str(cube)}')
 
 #####################################################
 

@@ -123,7 +123,20 @@
 # determines how many times you can add increment to itself 
 # until you start to get a floating point error.
 
-# your code here
+# code here
+# increment = 0.022  # The increment value
+# count = 0 # The number of increments
+# total = 0 # The total value
+
+# while total == count * increment: # While the total is equal to the count times the increment
+#     total += increment # Add the increment to the total
+#     count += 1 # Increment the count
+
+# print(f"Number of increments before floating point error: {count - 1}")
+# print(f"Expected value: {(count - 1) * increment}")
+# print(f"Actual value: {total - increment}")
+
+
 
 #################################################
 #################################################
